@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 export default function Home() {
   return (
@@ -7,8 +7,41 @@ export default function Home() {
         Listando <Text style={styles.movieCount}>1234</Text> itens
       </Text>
       <View style={styles.card}>
-        <View style={styles.upperSubCard}>Filme 1</View>
-        <View style={styles.bottomSubCard}>Filme 1</View>
+        <View style={styles.upperSubCard}>
+          <Image
+            source={require("../assets/images/posters/oppenheimer-poster.webp")}
+            style={styles.upperSubCardPosterImage}
+          />
+          <View>
+            <Text style={styles.upperSubCardMovieTitle}>Oppenheimer</Text>
+            <Image
+              source={require("../assets/images/favicon.png")}
+              style={styles.upperSubCardEmojis}
+            />
+          </View>
+        </View>
+        <View style={styles.bottomSubCard}>
+          <Image
+            source={require("../assets/images/favicon.png")}
+            style={styles.bottomSubCardIcons}
+          />
+          <Image
+            source={require("../assets/images/favicon.png")}
+            style={styles.bottomSubCardIcons}
+          />
+          <Image
+            source={require("../assets/images/favicon.png")}
+            style={styles.bottomSubCardIcons}
+          />
+          <Image
+            source={require("../assets/images/favicon.png")}
+            style={styles.bottomSubCardIcons}
+          />
+          <Image
+            source={require("../assets/images/favicon.png")}
+            style={styles.bottomSubCardIcons}
+          />
+        </View>
       </View>
 
       <View>
@@ -33,13 +66,39 @@ const styles = StyleSheet.create({
   },
   card: {
     overflow: "hidden",
-    borderRadius: 80,
+    borderRadius: 16,
     margin: 16,
   },
   upperSubCard: {
+    flexDirection: "row",
     backgroundColor: "#181818",
+    height: 128,
+  },
+  upperSubCardPosterImage: {
+    width: 100,
+    height: 150,
+    resizeMode: "stretch",
+    backgroundColor: "white",
+  },
+  upperSubCardMovieTitle: {
+    color: "white",
+    marginTop: 16,
+  },
+  upperSubCardEmojis: {
+    justifyContent: "space-around",
+    width: 32,
+    height: 32,
   },
   bottomSubCard: {
     backgroundColor: "#202020",
+    height: 64,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bottomSubCardIcons: {
+    width: 32,
+    height: 32,
+    margin: 16,
   },
 });
