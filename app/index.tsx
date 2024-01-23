@@ -12,7 +12,7 @@ export default function Home() {
             source={require("../assets/images/posters/oppenheimer-poster.webp")}
             style={styles.upperSubCardPosterImage}
           />
-          <View>
+          <View style={[{ backgroundColor: "teal" }, styles.UpperSubCardInfo]}>
             <Text style={styles.upperSubCardMovieTitle}>Oppenheimer</Text>
             <Image
               source={require("../assets/images/favicon.png")}
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   },
   upperSubCard: {
     flexDirection: "row",
-    backgroundColor: "#181818",
+    backgroundColor: "pink",
     height: 128,
   },
   upperSubCardPosterImage: {
@@ -79,6 +79,9 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: "stretch",
     backgroundColor: "white",
+  },
+  UpperSubCardInfo: {
+    flex: 1,
   },
   upperSubCardMovieTitle: {
     color: "white",
