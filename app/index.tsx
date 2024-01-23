@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function Home() {
   return (
@@ -13,11 +14,23 @@ export default function Home() {
             style={styles.upperSubCardPosterImage}
           />
           <View style={[{ backgroundColor: "teal" }, styles.UpperSubCardInfo]}>
-            <Text style={styles.upperSubCardMovieTitle}>Oppenheimer</Text>
-            <Image
-              source={require("../assets/images/favicon.png")}
-              style={styles.upperSubCardEmojis}
-            />
+            <Text style={styles.upperSubCardMovieTitle}>
+              Oppenheimer Oppenheimer Oppenheimer
+            </Text>
+            <View style={styles.upperSubCardEmojis}>
+              <FontAwesome5
+                name="laugh-squint"
+                size={24}
+                color="black"
+                style={{ marginRight: 12 }}
+              />
+              <FontAwesome5
+                name="grin-hearts"
+                size={24}
+                color="black"
+                style={{ marginRight: 12 }}
+              />
+            </View>
           </View>
         </View>
         <View style={styles.bottomSubCard}>
@@ -82,15 +95,14 @@ const styles = StyleSheet.create({
   },
   UpperSubCardInfo: {
     flex: 1,
+    padding: 12,
   },
   upperSubCardMovieTitle: {
     color: "white",
-    marginTop: 16,
+    marginBottom: 16,
   },
   upperSubCardEmojis: {
-    justifyContent: "space-around",
-    width: 32,
-    height: 32,
+    flexDirection: "row",
   },
   bottomSubCard: {
     backgroundColor: "#202020",
