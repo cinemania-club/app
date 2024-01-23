@@ -17,7 +17,9 @@ export default function Home() {
             <Text style={styles.upperSubCardMovieTitle}>
               Oppenheimer Oppenheimer Oppenheimer
             </Text>
-            <View style={styles.upperSubCardEmojis}>
+            <View
+              style={[{ backgroundColor: "yellow" }, styles.upperSubCardEmojis]}
+            >
               <FontAwesome5
                 name="laugh-squint"
                 size={24}
@@ -30,6 +32,7 @@ export default function Home() {
                 color="black"
                 style={{ marginRight: 12 }}
               />
+              <Text>2023</Text>
             </View>
           </View>
         </View>
@@ -103,6 +106,7 @@ const styles = StyleSheet.create({
   },
   upperSubCardEmojis: {
     flexDirection: "row",
+    alignItems: "center",
   },
   bottomSubCard: {
     backgroundColor: "#202020",
