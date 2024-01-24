@@ -14,25 +14,33 @@ export default function Home() {
             style={styles.upperSubCardPosterImage}
           />
           <View style={[{ backgroundColor: "teal" }, styles.UpperSubCardInfo]}>
-            <Text style={styles.upperSubCardMovieTitle}>
-              Oppenheimer Oppenheimer Oppenheimer
-            </Text>
+            <Text style={styles.upperSubCardMovieTitle}>Oppenheimer</Text>
             <View
-              style={[{ backgroundColor: "yellow" }, styles.upperSubCardEmojis]}
+              style={[
+                { backgroundColor: "yellow" },
+                styles.upperSubCardMiddleRow,
+              ]}
             >
-              <FontAwesome5
-                name="laugh-squint"
-                size={24}
-                color="black"
-                style={{ marginRight: 12 }}
-              />
-              <FontAwesome5
-                name="grin-hearts"
-                size={24}
-                color="black"
-                style={{ marginRight: 12 }}
-              />
+              <View
+                style={[{ backgroundColor: "pink" }, styles.upperSubCardEmoji]}
+              >
+                <FontAwesome5
+                  name="laugh-squint"
+                  size={24}
+                  color="black"
+                  style={styles.emoji}
+                />
+                <FontAwesome5
+                  name="grin-hearts"
+                  size={24}
+                  color="black"
+                  style={styles.emoji}
+                />
+                <FontAwesome5 name="surprise" size={24} color="black" />
+              </View>
               <Text>2023</Text>
+              <Text>185 min</Text>
+              <Text>4,53</Text>
             </View>
           </View>
         </View>
@@ -104,9 +112,16 @@ const styles = StyleSheet.create({
     color: "white",
     marginBottom: 16,
   },
-  upperSubCardEmojis: {
+  upperSubCardMiddleRow: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
+  },
+  upperSubCardEmoji: {
+    flexDirection: "row",
+  },
+  emoji: {
+    marginRight: 12,
   },
   bottomSubCard: {
     backgroundColor: "#202020",
