@@ -1,7 +1,9 @@
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-export default function Movie(props: any) {
+import { MovieType } from "./backend";
+
+export default function Movie(props: MovieType) {
   return (
     <View style={styles.card}>
       <View style={styles.upperSubCard}>
@@ -10,7 +12,7 @@ export default function Movie(props: any) {
           style={styles.upperSubCardPosterImage}
         />
         <View style={[styles.UpperSubCardInfo]}>
-          <Text style={styles.upperSubCardMovieTitle}>{props.name}</Text>
+          <Text style={styles.upperSubCardMovieTitle}>{props.title}</Text>
           <View style={[styles.upperSubCardMiddleRow]}>
             <View style={[styles.upperSubCardEmoji]}>
               <FontAwesome5
@@ -27,9 +29,9 @@ export default function Movie(props: any) {
               />
               <FontAwesome5 name="surprise" size={24} color="white" />
             </View>
-            <Text style={styles.text}>2023</Text>
-            <Text style={styles.text}>{props.duracao}</Text>
-            <Text style={styles.text}>4,53</Text>
+            <Text style={styles.text}>{props.releaseYear}</Text>
+            <Text style={styles.text}>{props.duration}</Text>
+            <Text style={styles.text}>{props.grade}</Text>
           </View>
           <View style={styles.profiles}>
             <Image
