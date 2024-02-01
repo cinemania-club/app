@@ -1,7 +1,8 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
-import { MovieType, fetchMovies } from "./backend";
+import { MovieType } from "./backend";
 import Movie from "./movie";
 
 export default function Home() {
@@ -9,8 +10,11 @@ export default function Home() {
   const [movies, setMovies] = useState<MovieType[]>([]);
 
   const getMovies = async () => {
-    const filmes = await fetchMovies();
-    setMovies(filmes);
+    const response = await axios.get(
+      "http://localhost:3000/admin/scrapper/get-movies",
+    );
+
+    setMovies(response.data);
     setLoading(false);
   };
 
