@@ -34,7 +34,7 @@ export default function Home() {
   return (
     <View style={styles.container}>
       <Text style={styles.headTitle}>
-        Listando <Text style={styles.movieCount}>1234</Text> itens
+        Listando <Text style={styles.movieCount}>{movies.length}</Text> itens
       </Text>
 
       {movies.map((movie) => (
