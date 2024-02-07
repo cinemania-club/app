@@ -4,7 +4,13 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 import { MovieType } from "./backend";
 
-export default function Movie(props: MovieType) {
+type Props = {
+  movieData: MovieType;
+};
+
+export default function Movie(props: Props) {
+  const movie = props.movieData;
+
   return (
     <View style={styles.card}>
       <View style={styles.upperSubCard}>
@@ -13,7 +19,7 @@ export default function Movie(props: MovieType) {
           style={styles.upperSubCardPosterImage}
         />
         <View style={[styles.UpperSubCardInfo]}>
-          <Text style={styles.upperSubCardMovieTitle}>{props.title}</Text>
+          <Text style={styles.upperSubCardMovieTitle}>{movie.title}</Text>
           <View style={[styles.upperSubCardMiddleRow]}>
             <View style={[styles.upperSubCardEmoji]}>
               <FontAwesome5
@@ -30,9 +36,9 @@ export default function Movie(props: MovieType) {
               />
               <FontAwesome5 name="surprise" size={24} color="white" />
             </View>
-            <Text style={styles.text}>{getYear(props.release_date)}</Text>
-            <Text style={styles.text}>{props.runtime} min</Text>
-            <Text style={styles.text}>{props.vote_average}</Text>
+            <Text style={styles.text}>{getYear(movie.release_date)}</Text>
+            <Text style={styles.text}>{movie.runtime} min</Text>
+            <Text style={styles.text}>{movie.vote_average}</Text>
           </View>
           <View style={styles.profiles}>
             <Image

@@ -36,13 +36,7 @@ export default function Home() {
       </Text>
 
       {movies.map((movie) => (
-        <Movie
-          _id={movie._id}
-          title={movie.title}
-          release_date={movie.release_date}
-          runtime={movie.runtime}
-          vote_average={movie.vote_average}
-        />
+        <Movie movieData={movie} />
       ))}
     </View>
   );
