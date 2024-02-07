@@ -41,7 +41,7 @@ export default function Home() {
           title={movie.title}
           release_date={movie.release_date}
           runtime={movie.runtime}
-          grade={movie.grade}
+          vote_average={movie.vote_average}
         />
       ))}
     </View>

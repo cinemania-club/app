@@ -3,5 +3,5 @@ export type MovieType = {
   title: string;
   runtime: number;
   release_date: number;
-  grade: number;
+  vote_average: number;
 };

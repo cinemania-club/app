@@ -32,7 +32,7 @@ export default function Movie(props: MovieType) {
             </View>
             <Text style={styles.text}>{getYear(props.release_date)}</Text>
             <Text style={styles.text}>{props.runtime} min</Text>
-            <Text style={styles.text}>{props.grade}</Text>
+            <Text style={styles.text}>{props.vote_average}</Text>
           </View>
           <View style={styles.profiles}>
             <Image
