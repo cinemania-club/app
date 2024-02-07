@@ -1,4 +1,5 @@
 import { FontAwesome5 } from "@expo/vector-icons";
+import { getYear } from "date-fns";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 import { MovieType } from "./backend";
@@ -29,8 +30,8 @@ export default function Movie(props: MovieType) {
               />
               <FontAwesome5 name="surprise" size={24} color="white" />
             </View>
-            <Text style={styles.text}>{props.release_date}</Text>
-            <Text style={styles.text}>{props.runtime}</Text>
+            <Text style={styles.text}>{getYear(props.release_date)}</Text>
+            <Text style={styles.text}>{props.runtime} min</Text>
             <Text style={styles.text}>{props.grade}</Text>
           </View>
           <View style={styles.profiles}>
