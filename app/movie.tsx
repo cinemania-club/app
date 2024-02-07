@@ -29,8 +29,8 @@ export default function Movie(props: MovieType) {
               />
               <FontAwesome5 name="surprise" size={24} color="white" />
             </View>
-            <Text style={styles.text}>{props.releaseYear}</Text>
-            <Text style={styles.text}>{props.duration}</Text>
+            <Text style={styles.text}>{props.release_date}</Text>
+            <Text style={styles.text}>{props.runtime}</Text>
             <Text style={styles.text}>{props.grade}</Text>
           </View>
           <View style={styles.profiles}>

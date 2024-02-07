@@ -10,9 +10,7 @@ export default function Home() {
   const [movies, setMovies] = useState<MovieType[]>([]);
 
   const getMovies = async () => {
-    const response = await axios.get(
-      "http://localhost:3000/admin/scrapper/get-movies",
-    );
+    const response = await axios.get("http://localhost:3000/movies");
 
     setMovies(response.data);
     setLoading(false);
@@ -39,10 +37,10 @@ export default function Home() {
 
       {movies.map((movie) => (
         <Movie
-          id={movie.id}
+          _id={movie._id}
           title={movie.title}
-          releaseYear={movie.releaseYear}
-          duration={movie.duration}
+          release_date={movie.release_date}
+          runtime={movie.runtime}
           grade={movie.grade}
         />
       ))}
