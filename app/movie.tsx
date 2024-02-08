@@ -2,8 +2,15 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { getYear } from "date-fns";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-import { MovieType } from "./backend";
 import { brNumber } from "./util";
+
+export type MovieType = {
+  _id: number;
+  title: string;
+  runtime: number;
+  release_date: number;
+  vote_average: number;
+};
 
 type Props = {
   movieData: MovieType;

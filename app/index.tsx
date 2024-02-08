@@ -2,15 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
-import { MovieType } from "./backend";
-import Movie from "./movie";
+import Movie, { MovieType } from "./movie";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState<MovieType[]>([]);
 
   const getMovies = async () => {
-    const response = await axios.get("http://localhost:3000/movies");
+    const response = await axios.get<MovieType[]>(
+      "http://localhost:3000/movies",
+    );
 
     setMovies(response.data);
     setLoading(false);
