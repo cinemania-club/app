@@ -14,8 +14,8 @@ export default function Home() {
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator />
+      <View style={[styles.container, styles.center]}>
+        <ActivityIndicator color="#F9284E" size="large" />
       </View>
     );
   }
@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000000",
     flex: 1,
+  },
+  center: {
+    justifyContent: "center",
   },
   headTitle: {
     textAlign: "center",
