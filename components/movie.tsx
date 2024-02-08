@@ -10,6 +10,7 @@ export type Movie = {
   runtime: number;
   release_date: number;
   vote_average: number;
+  poster_path: string;
 };
 
 type Props = {
@@ -23,7 +24,9 @@ export default function MovieCard(props: Props) {
     <View style={styles.card}>
       <View style={styles.upperSubCard}>
         <Image
-          source={require("../assets/images/posters/oppenheimer-poster.webp")}
+          source={{
+            uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
+          }}
           style={styles.upperSubCardPosterImage}
         />
         <View style={[styles.UpperSubCardInfo]}>
