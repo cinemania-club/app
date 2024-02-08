@@ -36,7 +36,7 @@ export default function Home() {
       </Text>
 
       {movies.map((movie) => (
-        <Movie movieData={movie} />
+        <Movie key={movie._id} movieData={movie} />
       ))}
     </View>
   );
