@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 
 import { brNumber } from "./util";
 
-export type MovieType = {
+export type Movie = {
   _id: number;
   title: string;
   runtime: number;
@@ -13,10 +13,10 @@ export type MovieType = {
 };
 
 type Props = {
-  movieData: MovieType;
+  movieData: Movie;
 };
 
-export default function Movie(props: Props) {
+export default function MovieCard(props: Props) {
   const movie = props.movieData;
 
   return (
