@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
-import MovieCard, { Movie } from "../movie";
+import MovieCard, { Movie } from "../../components/movie";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);

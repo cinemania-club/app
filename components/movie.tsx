@@ -2,7 +2,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { getYear } from "date-fns";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-import { brNumber } from "./util";
+import { brNumber } from "../app/util";
 
 export type Movie = {
   _id: number;
