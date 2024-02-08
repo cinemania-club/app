@@ -33,7 +33,9 @@ export default function Home() {
   );
 
   async function getMovies() {
-    const response = await axios.get<Movie[]>("http://localhost:3000/movies");
+    const response = await axios.get<Movie[]>(
+      `${process.env.EXPO_PUBLIC_API_URL}/movies`,
+    );
 
     setMovies(response.data);
     setLoading(false);
