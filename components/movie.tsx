@@ -53,11 +53,15 @@ export default function MovieCard(props: Props) {
           </View>
           <View style={styles.profiles}>
             <Image
-              source={require("../assets/images/posters/oppenheimer-poster.webp")}
+              source={{
+                uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
+              }}
               style={styles.lowerIconProfile}
             />
             <Image
-              source={require("../assets/images/posters/oppenheimer-poster.webp")}
+              source={{
+                uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
+              }}
               style={styles.lowerIconProfile}
             />
           </View>
