@@ -8,17 +8,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState<MovieType[]>([]);
 
-  const getMovies = async () => {
-    const response = await axios.get<MovieType[]>(
-      "http://localhost:3000/movies",
-    );
-
-    setMovies(response.data);
-    setLoading(false);
-  };
-
   useEffect(() => {
-    // Executa na primeira vez que o componente é desenhado
     getMovies();
   }, []);
 
@@ -41,6 +31,15 @@ export default function Home() {
       ))}
     </View>
   );
+
+  async function getMovies() {
+    const response = await axios.get<MovieType[]>(
+      "http://localhost:3000/movies",
+    );
+
+    setMovies(response.data);
+    setLoading(false);
+  }
 }
 
 const styles = StyleSheet.create({
