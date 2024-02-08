@@ -3,6 +3,7 @@ import { getYear } from "date-fns";
 import { Image, StyleSheet, Text, View } from "react-native";
 
 import { MovieType } from "./backend";
+import { brNumber } from "./util";
 
 type Props = {
   movieData: MovieType;
@@ -38,7 +39,7 @@ export default function Movie(props: Props) {
             </View>
             <Text style={styles.text}>{getYear(movie.release_date)}</Text>
             <Text style={styles.text}>{movie.runtime} min</Text>
-            <Text style={styles.text}>{movie.vote_average}</Text>
+            <Text style={styles.text}>{brNumber(movie.vote_average, 3)}</Text>
           </View>
           <View style={styles.profiles}>
             <Image
