@@ -1,35 +1,61 @@
-import { StyleSheet } from "react-native";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 
-import EditScreenInfo from "../../components/EditScreenInfo";
-import { Text, View } from "../../components/Themed";
+import MovieCard, { Movie } from "../../components/movie";
 
-export default function TabOneScreen() {
+export default function Home() {
+  const [loading, setLoading] = useState(true);
+  const [movies, setMovies] = useState<Movie[]>([]);
+
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={[styles.container, styles.center]}>
+        <ActivityIndicator color="#F9284E" size="large" />
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View
-        style={styles.separator}
-        lightColor="#eee"
-        darkColor="rgba(255,255,255,0.1)"
-      />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+      <Text style={styles.headTitle}>
+        Listando <Text style={styles.movieCount}>{movies.length}</Text> itens
+      </Text>
+
+      {movies.map((movie) => (
+        <MovieCard key={movie._id} movieData={movie} />
+      ))}
     </View>
   );
+
+  async function getMovies() {
+    const response = await axios.get<Movie[]>(
+      `${process.env.EXPO_PUBLIC_API_URL}/movies`,
+    );
+
+    setMovies(response.data);
+    setLoading(false);
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#000000",
     flex: 1,
-    alignItems: "center",
+  },
+  center: {
     justifyContent: "center",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
+  headTitle: {
+    textAlign: "center",
+    color: "white",
+    margin: 30,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: "80%",
+  movieCount: {
+    color: "#F9284E",
   },
 });
