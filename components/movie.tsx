@@ -1,6 +1,7 @@
 import { FontAwesome5 } from "@expo/vector-icons";
+import { HStack, Image } from "@gluestack-ui/themed";
 import { getYear } from "date-fns";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 import { brNumber } from "../app/util";
 
@@ -24,29 +25,21 @@ export default function MovieCard(props: Props) {
     <View style={styles.card}>
       <View style={styles.upperSubCard}>
         <Image
+          resizeMode="contain"
+          height={100}
           source={{
             uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
           }}
-          style={styles.upperSubCardPosterImage}
+          // style={styles.upperSubCardPosterImage}
         />
         <View style={[styles.UpperSubCardInfo]}>
           <Text style={styles.upperSubCardMovieTitle}>{movie.title}</Text>
           <View style={[styles.upperSubCardMiddleRow]}>
-            <View style={[styles.upperSubCardEmoji]}>
-              <FontAwesome5
-                name="laugh-squint"
-                size={24}
-                color="white"
-                style={styles.emoji}
-              />
-              <FontAwesome5
-                name="grin-hearts"
-                size={24}
-                color="white"
-                style={styles.emoji}
-              />
-              <FontAwesome5 name="surprise" size={24} color="white" />
-            </View>
+            <HStack space="sm">
+              <FontAwesome5 name="laugh-squint" size={20} color="white" />
+              <FontAwesome5 name="grin-hearts" size={20} color="white" />
+              <FontAwesome5 name="surprise" size={20} color="white" />
+            </HStack>
             <Text style={styles.text}>{getYear(movie.release_date)}</Text>
             <Text style={styles.text}>{movie.runtime} min</Text>
             <Text style={styles.text}>{brNumber(movie.vote_average, 3)}</Text>
@@ -101,7 +94,6 @@ const styles = StyleSheet.create({
   },
   upperSubCard: {
     flexDirection: "row",
-    height: 128,
   },
   upperSubCardPosterImage: {
     width: 100,
@@ -125,9 +117,6 @@ const styles = StyleSheet.create({
   },
   upperSubCardEmoji: {
     flexDirection: "row",
-  },
-  emoji: {
-    marginRight: 12,
   },
   bottomSubCard: {
     backgroundColor: "#202020",

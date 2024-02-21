@@ -1,4 +1,6 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { config } from "@gluestack-ui/config";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
 import {
   DarkTheme,
   DefaultTheme,
@@ -50,11 +52,13 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-      </Stack>
-    </ThemeProvider>
+    <GluestackUIProvider config={config}>
+      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        </Stack>
+      </ThemeProvider>
+    </GluestackUIProvider>
   );
 }
