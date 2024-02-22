@@ -1,7 +1,7 @@
 import { FontAwesome5 } from "@expo/vector-icons";
-import { HStack, Image } from "@gluestack-ui/themed";
+import { HStack } from "@gluestack-ui/themed";
 import { getYear } from "date-fns";
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
 import { brNumber } from "../app/util";
 
@@ -25,12 +25,11 @@ export default function MovieCard(props: Props) {
     <View style={styles.card}>
       <View style={styles.upperSubCard}>
         <Image
-          resizeMode="contain"
-          height={100}
+          resizeMode="cover"
           source={{
             uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
           }}
-          // style={styles.upperSubCardPosterImage}
+          style={{ aspectRatio: 2 / 3 }}
         />
         <View style={[styles.UpperSubCardInfo]}>
           <Text style={styles.upperSubCardMovieTitle}>{movie.title}</Text>
@@ -94,11 +93,7 @@ const styles = StyleSheet.create({
   },
   upperSubCard: {
     flexDirection: "row",
-  },
-  upperSubCardPosterImage: {
-    width: 100,
-    height: 150,
-    resizeMode: "stretch",
+    alignItems: "stretch",
   },
   UpperSubCardInfo: {
     flex: 1,
