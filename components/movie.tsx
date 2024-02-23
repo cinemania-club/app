@@ -1,7 +1,12 @@
-import { FontAwesome5 } from "@expo/vector-icons";
-import { HStack } from "@gluestack-ui/themed";
+import {
+  Avatar,
+  AvatarFallbackText,
+  AvatarImage,
+  HStack,
+  Text,
+} from "@gluestack-ui/themed";
 import { getYear } from "date-fns";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 
 import { brNumber } from "../app/util";
 
@@ -32,31 +37,41 @@ export default function MovieCard(props: Props) {
           style={{ aspectRatio: 2 / 3 }}
         />
         <View style={[styles.UpperSubCardInfo]}>
-          <Text style={styles.upperSubCardMovieTitle}>{movie.title}</Text>
-          <View style={[styles.upperSubCardMiddleRow]}>
-            <HStack space="sm">
-              <FontAwesome5 name="laugh-squint" size={20} color="white" />
-              <FontAwesome5 name="grin-hearts" size={20} color="white" />
-              <FontAwesome5 name="surprise" size={20} color="white" />
-            </HStack>
-            <Text style={styles.text}>{getYear(movie.release_date)}</Text>
-            <Text style={styles.text}>{movie.runtime} min</Text>
-            <Text style={styles.text}>{brNumber(movie.vote_average, 3)}</Text>
-          </View>
-          <View style={styles.profiles}>
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
-              }}
-              style={styles.lowerIconProfile}
-            />
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
-              }}
-              style={styles.lowerIconProfile}
-            />
-          </View>
+          <Text bold color="$primary" size="xs">
+            {movie.title}
+          </Text>
+          <HStack space="md">
+            <Text color="$text" size="xs">
+              Drama
+            </Text>
+            <Text color="$text" size="xs">
+              {getYear(movie.release_date)}
+            </Text>
+            <Text color="$text" size="xs">
+              {movie.runtime} min
+            </Text>
+            <Text color="$text" size="xs">
+              {brNumber(movie.vote_average, 3)}
+            </Text>
+          </HStack>
+          <HStack space="xs">
+            <Avatar size="xs">
+              <AvatarFallbackText>F</AvatarFallbackText>
+              <AvatarImage
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
+                }}
+              />
+            </Avatar>
+            <Avatar size="xs">
+              <AvatarFallbackText>F</AvatarFallbackText>
+              <AvatarImage
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
+                }}
+              />
+            </Avatar>
+          </HStack>
         </View>
       </View>
       <View style={styles.bottomSubCard}>
@@ -100,19 +115,6 @@ const styles = StyleSheet.create({
     padding: 12,
     backgroundColor: "#181818",
   },
-  upperSubCardMovieTitle: {
-    color: "white",
-    marginBottom: 16,
-  },
-  upperSubCardMiddleRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    color: "white",
-  },
-  upperSubCardEmoji: {
-    flexDirection: "row",
-  },
   bottomSubCard: {
     backgroundColor: "#202020",
     height: 64,
@@ -124,20 +126,5 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     margin: 16,
-  },
-  lowerIconProfile: {
-    height: 30,
-    width: 30,
-    borderColor: "#F9284E",
-    borderRadius: 15,
-    borderWidth: 2,
-    marginTop: 12,
-    marginRight: 5,
-  },
-  profiles: {
-    flexDirection: "row",
-  },
-  text: {
-    color: "white",
   },
 });
