@@ -1,14 +1,17 @@
+import { Entypo } from "@expo/vector-icons";
 import {
   Avatar,
   AvatarFallbackText,
   AvatarImage,
   HStack,
   Text,
+  VStack,
 } from "@gluestack-ui/themed";
 import { getYear } from "date-fns";
 import { Image, StyleSheet, View } from "react-native";
 
 import { brNumber } from "../app/util";
+import { gluestackUIConfig } from "../config/gluestack-ui.config";
 
 export type Movie = {
   _id: number;
@@ -25,10 +28,11 @@ type Props = {
 
 export default function MovieCard(props: Props) {
   const movie = props.movieData;
+  const textColor = gluestackUIConfig.tokens.colors.text;
 
   return (
     <View style={styles.card}>
-      <View style={styles.upperSubCard}>
+      <HStack>
         <Image
           resizeMode="cover"
           source={{
@@ -36,11 +40,11 @@ export default function MovieCard(props: Props) {
           }}
           style={{ aspectRatio: 2 / 3 }}
         />
-        <View style={[styles.UpperSubCardInfo]}>
+        <VStack bg="$mediumBackground" p="$3" space="sm" flex={1}>
           <Text bold color="$primary" size="xs">
             {movie.title}
           </Text>
-          <HStack space="md">
+          <HStack space="md" alignItems="center">
             <Text color="$text" size="xs">
               Drama
             </Text>
@@ -50,9 +54,12 @@ export default function MovieCard(props: Props) {
             <Text color="$text" size="xs">
               {movie.runtime} min
             </Text>
-            <Text color="$text" size="xs">
-              {brNumber(movie.vote_average, 3)}
-            </Text>
+            <HStack space="xs" alignItems="center">
+              <Entypo name="star" size={16} color={textColor} />
+              <Text color="$text" size="xs">
+                {brNumber(movie.vote_average, 3)}
+              </Text>
+            </HStack>
           </HStack>
           <HStack space="xs">
             <Avatar size="xs">
@@ -72,8 +79,8 @@ export default function MovieCard(props: Props) {
               />
             </Avatar>
           </HStack>
-        </View>
-      </View>
+        </VStack>
+      </HStack>
       <View style={styles.bottomSubCard}>
         <Image
           source={require("../assets/images/favicon.png")}
@@ -105,15 +112,6 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderRadius: 16,
     margin: 16,
-  },
-  upperSubCard: {
-    flexDirection: "row",
-    alignItems: "stretch",
-  },
-  UpperSubCardInfo: {
-    flex: 1,
-    padding: 12,
-    backgroundColor: "#181818",
   },
   bottomSubCard: {
     backgroundColor: "#202020",

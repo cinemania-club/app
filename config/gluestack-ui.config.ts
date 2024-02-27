@@ -29,7 +29,7 @@ export const gluestackUIConfig = createConfig({
   tokens: {
     colors: {
       // color pallete
-      primary: "#F9284E",
+      primary: "#F2274C",
       text: "#FFFFFF",
       darkBackground: "#000000",
       mediumBackground: "#181818",
