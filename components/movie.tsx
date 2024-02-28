@@ -35,6 +35,7 @@ export default function MovieCard(props: Props) {
       <HStack>
         <Image
           resizeMode="cover"
+          height={128}
           source={{
             uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
           }}
