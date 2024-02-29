@@ -1,4 +1,4 @@
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, Fontisto, MaterialIcons } from "@expo/vector-icons";
 import {
   Avatar,
   AvatarFallbackText,
@@ -29,6 +29,7 @@ type Props = {
 export default function MovieCard(props: Props) {
   const movie = props.movieData;
   const textColor = gluestackUIConfig.tokens.colors.text;
+  const primaryColor = gluestackUIConfig.tokens.colors.primary
 
   return (
     <View style={styles.card}>
@@ -82,28 +83,12 @@ export default function MovieCard(props: Props) {
           </HStack>
         </VStack>
       </HStack>
-      <View style={styles.bottomSubCard}>
-        <Image
-          source={require("../assets/images/favicon.png")}
-          style={styles.bottomSubCardIcons}
-        />
-        <Image
-          source={require("../assets/images/favicon.png")}
-          style={styles.bottomSubCardIcons}
-        />
-        <Image
-          source={require("../assets/images/favicon.png")}
-          style={styles.bottomSubCardIcons}
-        />
-        <Image
-          source={require("../assets/images/favicon.png")}
-          style={styles.bottomSubCardIcons}
-        />
-        <Image
-          source={require("../assets/images/favicon.png")}
-          style={styles.bottomSubCardIcons}
-        />
-      </View>
+      <HStack bg="$lightBackground" p="$4" justifyContent="center" space="4xl">
+        <Entypo name="star-outlined" size={24} color={primaryColor} />
+        <Fontisto name="favorite" size={24} color={primaryColor} />
+        <MaterialIcons name="keyboard-arrow-down" size={24} color={primaryColor} />
+        <MaterialIcons name="info-outline" size={24} color={primaryColor} />
+      </HStack>
     </View>
   );
 }
@@ -112,18 +97,6 @@ const styles = StyleSheet.create({
   card: {
     overflow: "hidden",
     borderRadius: 16,
-    margin: 16,
-  },
-  bottomSubCard: {
-    backgroundColor: "#202020",
-    height: 64,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  bottomSubCardIcons: {
-    width: 32,
-    height: 32,
     margin: 16,
   },
 });
