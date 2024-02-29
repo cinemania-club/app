@@ -8,7 +8,7 @@ import {
   VStack,
 } from "@gluestack-ui/themed";
 import { getYear } from "date-fns";
-import { Image, StyleSheet, View } from "react-native";
+import { Image } from "react-native";
 
 import { brNumber } from "../app/util";
 import { gluestackUIConfig } from "../config/gluestack-ui.config";
@@ -29,10 +29,10 @@ type Props = {
 export default function MovieCard(props: Props) {
   const movie = props.movieData;
   const textColor = gluestackUIConfig.tokens.colors.text;
-  const primaryColor = gluestackUIConfig.tokens.colors.primary
+  const primaryColor = gluestackUIConfig.tokens.colors.primary;
 
   return (
-    <View style={styles.card}>
+    <VStack overflow="hidden" rounded="$md">
       <HStack>
         <Image
           resizeMode="cover"
@@ -86,17 +86,13 @@ export default function MovieCard(props: Props) {
       <HStack bg="$lightBackground" p="$4" justifyContent="center" space="4xl">
         <Entypo name="star-outlined" size={24} color={primaryColor} />
         <Fontisto name="favorite" size={24} color={primaryColor} />
-        <MaterialIcons name="keyboard-arrow-down" size={24} color={primaryColor} />
+        <MaterialIcons
+          name="keyboard-arrow-down"
+          size={24}
+          color={primaryColor}
+        />
         <MaterialIcons name="info-outline" size={24} color={primaryColor} />
       </HStack>
-    </View>
+    </VStack>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    overflow: "hidden",
-    borderRadius: 16,
-    margin: 16,
-  },
-});

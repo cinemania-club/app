@@ -1,6 +1,7 @@
+import { Text, VStack } from "@gluestack-ui/themed";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 import MovieCard, { Movie } from "../../components/movie";
 
@@ -21,15 +22,19 @@ export default function Home() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.headTitle}>
-        Listando <Text style={styles.movieCount}>{movies.length}</Text> itens
+    <VStack bg="$darkBackground" flex={1} p="$4" space="lg">
+      <Text color="$text" size="md" my="$2">
+        Listando{" "}
+        <Text bold color="$primary">
+          {movies.length}
+        </Text>{" "}
+        itens
       </Text>
 
       {movies.map((movie) => (
         <MovieCard key={movie._id} movieData={movie} />
       ))}
-    </View>
+    </VStack>
   );
 
   async function getMovies() {
@@ -49,13 +54,5 @@ const styles = StyleSheet.create({
   },
   center: {
     justifyContent: "center",
-  },
-  headTitle: {
-    textAlign: "center",
-    color: "white",
-    margin: 30,
-  },
-  movieCount: {
-    color: "#F9284E",
   },
 });
