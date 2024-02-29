@@ -1,7 +1,6 @@
-import { Text, VStack } from "@gluestack-ui/themed";
+import { Center, Spinner, Text, VStack } from "@gluestack-ui/themed";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 import MovieCard, { Movie } from "../../components/movie";
 
@@ -15,9 +14,9 @@ export default function Home() {
 
   if (loading) {
     return (
-      <View style={[styles.container, styles.center]}>
-        <ActivityIndicator color="#F9284E" size="large" />
-      </View>
+      <Center bg="$darkBackground" flex={1}>
+        <Spinner color="$primary" size="large" />
+      </Center>
     );
   }
 
@@ -46,13 +45,3 @@ export default function Home() {
     setLoading(false);
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#000000",
-    flex: 1,
-  },
-  center: {
-    justifyContent: "center",
-  },
-});
