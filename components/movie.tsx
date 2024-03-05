@@ -41,6 +41,7 @@ export default function MovieCard(props: Props) {
             uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
           }}
           style={{ aspectRatio: 2 / 3 }}
+          alt="Capa do filme"
         />
         <VStack bg="$mediumBackground" p="$3" space="sm" flex={1}>
           <Text bold color="$primary" size="xs">
@@ -70,6 +71,7 @@ export default function MovieCard(props: Props) {
                 source={{
                   uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
                 }}
+                alt="Nome do amigo"
               />
             </Avatar>
             <Avatar size="xs">
@@ -78,6 +80,7 @@ export default function MovieCard(props: Props) {
                 source={{
                   uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
                 }}
+                alt="Nome do amigo"
               />
             </Avatar>
           </HStack>
