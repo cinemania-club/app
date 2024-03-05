@@ -1,8 +1,17 @@
-import { FontAwesome5 } from "@expo/vector-icons";
+import { Entypo, Fontisto, MaterialIcons } from "@expo/vector-icons";
+import {
+  Avatar,
+  AvatarFallbackText,
+  AvatarImage,
+  HStack,
+  Text,
+  VStack,
+} from "@gluestack-ui/themed";
 import { getYear } from "date-fns";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image } from "react-native";
 
 import { brNumber } from "../app/util";
+import { gluestackUIConfig } from "../config/gluestack-ui.config";
 
 export type Movie = {
   _id: number;
@@ -19,141 +28,74 @@ type Props = {
 
 export default function MovieCard(props: Props) {
   const movie = props.movieData;
+  const textColor = gluestackUIConfig.tokens.colors.text;
+  const primaryColor = gluestackUIConfig.tokens.colors.primary;
 
   return (
-    <View style={styles.card}>
-      <View style={styles.upperSubCard}>
+    <VStack overflow="hidden" rounded="$md">
+      <HStack>
         <Image
+          resizeMode="cover"
+          height={128}
           source={{
             uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
           }}
-          style={styles.upperSubCardPosterImage}
+          style={{ aspectRatio: 2 / 3 }}
+          alt="Capa do filme"
         />
-        <View style={[styles.UpperSubCardInfo]}>
-          <Text style={styles.upperSubCardMovieTitle}>{movie.title}</Text>
-          <View style={[styles.upperSubCardMiddleRow]}>
-            <View style={[styles.upperSubCardEmoji]}>
-              <FontAwesome5
-                name="laugh-squint"
-                size={24}
-                color="white"
-                style={styles.emoji}
+        <VStack bg="$mediumBackground" p="$3" space="sm" flex={1}>
+          <Text bold color="$primary" size="xs">
+            {movie.title}
+          </Text>
+          <HStack space="md" alignItems="center">
+            <Text color="$text" size="xs">
+              Drama
+            </Text>
+            <Text color="$text" size="xs">
+              {getYear(movie.release_date)}
+            </Text>
+            <Text color="$text" size="xs">
+              {movie.runtime} min
+            </Text>
+            <HStack space="xs" alignItems="center">
+              <Entypo name="star" size={16} color={textColor} />
+              <Text color="$text" size="xs">
+                {brNumber(movie.vote_average, 3)}
+              </Text>
+            </HStack>
+          </HStack>
+          <HStack space="xs">
+            <Avatar size="xs">
+              <AvatarFallbackText>F</AvatarFallbackText>
+              <AvatarImage
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
+                }}
+                alt="Nome do amigo"
               />
-              <FontAwesome5
-                name="grin-hearts"
-                size={24}
-                color="white"
-                style={styles.emoji}
+            </Avatar>
+            <Avatar size="xs">
+              <AvatarFallbackText>F</AvatarFallbackText>
+              <AvatarImage
+                source={{
+                  uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
+                }}
+                alt="Nome do amigo"
               />
-              <FontAwesome5 name="surprise" size={24} color="white" />
-            </View>
-            <Text style={styles.text}>{getYear(movie.release_date)}</Text>
-            <Text style={styles.text}>{movie.runtime} min</Text>
-            <Text style={styles.text}>{brNumber(movie.vote_average, 3)}</Text>
-          </View>
-          <View style={styles.profiles}>
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
-              }}
-              style={styles.lowerIconProfile}
-            />
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
-              }}
-              style={styles.lowerIconProfile}
-            />
-          </View>
-        </View>
-      </View>
-      <View style={styles.bottomSubCard}>
-        <Image
-          source={require("../assets/images/favicon.png")}
-          style={styles.bottomSubCardIcons}
+            </Avatar>
+          </HStack>
+        </VStack>
+      </HStack>
+      <HStack bg="$lightBackground" p="$4" justifyContent="center" space="4xl">
+        <Entypo name="star-outlined" size={24} color={primaryColor} />
+        <Fontisto name="favorite" size={24} color={primaryColor} />
+        <MaterialIcons
+          name="keyboard-arrow-down"
+          size={24}
+          color={primaryColor}
         />
-        <Image
-          source={require("../assets/images/favicon.png")}
-          style={styles.bottomSubCardIcons}
-        />
-        <Image
-          source={require("../assets/images/favicon.png")}
-          style={styles.bottomSubCardIcons}
-        />
-        <Image
-          source={require("../assets/images/favicon.png")}
-          style={styles.bottomSubCardIcons}
-        />
-        <Image
-          source={require("../assets/images/favicon.png")}
-          style={styles.bottomSubCardIcons}
-        />
-      </View>
-    </View>
+        <MaterialIcons name="info-outline" size={24} color={primaryColor} />
+      </HStack>
+    </VStack>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    overflow: "hidden",
-    borderRadius: 16,
-    margin: 16,
-  },
-  upperSubCard: {
-    flexDirection: "row",
-    height: 128,
-  },
-  upperSubCardPosterImage: {
-    width: 100,
-    height: 150,
-    resizeMode: "stretch",
-  },
-  UpperSubCardInfo: {
-    flex: 1,
-    padding: 12,
-    backgroundColor: "#181818",
-  },
-  upperSubCardMovieTitle: {
-    color: "white",
-    marginBottom: 16,
-  },
-  upperSubCardMiddleRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    color: "white",
-  },
-  upperSubCardEmoji: {
-    flexDirection: "row",
-  },
-  emoji: {
-    marginRight: 12,
-  },
-  bottomSubCard: {
-    backgroundColor: "#202020",
-    height: 64,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  bottomSubCardIcons: {
-    width: 32,
-    height: 32,
-    margin: 16,
-  },
-  lowerIconProfile: {
-    height: 30,
-    width: 30,
-    borderColor: "#F9284E",
-    borderRadius: 15,
-    borderWidth: 2,
-    marginTop: 12,
-    marginRight: 5,
-  },
-  profiles: {
-    flexDirection: "row",
-  },
-  text: {
-    color: "white",
-  },
-});
