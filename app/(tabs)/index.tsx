@@ -1,4 +1,10 @@
-import { Center, Spinner, Text, VStack } from "@gluestack-ui/themed";
+import {
+  Center,
+  ScrollView,
+  Spinner,
+  Text,
+  VStack,
+} from "@gluestack-ui/themed";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -21,19 +27,21 @@ export default function Home() {
   }
 
   return (
-    <VStack bg="$darkBackground" flex={1} p="$4" space="lg">
-      <Text color="$text" size="md" my="$2">
-        Listando{" "}
-        <Text bold color="$primary">
-          {movies.length}
-        </Text>{" "}
-        itens
-      </Text>
+    <ScrollView>
+      <VStack bg="$darkBackground" flex={1} p="$4" space="lg">
+        <Text color="$text" size="md" my="$2">
+          Listando{" "}
+          <Text bold color="$primary">
+            {movies.length}
+          </Text>{" "}
+          itens
+        </Text>
 
-      {movies.map((movie) => (
-        <MovieCard key={movie._id} movieData={movie} />
-      ))}
-    </VStack>
+        {movies.map((movie) => (
+          <MovieCard key={movie._id} movieData={movie} />
+        ))}
+      </VStack>
+    </ScrollView>
   );
 
   async function getMovies() {
