@@ -3,11 +3,14 @@ import {
   Avatar,
   AvatarFallbackText,
   AvatarImage,
+  Box,
   HStack,
+  Pressable,
   Text,
   VStack,
 } from "@gluestack-ui/themed";
 import { getYear } from "date-fns";
+import React, { useState } from "react";
 import { Image } from "react-native";
 
 import { brNumber } from "../app/util";
@@ -30,6 +33,8 @@ export default function MovieCard(props: Props) {
   const movie = props.movieData;
   const textColor = gluestackUIConfig.tokens.colors.text;
   const primaryColor = gluestackUIConfig.tokens.colors.primary;
+
+  const [showSynopsis, setShowSynopsis] = useState(false);
 
   return (
     <VStack overflow="hidden" rounded="$md">
@@ -86,14 +91,28 @@ export default function MovieCard(props: Props) {
           </HStack>
         </VStack>
       </HStack>
-      <HStack bg="$lightBackground" p="$4" justifyContent="center" space="4xl">
+
+      {showSynopsis && (
+        <Box bg="$lightBackground" p="$4">
+          <Text color="$text" size="sm">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. A earum
+            mollitia, sed minus distinctio maxime similique nihil. Officia,
+            aliquid dolore sequi obcaecati, id, commodi nulla dignissimos libero
+            hic fugiat dolorem!
+          </Text>
+        </Box>
+      )}
+
+      <HStack bg="$lightBackground" p="$3" justifyContent="center" space="4xl">
         <Entypo name="star-outlined" size={24} color={primaryColor} />
         <Fontisto name="favorite" size={24} color={primaryColor} />
-        <MaterialIcons
-          name="keyboard-arrow-down"
-          size={24}
-          color={primaryColor}
-        />
+        <Pressable onPress={() => setShowSynopsis(!showSynopsis)}>
+          <MaterialIcons
+            name={showSynopsis ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+            size={24}
+            color={primaryColor}
+          />
+        </Pressable>
         <MaterialIcons name="info-outline" size={24} color={primaryColor} />
       </HStack>
     </VStack>
