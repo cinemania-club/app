@@ -23,6 +23,7 @@ export type Movie = {
   release_date: number;
   vote_average: number;
   poster_path: string;
+  overview: string;
 };
 
 type Props = {
@@ -95,10 +96,7 @@ export default function MovieCard(props: Props) {
       {showSynopsis && (
         <Box bg="$lightBackground" p="$4">
           <Text color="$text" size="sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. A earum
-            mollitia, sed minus distinctio maxime similique nihil. Officia,
-            aliquid dolore sequi obcaecati, id, commodi nulla dignissimos libero
-            hic fugiat dolorem!
+            {movie.overview}
           </Text>
         </Box>
       )}
