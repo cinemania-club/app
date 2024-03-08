@@ -8,11 +8,14 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 
+import MovieFilters from "../../components/MovieFilters";
 import MovieCard, { Movie } from "../../components/movie";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState<Movie[]>([]);
+  const [checkedDrama, setCheckedDrama] = useState(false);
+  const [checkedAcao, setCheckedAcao] = useState(false);
 
   useEffect(() => {
     getMovies();
@@ -29,6 +32,13 @@ export default function Home() {
   return (
     <ScrollView>
       <VStack bg="$darkBackground" flex={1} p="$4" space="lg">
+        <MovieFilters
+          checkedDrama={checkedDrama}
+          setCheckedDrama={setCheckedDrama}
+          checkedAcao={checkedAcao}
+          setCheckedAcao={setCheckedAcao}
+          getGenre={getMovies}
+        />
         <Text color="$text" size="md" my="$2">
           Listando{" "}
           <Text bold color="$primary">

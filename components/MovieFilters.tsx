@@ -11,14 +11,18 @@ import {
   Text,
   VStack,
 } from "@gluestack-ui/themed";
-import React, { useState } from "react";
+import React from "react";
 
-import { gluestackUIConfig } from "../../config/gluestack-ui.config";
+import { gluestackUIConfig } from "../config/gluestack-ui.config";
 
-export default function Filter() {
+export default function MovieFilters(props: {
+  checkedDrama: boolean;
+  setCheckedDrama: React.Dispatch<React.SetStateAction<boolean>>;
+  checkedAcao: boolean;
+  setCheckedAcao: React.Dispatch<React.SetStateAction<boolean>>;
+  getGenre: () => void;
+}) {
   const primaryColor = gluestackUIConfig.tokens.colors.primary;
-  const [checkedDrama, setCheckedDrama] = useState(false);
-  const [checkedAcao, setCheckedAcao] = useState(false);
 
   return (
     <ScrollView bg="$darkBackground" flex={1} p="$4">
@@ -49,10 +53,10 @@ export default function Filter() {
         <HStack flexWrap="wrap" space="sm">
           <Checkbox
             value="teste"
-            onChange={setCheckedDrama}
+            onChange={props.setCheckedDrama}
             size="md"
             aria-label="teste"
-            isChecked={checkedDrama}
+            isChecked={props.checkedDrama}
           >
             <CheckboxIndicator mr="$2">
               <CheckboxIcon as={CheckIcon} />
@@ -61,10 +65,10 @@ export default function Filter() {
           </Checkbox>
           <Checkbox
             value="teste"
-            onChange={setCheckedAcao}
+            onChange={props.setCheckedAcao}
             size="md"
             aria-label="teste"
-            isChecked={checkedAcao}
+            isChecked={props.checkedAcao}
           >
             <CheckboxIndicator mr="$2">
               <CheckboxIcon as={CheckIcon} />
@@ -74,7 +78,7 @@ export default function Filter() {
         </HStack>
 
         <Pressable
-          onPress={() => console.log("Hello")}
+          onPress={props.getGenre}
           p="$5"
           bg="$primary500"
           $hover-bg="$primary400"
