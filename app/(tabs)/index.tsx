@@ -1,14 +1,11 @@
-import {
-  Center,
-  ScrollView,
-  Spinner,
-  Text,
-  VStack,
-} from "@gluestack-ui/themed";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 
 import MovieCard, { Movie } from "../../components/movie";
+import colors from "../../theme/colors";
+import s from "../../theme/spaces";
+import ss from "../../theme/styles";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -20,27 +17,24 @@ export default function Home() {
 
   if (loading) {
     return (
-      <Center bg="$darkBackground" flex={1}>
-        <Spinner color="$primary" size="large" />
-      </Center>
+      <View style={ss.center}>
+        <ActivityIndicator color={colors.primary} size="large" />
+      </View>
     );
   }
 
   return (
-    <ScrollView>
-      <VStack bg="$darkBackground" flex={1} p="$4" space="lg">
-        <Text color="$text" size="md" my="$2">
-          Listando{" "}
-          <Text bold color="$primary">
-            {movies.length}
-          </Text>{" "}
-          itens
-        </Text>
+    <ScrollView contentContainerStyle={s.p3}>
+      <Text style={[ss.text._, s.my4]}>
+        Ordenamos <Text style={ss.text.strong}>{movies.length}</Text> itens
+        conforme o seu perfil
+      </Text>
 
+      <View style={s.g3}>
         {movies.map((movie) => (
-          <MovieCard key={movie._id} movieData={movie} />
+          <MovieCard key={movie._id} movie={movie} />
         ))}
-      </VStack>
+      </View>
     </ScrollView>
   );
 
