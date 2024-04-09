@@ -4,9 +4,8 @@ import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { brNumber } from "../app/util";
-import colors from "../theme/colors";
-import s from "../theme/spaces";
-import ss from "../theme/styles";
+import { palette } from "../theme/colors";
+import s from "../theme/styles";
 
 export type Movie = {
   _id: number;
@@ -22,8 +21,8 @@ export default function MovieCard(props: { movie: Movie }) {
   const movie = props.movie;
 
   return (
-    <View style={styles.card}>
-      <View style={ss.row}>
+    <View style={[styles.card, s.bgMedium]}>
+      <View style={s.row}>
         <Image
           style={styles.poster}
           source={{
@@ -45,20 +44,20 @@ function MovieInfo(props: { movie: Movie }) {
 
   return (
     <View style={[s.p3, s.g3]}>
-      <Text style={ss.text.strong}>{movie.title}</Text>
+      <Text style={s.textStrong}>{movie.title}</Text>
 
-      <View style={[ss.row, ss.ai.center, s.g4]}>
-        <Text style={ss.text._}>Drama</Text>
-        <Text style={ss.text._}>{getYear(movie.release_date)}</Text>
-        <Text style={ss.text._}>{movie.runtime} min</Text>
+      <View style={[s.row, s.aiCenter, s.g4]}>
+        <Text style={s.text}>Drama</Text>
+        <Text style={s.text}>{getYear(movie.release_date)}</Text>
+        <Text style={s.text}>{movie.runtime} min</Text>
 
-        <View style={[ss.row, ss.ai.center, s.g1]}>
-          <Entypo name="star" size={16} color={colors.text} />
-          <Text style={ss.text._}>{brNumber(movie.vote_average, 3)}</Text>
+        <View style={[s.row, s.aiCenter, s.g1]}>
+          <Entypo name="star" size={16} color={palette.text} />
+          <Text style={s.text}>{brNumber(movie.vote_average, 3)}</Text>
         </View>
       </View>
 
-      <View style={[ss.row, s.g2]}>
+      <View style={[s.row, s.g2]}>
         <Image
           style={styles.avatar}
           source={{
@@ -82,22 +81,22 @@ function MovieActions(props: { movie: Movie }) {
   const [showSynopsis, setShowSynopsis] = useState(false);
 
   return (
-    <View style={styles.actions}>
+    <View style={[s.bgLight]}>
       {showSynopsis && (
-        <Text style={[ss.text._, s.p3]}>{props.movie.overview}</Text>
+        <Text style={[s.text, s.p3]}>{props.movie.overview}</Text>
       )}
 
-      <View style={[ss.row, ss.jc.center, s.p3, s.g4]}>
-        <Entypo name="star-outlined" size={24} color={colors.primary} />
-        <Fontisto name="favorite" size={24} color={colors.primary} />
+      <View style={[s.row, s.jcCenter, s.p3, s.g4]}>
+        <Entypo name="star-outlined" size={24} color={palette.primary} />
+        <Fontisto name="favorite" size={24} color={palette.primary} />
         <Pressable onPress={() => setShowSynopsis(!showSynopsis)}>
           <MaterialIcons
             name={showSynopsis ? "keyboard-arrow-up" : "keyboard-arrow-down"}
             size={24}
-            color={colors.primary}
+            color={palette.primary}
           />
         </Pressable>
-        <MaterialIcons name="info-outline" size={24} color={colors.primary} />
+        <MaterialIcons name="info-outline" size={24} color={palette.primary} />
       </View>
     </View>
   );
@@ -105,7 +104,6 @@ function MovieActions(props: { movie: Movie }) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.bg.medium,
     borderRadius: 8,
     overflow: "hidden",
   },
@@ -118,8 +116,5 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
-  },
-  actions: {
-    backgroundColor: colors.bg.light,
   },
 });

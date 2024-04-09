@@ -1,9 +1,13 @@
-export default {
+export const palette = {
   primary: "#F2274C",
   text: "#FFFFFF",
-  bg: {
-    dark: "#000000",
-    medium: "#181818",
-    light: "#202020",
-  },
+  bgDark: "#000000",
+  bgMedium: "#181818",
+  bgLight: "#202020",
+};
+
+export default {
+  bgDark: { backgroundColor: palette.bgDark },
+  bgMedium: { backgroundColor: palette.bgMedium },
+  bgLight: { backgroundColor: palette.bgLight },
 };

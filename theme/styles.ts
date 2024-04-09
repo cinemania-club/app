@@ -1,27 +1,20 @@
 import { StyleSheet } from "react-native";
 
-import colors from "./colors";
+import colors, { palette } from "./colors";
+import spaces from "./spaces";
 
 const props = StyleSheet.create({
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
   row: { flexDirection: "row" },
+
+  aiCenter: { justifyContent: "center" },
+  jcCenter: { justifyContent: "center" },
 });
 
-const ss = {
-  ...props,
+const components = StyleSheet.create({
+  text: { color: palette.text, fontSize: 12, lineHeight: 18 },
+  textStrong: { color: palette.primary, fontWeight: "bold" },
+});
 
-  jc: StyleSheet.create({
-    center: { justifyContent: "center" },
-  }),
-
-  ai: StyleSheet.create({
-    center: { alignItems: "center" },
-  }),
-
-  text: StyleSheet.create({
-    _: { color: colors.text, fontSize: 12, lineHeight: 18 },
-    strong: { color: colors.primary, fontWeight: "bold" },
-  }),
-};
-
-export default ss;
+const s = { ...colors, ...spaces, ...props, ...components };
+export default s;

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const s = StyleSheet.create({
+export default StyleSheet.create({
   m0: { margin: 1 },
   my0: { marginVertical: 1 },
   mx0: { marginHorizontal: 1 },
@@ -97,5 +97,3 @@ const s = StyleSheet.create({
   pb5: { paddingBottom: 32 },
   g5: { gap: 32 },
 });
-
-export default s;

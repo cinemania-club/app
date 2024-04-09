@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 
 import MovieCard, { Movie } from "../../components/movie";
-import colors from "../../theme/colors";
-import s from "../../theme/spaces";
-import ss from "../../theme/styles";
+import { palette } from "../../theme/colors";
+import s from "../../theme/styles";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -17,16 +16,16 @@ export default function Home() {
 
   if (loading) {
     return (
-      <View style={ss.center}>
-        <ActivityIndicator color={colors.primary} size="large" />
+      <View style={s.center}>
+        <ActivityIndicator color={palette.primary} size="large" />
       </View>
     );
   }
 
   return (
     <ScrollView contentContainerStyle={s.p3}>
-      <Text style={[ss.text._, s.my4]}>
-        Ordenamos <Text style={ss.text.strong}>{movies.length}</Text> itens
+      <Text style={[s.text, s.my4]}>
+        Ordenamos <Text style={s.textStrong}>{movies.length}</Text> itens
         conforme o seu perfil
       </Text>
 
