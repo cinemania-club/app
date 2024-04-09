@@ -16,6 +16,7 @@ export default StyleSheet.create({
   pt0: { paddingTop: 1 },
   pb0: { paddingBottom: 1 },
   g0: { gap: 1 },
+  rounded0: { borderRadius: 1 },
 
   m1: { margin: 2 },
   my1: { marginVertical: 2 },
@@ -32,6 +33,7 @@ export default StyleSheet.create({
   pt1: { paddingTop: 2 },
   pb1: { paddingBottom: 2 },
   g1: { gap: 2 },
+  rounded1: { borderRadius: 2 },
 
   m2: { margin: 4 },
   my2: { marginVertical: 4 },
@@ -48,6 +50,7 @@ export default StyleSheet.create({
   pt2: { paddingTop: 4 },
   pb2: { paddingBottom: 4 },
   g2: { gap: 4 },
+  rounded2: { borderRadius: 4 },
 
   m3: { margin: 8 },
   my3: { marginVertical: 8 },
@@ -64,6 +67,7 @@ export default StyleSheet.create({
   pt3: { paddingTop: 8 },
   pb3: { paddingBottom: 8 },
   g3: { gap: 8 },
+  rounded3: { borderRadius: 5 },
 
   m4: { margin: 16 },
   my4: { marginVertical: 16 },
@@ -80,6 +84,7 @@ export default StyleSheet.create({
   pt4: { paddingTop: 16 },
   pb4: { paddingBottom: 16 },
   g4: { gap: 16 },
+  rounded4: { borderRadius: 16 },
 
   m5: { margin: 32 },
   my5: { marginVertical: 32 },
@@ -96,4 +101,5 @@ export default StyleSheet.create({
   pt5: { paddingTop: 32 },
   pb5: { paddingBottom: 32 },
   g5: { gap: 32 },
+  rounded5: { borderRadius: 32 },
 });

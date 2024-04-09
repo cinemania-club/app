@@ -21,7 +21,7 @@ export default function MovieCard(props: { movie: Movie }) {
   const movie = props.movie;
 
   return (
-    <View style={[styles.card, s.bgMedium]}>
+    <View style={[s.rounded3, s.bgMedium, { overflow: "hidden" }]}>
       <View style={s.row}>
         <Image
           style={styles.poster}
@@ -59,14 +59,14 @@ function MovieInfo(props: { movie: Movie }) {
 
       <View style={[s.row, s.g2]}>
         <Image
-          style={styles.avatar}
+          style={[styles.avatar, s.rounded]}
           source={{
             uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
           }}
           alt="Nome do amigo"
         />
         <Image
-          style={styles.avatar}
+          style={[styles.avatar, s.rounded]}
           source={{
             uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
           }}
@@ -103,10 +103,6 @@ function MovieActions(props: { movie: Movie }) {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    borderRadius: 8,
-    overflow: "hidden",
-  },
   poster: {
     resizeMode: "cover",
     width: 75,
@@ -115,6 +111,5 @@ const styles = StyleSheet.create({
   avatar: {
     width: 20,
     height: 20,
-    borderRadius: 10,
   },
 });

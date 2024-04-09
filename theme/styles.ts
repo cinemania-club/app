@@ -4,6 +4,8 @@ import colors, { palette } from "./colors";
 import spaces from "./spaces";
 
 const props = StyleSheet.create({
+  rounded: { borderRadius: 99999 },
+
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
   row: { flexDirection: "row" },
 
