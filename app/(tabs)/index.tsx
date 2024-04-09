@@ -38,8 +38,17 @@ export default function Home() {
   );
 
   async function getMovies() {
-    const response = await axios.get<Movie[]>(
+    const response = await axios.post<Movie[]>(
       `${process.env.EXPO_PUBLIC_API_URL}/movies`,
+      {
+        minRuntime: 5,
+        maxRuntime: 500,
+        requiredGenres: [],
+        genres: [],
+        minReleaseDate: "1800-07-12T00:00:00.000+00:00",
+        maxReleaseDate: "2100-07-12T00:00:00.000+00:00",
+        orderBy: "RELEASE_DATE_ASC",
+      },
     );
 
     setMovies(response.data);
