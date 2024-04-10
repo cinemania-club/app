@@ -1,13 +1,19 @@
-import { ReactNode, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ReactNode, useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
+import { v4 as uuidv4 } from "uuid";
 
 import { palette } from "../theme/colors";
 import s from "../theme/styles";
 
 export default function Onboarding(props: { children: ReactNode }) {
-  const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string>("");
 
-  if (loading) {
+  useEffect(() => {
+    getUserId();
+  }, []);
+
+  if (!userId) {
     return (
       <View style={s.center}>
         <ActivityIndicator color={palette.primary} size="large" />
@@ -16,4 +22,10 @@ export default function Onboarding(props: { children: ReactNode }) {
   }
 
   return props.children;
+
+  async function getUserId() {
+    const userId: string = (await AsyncStorage.getItem("userId")) || uuidv4();
+    await AsyncStorage.setItem("userId", userId);
+    setUserId(userId);
+  }
 }
