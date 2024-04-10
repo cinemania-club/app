@@ -24,7 +24,7 @@ export default function Onboarding(props: { children: ReactNode }) {
   return props.children;
 
   async function getUserId() {
-    const userId: string = (await AsyncStorage.getItem("userId")) || uuidv4();
+    const userId = (await AsyncStorage.getItem("userId")) || uuidv4();
     await AsyncStorage.setItem("userId", userId);
     setUserId(userId);
   }
