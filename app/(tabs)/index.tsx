@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 
-import MovieCard, { Movie } from "../../components/movie";
+import MovieCard, { Movie } from "../../components/MovieCard";
 import { palette } from "../../theme/colors";
 import s from "../../theme/styles";
 
