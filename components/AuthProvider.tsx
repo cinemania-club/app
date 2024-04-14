@@ -45,7 +45,7 @@ export default function (props: { children: ReactNode }) {
   async function createAnonymousUser() {
     const token = uuidv4();
 
-    await server.post(`/users`, { _id: token });
+    await server.post(`/users`, { uuid: token });
 
     await AsyncStorage.setItem("token", token);
     return token;
