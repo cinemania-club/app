@@ -1,14 +1,16 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 
-import MovieCard, { Movie } from "../../components/movie";
+import MovieCard, { Movie } from "../../components/MovieCard";
+import { useServer } from "../../hooks";
 import { palette } from "../../theme/colors";
 import s from "../../theme/styles";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState<Movie[]>([]);
+
+  const server = useServer();
 
   useEffect(() => {
     getMovies();
@@ -38,18 +40,15 @@ export default function Home() {
   );
 
   async function getMovies() {
-    const response = await axios.post<Movie[]>(
-      `${process.env.EXPO_PUBLIC_API_URL}/movies`,
-      {
-        minRuntime: 5,
-        maxRuntime: 500,
-        requiredGenres: [],
-        genres: [],
-        minReleaseDate: "1800-07-12T00:00:00.000+00:00",
-        maxReleaseDate: "2100-07-12T00:00:00.000+00:00",
-        orderBy: "RELEASE_DATE_ASC",
-      },
-    );
+    const response = await server.post<Movie[]>("/movies", {
+      minRuntime: 5,
+      maxRuntime: 500,
+      requiredGenres: [],
+      genres: [],
+      minReleaseDate: "1800-07-12T00:00:00.000+00:00",
+      maxReleaseDate: "2100-07-12T00:00:00.000+00:00",
+      orderBy: "RELEASE_DATE_ASC",
+    });
 
     setMovies(response.data);
     setLoading(false);
