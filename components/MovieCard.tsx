@@ -1,9 +1,11 @@
-import { Entypo, Fontisto, MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { getYear } from "date-fns";
+import _ from "lodash";
 import React, { useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { brNumber } from "../app/util";
+import { useServer } from "../hooks";
 import { palette } from "../theme/colors";
 import s from "../theme/styles";
 
@@ -17,7 +19,7 @@ export type Movie = {
   overview: string;
 };
 
-export default function MovieCard(props: { movie: Movie }) {
+export default function (props: { movie: Movie }) {
   const movie = props.movie;
 
   return (
@@ -52,7 +54,7 @@ function MovieInfo(props: { movie: Movie }) {
         <Text style={s.text}>{movie.runtime} min</Text>
 
         <View style={[s.row, s.aiCenter, s.g1]}>
-          <Entypo name="star" size={16} color={palette.text} />
+          <MaterialIcons name="star" size={16} color={palette.text} />
           <Text style={s.text}>{brNumber(movie.vote_average, 3)}</Text>
         </View>
       </View>
@@ -81,25 +83,54 @@ function MovieActions(props: { movie: Movie }) {
   const [showSynopsis, setShowSynopsis] = useState(false);
 
   return (
-    <View style={[s.bgLight]}>
-      {showSynopsis && (
-        <Text style={[s.text, s.p3]}>{props.movie.overview}</Text>
-      )}
+    <View style={[s.bgLight, s.p3, s.g3]}>
+      {showSynopsis && <Text style={[s.text]}>{props.movie.overview}</Text>}
 
-      <View style={[s.row, s.jcCenter, s.p3, s.g4]}>
-        <Entypo name="star-outlined" size={24} color={palette.primary} />
-        <Fontisto name="favorite" size={24} color={palette.primary} />
-        <Pressable onPress={() => setShowSynopsis(!showSynopsis)}>
+      <View style={[s.row, s.aiCenter, s.jcBetween, s.g4]}>
+        <MovieVote movie={props.movie} />
+
+        <View style={[s.row, s.aiCenter, s.g4]}>
           <MaterialIcons
-            name={showSynopsis ? "keyboard-arrow-up" : "keyboard-arrow-down"}
-            size={24}
+            name="bookmark-outline"
+            size={20}
             color={palette.primary}
           />
-        </Pressable>
-        <MaterialIcons name="info-outline" size={24} color={palette.primary} />
+
+          <Pressable
+            style={[s.pressable]}
+            onPress={() => setShowSynopsis(!showSynopsis)}
+          >
+            <MaterialIcons
+              name={showSynopsis ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+              size={24}
+              color={palette.primary}
+            />
+          </Pressable>
+        </View>
       </View>
     </View>
   );
+}
+
+function MovieVote(props: { movie: Movie }) {
+  const server = useServer();
+
+  return (
+    <View style={[s.row, s.g4]}>
+      {_.range(1, 6).map((stars) => (
+        <Pressable
+          style={[s.pressable]}
+          onPress={() => vote(props.movie._id, stars)}
+        >
+          <MaterialIcons name="star-border" size={20} color={palette.primary} />
+        </Pressable>
+      ))}
+    </View>
+  );
+
+  function vote(movieId: number, stars: number) {
+    server.post("/movies/vote", { movieId, stars });
+  }
 }
 
 const styles = StyleSheet.create({
