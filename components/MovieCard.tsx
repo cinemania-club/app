@@ -116,6 +116,8 @@ function MovieActions(props: { movie: Movie }) {
 function MovieVote(props: { movie: Movie }) {
   const server = useServer();
 
+  const [userStars, setUserStars] = useState(props.movie.userStars);
+
   return (
     <View style={[s.row, s.g4]}>
       {_.range(1, 6).map((stars) => (
@@ -124,7 +126,7 @@ function MovieVote(props: { movie: Movie }) {
           onPress={() => vote(props.movie._id, stars)}
         >
           <MaterialIcons
-            name={stars <= props.movie.userStars ? "star" : "star-border"}
+            name={stars <= userStars ? "star" : "star-border"}
             size={20}
             color={palette.primary}
           />
@@ -135,6 +137,7 @@ function MovieVote(props: { movie: Movie }) {
 
   function vote(movieId: number, stars: number) {
     server.post("/movies/vote", { movieId, stars });
+    setUserStars(stars);
   }
 }
 
