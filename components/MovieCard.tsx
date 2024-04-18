@@ -122,7 +122,11 @@ function MovieVote(props: { movie: Movie }) {
           style={[s.pressable]}
           onPress={() => vote(props.movie._id, stars)}
         >
-          <MaterialIcons name="star-border" size={20} color={palette.primary} />
+          <MaterialIcons
+            name={stars <= 2 ? "star" : "star-border"}
+            size={20}
+            color={palette.primary}
+          />
         </Pressable>
       ))}
     </View>
