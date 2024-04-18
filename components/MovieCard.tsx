@@ -17,6 +17,7 @@ export type Movie = {
   vote_average: number;
   poster_path: string;
   overview: string;
+  userStars: number;
 };
 
 export default function (props: { movie: Movie }) {
@@ -123,7 +124,7 @@ function MovieVote(props: { movie: Movie }) {
           onPress={() => vote(props.movie._id, stars)}
         >
           <MaterialIcons
-            name={stars <= 2 ? "star" : "star-border"}
+            name={stars <= props.movie.userStars ? "star" : "star-border"}
             size={20}
             color={palette.primary}
           />
