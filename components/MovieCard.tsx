@@ -1,11 +1,11 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { getYear } from "date-fns";
 import _ from "lodash";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
+import { MovieContext } from "../app/(tabs)";
 import { brNumber } from "../app/util";
-import { useServer } from "../hooks";
 import { palette } from "../theme/colors";
 import s from "../theme/styles";
 
@@ -20,8 +20,8 @@ export type Movie = {
   userStars: number;
 };
 
-export default function (props: { movie: Movie }) {
-  const movie = props.movie;
+export default function () {
+  const { movie } = useContext(MovieContext)!;
 
   return (
     <View style={[s.rounded3, s.bgMedium, { overflow: "hidden" }]}>
@@ -34,16 +34,16 @@ export default function (props: { movie: Movie }) {
           alt="Capa do filme"
         />
 
-        <MovieInfo movie={movie} />
+        <MovieInfo />
       </View>
 
-      <MovieActions movie={movie} />
+      <MovieActions />
     </View>
   );
 }
 
-function MovieInfo(props: { movie: Movie }) {
-  const movie = props.movie;
+function MovieInfo() {
+  const { movie } = useContext(MovieContext)!;
 
   return (
     <View style={[s.p3, s.g3]}>
@@ -80,15 +80,17 @@ function MovieInfo(props: { movie: Movie }) {
   );
 }
 
-function MovieActions(props: { movie: Movie }) {
+function MovieActions() {
+  const { movie } = useContext(MovieContext)!;
+
   const [showSynopsis, setShowSynopsis] = useState(false);
 
   return (
     <View style={[s.bgLight, s.p3, s.g3]}>
-      {showSynopsis && <Text style={[s.text]}>{props.movie.overview}</Text>}
+      {showSynopsis && <Text style={[s.text]}>{movie.overview}</Text>}
 
       <View style={[s.row, s.aiCenter, s.jcBetween, s.g4]}>
-        <MovieVote movie={props.movie} />
+        <MovieVote />
 
         <View style={[s.row, s.aiCenter, s.g4]}>
           <MaterialIcons
@@ -113,20 +115,19 @@ function MovieActions(props: { movie: Movie }) {
   );
 }
 
-function MovieVote(props: { movie: Movie }) {
-  const server = useServer();
-
-  const [userStars, setUserStars] = useState(props.movie.userStars);
+function MovieVote() {
+  const { movie, vote } = useContext(MovieContext)!;
 
   return (
     <View style={[s.row, s.g4]}>
       {_.range(1, 6).map((stars) => (
         <Pressable
+          key={stars}
           style={[s.pressable]}
-          onPress={() => vote(props.movie._id, stars)}
+          onPress={() => vote(stars)}
         >
           <MaterialIcons
-            name={stars <= userStars ? "star" : "star-border"}
+            name={stars <= movie.userStars ? "star" : "star-border"}
             size={20}
             color={palette.primary}
           />
@@ -134,11 +135,6 @@ function MovieVote(props: { movie: Movie }) {
       ))}
     </View>
   );
-
-  function vote(movieId: number, stars: number) {
-    server.post("/movies/vote", { movieId, stars });
-    setUserStars(stars);
-  }
 }
 
 const styles = StyleSheet.create({
