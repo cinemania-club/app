@@ -4,7 +4,7 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 
-import AuthProvider from "../components/AuthProvider";
+import AuthProvider from "../src/components/AuthProvider";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -12,7 +12,6 @@ export {
 } from "expo-router";
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: "(tabs)",
 };
 

@@ -1,10 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 
-import MovieCard, { Movie } from "../../components/MovieCard";
-import { useServer } from "../../hooks";
-import { palette } from "../../theme/colors";
-import s from "../../theme/styles";
+import MovieCard, { Movie } from "../../src/components/MovieCard";
+import { useServer } from "../../src/hooks";
+import { palette } from "../../src/theme/colors";
+import s from "../../src/theme/styles";
 
 type MoviePayload = {
   movie: Movie;
