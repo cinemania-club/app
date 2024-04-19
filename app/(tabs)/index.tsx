@@ -1,10 +1,17 @@
-import { useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 
 import MovieCard, { Movie } from "../../components/MovieCard";
 import { useServer } from "../../hooks";
 import { palette } from "../../theme/colors";
 import s from "../../theme/styles";
+
+type MoviePayload = {
+  movie: Movie;
+  vote: (stars: number) => void;
+};
+
+export const MovieContext = createContext<MoviePayload | undefined>(undefined);
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -33,7 +40,12 @@ export default function Home() {
 
       <View style={s.g3}>
         {movies.map((movie) => (
-          <MovieCard key={movie._id} movie={movie} />
+          <MovieContext.Provider
+            key={movie._id}
+            value={{ movie, vote: (stars) => voteMovie(movie._id, stars) }}
+          >
+            <MovieCard />
+          </MovieContext.Provider>
         ))}
       </View>
     </ScrollView>
@@ -52,5 +64,15 @@ export default function Home() {
 
     setMovies(response.data);
     setLoading(false);
+  }
+
+  async function voteMovie(movieId: number, stars: number) {
+    server.post("/movies/vote", { movieId, stars });
+
+    const movie = movies.find((movie) => movie._id === movieId);
+    if (!movie) return;
+
+    movie.userStars = stars;
+    setMovies([...movies]);
   }
 }
