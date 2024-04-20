@@ -4,21 +4,10 @@ import _ from "lodash";
 import React, { useContext, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
-import { MovieContext } from "../../app/(tabs)";
-import { palette } from "../theme/colors";
-import s from "../theme/styles";
-import { brNumber } from "../util";
-
-export type Movie = {
-  _id: number;
-  title: string;
-  runtime: number;
-  release_date: number;
-  vote_average: number;
-  poster_path: string;
-  overview: string;
-  userStars: number;
-};
+import { MovieContext } from "../src/contexts";
+import { palette } from "../src/theme/colors";
+import s from "../src/theme/styles";
+import { brNumber } from "../src/util";
 
 export default function () {
   const { movie } = useContext(MovieContext)!;

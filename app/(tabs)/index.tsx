@@ -1,17 +1,12 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 
-import MovieCard, { Movie } from "../../src/components/MovieCard";
+import MovieCard from "../../components/MovieCard";
+import { MovieContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
-
-type MoviePayload = {
-  movie: Movie;
-  vote: (stars: number) => void;
-};
-
-export const MovieContext = createContext<MoviePayload | undefined>(undefined);
+import { Movie } from "../../src/types";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);

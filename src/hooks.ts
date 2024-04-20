@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext } from "react";
 
-import { AuthContext } from "../components/AuthProvider";
+import { AuthContext } from "./contexts";
 
 export function useServer() {
   const token = useContext(AuthContext);

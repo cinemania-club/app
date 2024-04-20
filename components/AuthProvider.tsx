@@ -1,13 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { createContext, ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { v4 as uuidv4 } from "uuid";
 
-import { useServer } from "../hooks";
-import { palette } from "../theme/colors";
-import s from "../theme/styles";
-
-export const AuthContext = createContext("");
+import { AuthContext } from "../src/contexts";
+import { useServer } from "../src/hooks";
+import { palette } from "../src/theme/colors";
+import s from "../src/theme/styles";
 
 export default function (props: { children: ReactNode }) {
   const [token, setToken] = useState<string>("");
