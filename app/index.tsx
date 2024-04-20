@@ -8,12 +8,13 @@ import {
   View,
 } from "react-native";
 
-import MovieCard from "../../components/MovieCard";
-import { MovieContext } from "../../src/contexts";
-import { useServer } from "../../src/hooks";
-import { palette } from "../../src/theme/colors";
-import s from "../../src/theme/styles";
-import { Movie } from "../../src/types";
+import DrawerFrame from "../components/DrawerFrame";
+import MovieCard from "../components/MovieCard";
+import { MovieContext } from "../src/contexts";
+import { useServer } from "../src/hooks";
+import { palette } from "../src/theme/colors";
+import s from "../src/theme/styles";
+import { Movie } from "../src/types";
 
 type MoviesResponse = {
   onboarding: Onboarding;
@@ -25,7 +26,7 @@ type Onboarding = {
   target: number;
 } | null;
 
-export default function Home() {
+export default function Lista() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [onboarding, setOnboarding] = useState<Onboarding>(null);
@@ -45,25 +46,27 @@ export default function Home() {
   }
 
   return (
-    <FlatList
-      style={[s.flex1, s.p3]}
-      contentContainerStyle={s.g3}
-      data={movies}
-      stickyHeaderIndices={onboarding ? [0] : undefined}
-      keyExtractor={(item) => item._id.toString()}
-      onEndReached={() => loadMovies()}
-      ListHeaderComponent={() => (
-        <Header itemsCount={movies.length} onboarding={onboarding} />
-      )}
-      renderItem={({ item: movie }) => (
-        <MovieContext.Provider
-          key={movie._id}
-          value={{ movie, vote: (stars) => voteMovie(movie._id, stars) }}
-        >
-          <MovieCard />
-        </MovieContext.Provider>
-      )}
-    />
+    <DrawerFrame title="Lista">
+      <FlatList
+        style={[s.flex1, s.p3]}
+        contentContainerStyle={s.g3}
+        data={movies}
+        stickyHeaderIndices={onboarding ? [0] : undefined}
+        keyExtractor={(item) => item._id.toString()}
+        onEndReached={() => loadMovies()}
+        ListHeaderComponent={() => (
+          <Header itemsCount={movies.length} onboarding={onboarding} />
+        )}
+        renderItem={({ item: movie }) => (
+          <MovieContext.Provider
+            key={movie._id}
+            value={{ movie, vote: (stars) => voteMovie(movie._id, stars) }}
+          >
+            <MovieCard />
+          </MovieContext.Provider>
+        )}
+      />
+    </DrawerFrame>
   );
 
   async function loadMovies() {
