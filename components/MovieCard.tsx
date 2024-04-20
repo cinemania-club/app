@@ -13,7 +13,7 @@ export default function () {
   const { movie } = useContext(MovieContext)!;
 
   return (
-    <View style={[s.rounded3, s.bgMedium, { overflow: "hidden" }]}>
+    <View style={[s.r3, s.bgMedium, { overflow: "hidden" }]}>
       <View style={s.row}>
         <Image
           style={styles.poster}

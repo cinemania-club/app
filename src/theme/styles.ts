@@ -6,6 +6,8 @@ import spaces from "./spaces";
 const props = StyleSheet.create({
   rounded: { borderRadius: 99999 },
 
+  taCenter: { textAlign: "center" },
+
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
   row: { flexDirection: "row" },
 
@@ -19,7 +21,18 @@ const props = StyleSheet.create({
 
 const components = StyleSheet.create({
   text: { color: palette.text, fontSize: 12, lineHeight: 18 },
-  textStrong: { color: palette.primary, fontWeight: "bold" },
+  textBold: {
+    color: palette.text,
+    fontSize: 12,
+    lineHeight: 18,
+    fontWeight: "bold",
+  },
+  textStrong: {
+    color: palette.primary,
+    fontSize: 12,
+    lineHeight: 18,
+    fontWeight: "bold",
+  },
 
   pressable: { padding: 8, margin: -8 },
 });

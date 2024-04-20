@@ -1,3 +1,8 @@
+export type State<T> = {
+  get: T;
+  set: React.Dispatch<React.SetStateAction<T>>;
+};
+
 export type Movie = {
   _id: number;
   title: string;
