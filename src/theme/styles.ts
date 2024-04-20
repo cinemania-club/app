@@ -13,6 +13,8 @@ const props = StyleSheet.create({
 
   jcCenter: { justifyContent: "center" },
   jcBetween: { justifyContent: "space-between" },
+
+  flex1: { flex: 1 },
 });
 
 const components = StyleSheet.create({

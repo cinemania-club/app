@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 
 import MovieCard from "../../components/MovieCard";
 import { MovieContext } from "../../src/contexts";
@@ -15,7 +15,7 @@ export default function Home() {
   const server = useServer();
 
   useEffect(() => {
-    getMovies();
+    loadMovies();
   }, []);
 
   if (loading) {
@@ -27,26 +27,30 @@ export default function Home() {
   }
 
   return (
-    <ScrollView contentContainerStyle={s.p3}>
-      <Text style={[s.text, s.my4]}>
-        Ordenamos <Text style={s.textStrong}>{movies.length}</Text> itens
-        conforme o seu perfil
-      </Text>
-
-      <View style={s.g3}>
-        {movies.map((movie) => (
-          <MovieContext.Provider
-            key={movie._id}
-            value={{ movie, vote: (stars) => voteMovie(movie._id, stars) }}
-          >
-            <MovieCard />
-          </MovieContext.Provider>
-        ))}
-      </View>
-    </ScrollView>
+    <FlatList
+      style={[s.flex1, s.p3]}
+      contentContainerStyle={s.g3}
+      data={movies}
+      keyExtractor={(item) => item._id.toString()}
+      onEndReached={() => loadMovies()}
+      ListHeaderComponent={() => (
+        <Text style={[s.text, s.my4]}>
+          Ordenamos <Text style={s.textStrong}>{movies.length}</Text> itens
+          conforme o seu perfil
+        </Text>
+      )}
+      renderItem={({ item: movie }) => (
+        <MovieContext.Provider
+          key={movie._id}
+          value={{ movie, vote: (stars) => voteMovie(movie._id, stars) }}
+        >
+          <MovieCard />
+        </MovieContext.Provider>
+      )}
+    />
   );
 
-  async function getMovies() {
+  async function loadMovies() {
     const response = await server.post<Movie[]>("/movies", {
       minRuntime: 5,
       maxRuntime: 500,
@@ -55,14 +59,15 @@ export default function Home() {
       minReleaseDate: "1800-07-12T00:00:00.000+00:00",
       maxReleaseDate: "2100-07-12T00:00:00.000+00:00",
       orderBy: "RELEASE_DATE_ASC",
+      skip: movies.map((m) => m._id),
     });
 
-    setMovies(response.data);
+    setMovies([...movies, ...response.data]);
     setLoading(false);
   }
 
   async function voteMovie(movieId: number, vote: number) {
-    const movie = movies.find((movie) => movie._id === movieId);
+    const movie = movies[movieId];
     if (!movie) return;
 
     const stars = movie.userVote === vote ? undefined : vote;
