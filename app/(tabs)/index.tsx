@@ -104,8 +104,6 @@ export default function Home() {
       if (!hadVote && hasVote) increment++;
       if (hadVote && !hasVote) increment--;
 
-      console.log(stars, hadVote, hasVote, increment);
-
       const votes = onboarding.votes + increment;
       setOnboarding({ ...onboarding, votes });
     }
