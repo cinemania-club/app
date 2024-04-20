@@ -1,3 +1,5 @@
+import "react-native-get-random-values";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ReactNode, useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
