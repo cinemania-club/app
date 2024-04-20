@@ -61,13 +61,14 @@ export default function Home() {
     setLoading(false);
   }
 
-  async function voteMovie(movieId: number, stars: number) {
-    server.post("/movies/vote", { movieId, stars });
-
+  async function voteMovie(movieId: number, vote: number) {
     const movie = movies.find((movie) => movie._id === movieId);
     if (!movie) return;
 
-    movie.userStars = stars;
+    const stars = movie.userVote === vote ? undefined : vote;
+    server.post("/movies/vote", { movieId, stars });
+
+    movie.userVote = stars;
     setMovies([...movies]);
   }
 }

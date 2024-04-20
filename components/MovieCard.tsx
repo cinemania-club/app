@@ -116,7 +116,9 @@ function MovieVote() {
           onPress={() => vote(stars)}
         >
           <MaterialIcons
-            name={stars <= movie.userStars ? "star" : "star-border"}
+            name={
+              movie.userVote && stars <= movie.userVote ? "star" : "star-border"
+            }
             size={20}
             color={palette.primary}
           />

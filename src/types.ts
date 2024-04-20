@@ -6,5 +6,5 @@ export type Movie = {
   vote_average: number;
   poster_path: string;
   overview: string;
-  userStars: number;
+  userVote?: number;
 };
