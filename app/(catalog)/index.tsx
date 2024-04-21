@@ -26,7 +26,7 @@ type Onboarding = {
   target: number;
 } | null;
 
-export default function Lista() {
+export default function () {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState<Movie[]>([]);
   const [onboarding, setOnboarding] = useState<Onboarding>(null);
@@ -46,7 +46,7 @@ export default function Lista() {
   }
 
   return (
-    <DrawerFrame title="Lista">
+    <DrawerFrame title="Catálogo">
       <FlatList
         style={[s.flex1, s.p3]}
         contentContainerStyle={s.g3}

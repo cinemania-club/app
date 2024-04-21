@@ -3,7 +3,7 @@ import { Text } from "react-native";
 import DrawerFrame from "../components/DrawerFrame";
 import s from "../src/theme/styles";
 
-export default function Amigos() {
+export default function () {
   return (
     <DrawerFrame title="Amigos">
       <Text style={s.text}>Amigos</Text>

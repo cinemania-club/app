@@ -15,7 +15,7 @@ export {
 } from "expo-router";
 
 export const unstable_settings = {
-  initialRouteName: "(lista)",
+  initialRouteName: "(catalog)",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -53,8 +53,8 @@ function RootLayoutNav() {
           screenOptions={{ headerShown: false }}
           drawerContent={() => <DrawerContent />}
         >
-          <Drawer.Screen name="(lista)" />
-          <Drawer.Screen name="amigos" />
+          <Drawer.Screen name="(catalog)" />
+          <Drawer.Screen name="friends" />
         </Drawer>
       </AuthProvider>
     </ThemeProvider>
@@ -70,10 +70,10 @@ function DrawerContent() {
 
       <View style={[s.p5, s.g5]}>
         <Link href="/" style={[s.pressable]}>
-          <Text style={[s.textBold]}>Lista</Text>
+          <Text style={[s.textBold]}>Catálogo</Text>
         </Link>
 
-        <Link href="/amigos" style={[s.pressable]}>
+        <Link href="/friends" style={[s.pressable]}>
           <Text style={[s.textBold]}>Amigos</Text>
         </Link>
       </View>

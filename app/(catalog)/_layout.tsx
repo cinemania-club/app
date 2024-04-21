@@ -5,10 +5,11 @@ export const unstable_settings = {
   initialRouteName: "index",
 };
 
-export default function StackTeste() {
+export default function () {
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
+      <Stack.Screen name="search" />
       <Stack.Screen name="[id]" />
     </Stack>
   );

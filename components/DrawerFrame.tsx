@@ -11,6 +11,7 @@ export default function (props: {
   children: ReactNode;
   title: string;
   back?: boolean;
+  noSearch?: boolean;
 }) {
   const nav = useNavigation();
 
@@ -33,9 +34,11 @@ export default function (props: {
           {props.title}
         </Text>
 
-        <Pressable style={s.pressable} onPress={() => {}}>
-          <MaterialIcons name="search" size={28} color={palette.text} />
-        </Pressable>
+        {!props.noSearch && (
+          <Pressable style={s.pressable} onPress={() => router.push("/search")}>
+            <MaterialIcons name="search" size={28} color={palette.text} />
+          </Pressable>
+        )}
       </View>
     </View>
   );
