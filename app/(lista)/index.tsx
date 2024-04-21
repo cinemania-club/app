@@ -8,13 +8,13 @@ import {
   View,
 } from "react-native";
 
-import DrawerFrame from "../components/DrawerFrame";
-import MovieCard from "../components/MovieCard";
-import { MovieContext } from "../src/contexts";
-import { useServer } from "../src/hooks";
-import { palette } from "../src/theme/colors";
-import s from "../src/theme/styles";
-import { Movie } from "../src/types";
+import DrawerFrame from "../../components/DrawerFrame";
+import MovieCard from "../../components/MovieCard";
+import { MovieContext } from "../../src/contexts";
+import { useServer } from "../../src/hooks";
+import { palette } from "../../src/theme/colors";
+import s from "../../src/theme/styles";
+import { Movie } from "../../src/types";
 
 type MoviesResponse = {
   onboarding: Onboarding;
@@ -123,7 +123,7 @@ function Header(props: { itemsCount: number; onboarding: Onboarding }) {
           </Text>{" "}
           Quanto mais itens avaliar, melhores recomendações vai receber. Você já
           avaliou <Text style={[s.textStrong]}>{props.onboarding.votes}</Text>{" "}
-          filmes.
+          {props.onboarding.votes === 1 ? "filme" : "filmes"}.
         </Text>
 
         {props.onboarding.votes >= props.onboarding.target && (

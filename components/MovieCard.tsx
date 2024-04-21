@@ -1,5 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { getYear } from "date-fns";
+import { router } from "expo-router";
 import _ from "lodash";
 import React, { useContext, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
@@ -13,21 +14,23 @@ export default function () {
   const { movie } = useContext(MovieContext)!;
 
   return (
-    <View style={[s.r3, s.bgMedium, { overflow: "hidden" }]}>
-      <View style={s.row}>
-        <Image
-          style={styles.poster}
-          source={{
-            uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
-          }}
-          alt="Capa do filme"
-        />
+    <Pressable onPress={() => router.push(`/${movie._id}`)}>
+      <View style={[s.r3, s.bgMedium, { overflow: "hidden" }]}>
+        <View style={s.row}>
+          <Image
+            style={styles.poster}
+            source={{
+              uri: `https://image.tmdb.org/t/p/w185${movie.poster_path}`,
+            }}
+            alt="Capa do filme"
+          />
 
-        <MovieInfo />
+          <MovieInfo />
+        </View>
+
+        <MovieActions />
       </View>
-
-      <MovieActions />
-    </View>
+    </Pressable>
   );
 }
 
