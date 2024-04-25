@@ -66,6 +66,24 @@ export default function () {
           </MovieContext.Provider>
         )}
       />
+      <View
+        style={[
+          {
+            backgroundColor: "rgba(0,0,0,0.8)",
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+          },
+          s.jcEnd,
+          s.aiEnd,
+        ]}
+      >
+        <Pressable
+          style={[{ width: 48, height: 48 }, s.rounded, s.bgAccent, s.m4]}
+        />
+      </View>
     </DrawerFrame>
   );
 

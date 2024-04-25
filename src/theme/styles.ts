@@ -12,9 +12,11 @@ const props = StyleSheet.create({
   row: { flexDirection: "row" },
 
   aiCenter: { alignItems: "center" },
+  aiEnd: { alignItems: "flex-end" },
 
   jcCenter: { justifyContent: "center" },
   jcBetween: { justifyContent: "space-between" },
+  jcEnd: { justifyContent: "flex-end" },
 
   flex1: { flex: 1 },
 });
