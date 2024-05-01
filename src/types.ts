@@ -15,7 +15,7 @@ export type Movie = {
 };
 
 export type MovieDetails = {
-  id: number;
+  _id: number;
   title: string;
   backdrop_path: string;
   genres: string[];
