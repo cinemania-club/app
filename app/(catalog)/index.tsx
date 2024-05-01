@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -9,7 +9,9 @@ import {
 } from "react-native";
 
 import DrawerFrame from "../../components/DrawerFrame";
+import FloatingActionButton from "../../components/FloatingActionButton";
 import MovieCard from "../../components/MovieCard";
+import Overlay from "../../components/Overlay";
 import { MovieContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
@@ -66,24 +68,9 @@ export default function () {
           </MovieContext.Provider>
         )}
       />
-      <View
-        style={[
-          {
-            backgroundColor: "rgba(0,0,0,0.8)",
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-          },
-          s.jcEnd,
-          s.aiEnd,
-        ]}
-      >
-        <Pressable
-          style={[{ width: 48, height: 48 }, s.rounded, s.bgAccent, s.m4]}
-        />
-      </View>
+      <Overlay>
+        <FloatingActionButton icons={["reload", "filter", "remove-red-eye"]} />
+      </Overlay>
     </DrawerFrame>
   );
 
