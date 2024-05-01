@@ -16,9 +16,10 @@ import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
 import { Movie } from "../../src/types";
 
-type MoviesResponse = {
+type CatalogResponse = {
   onboarding: Onboarding;
-  movies: Movie[];
+  total: number;
+  items: Movie[];
 };
 
 type Onboarding = {
@@ -28,7 +29,8 @@ type Onboarding = {
 
 export default function () {
   const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [total, setTotal] = useState(0);
+  const [items, setItems] = useState<Movie[]>([]);
   const [onboarding, setOnboarding] = useState<Onboarding>(null);
 
   const server = useServer();
@@ -50,17 +52,17 @@ export default function () {
       <FlatList
         style={[s.flex1, s.p3]}
         contentContainerStyle={s.g3}
-        data={movies}
+        data={items}
         stickyHeaderIndices={onboarding ? [0] : undefined}
         keyExtractor={(item) => item._id.toString()}
         onEndReached={() => loadMovies()}
         ListHeaderComponent={() => (
-          <Header itemsCount={movies.length} onboarding={onboarding} />
+          <Header total={total} onboarding={onboarding} />
         )}
-        renderItem={({ item: movie }) => (
+        renderItem={({ item }) => (
           <MovieContext.Provider
-            key={movie._id}
-            value={{ movie, vote: (stars) => voteMovie(movie._id, stars) }}
+            key={item._id}
+            value={{ movie: item, vote: (stars) => rateItem(item._id, stars) }}
           >
             <MovieCard />
           </MovieContext.Provider>
@@ -70,26 +72,20 @@ export default function () {
   );
 
   async function loadMovies() {
-    const response = await server.post<MoviesResponse>("/movies", {
-      minRuntime: 5,
-      maxRuntime: 500,
-      requiredGenres: [],
-      genres: [],
-      minReleaseDate: "1800-07-12T00:00:00.000+00:00",
-      maxReleaseDate: "2100-07-12T00:00:00.000+00:00",
-      orderBy: "RELEASE_DATE_ASC",
-      skip: movies.map((m) => m._id),
+    const response = await server.post<CatalogResponse>("/movies", {
+      skip: items.map((item) => item._id),
     });
 
     const data = response.data;
 
-    setMovies([...movies, ...data.movies]);
+    setTotal(data.total);
+    setItems([...items, ...data.items]);
     setOnboarding(data.onboarding);
     setLoading(false);
   }
 
-  async function voteMovie(movieId: number, vote: number) {
-    const movie = movies.find((movie) => movie._id === movieId);
+  async function rateItem(movieId: number, vote: number) {
+    const movie = items.find((item) => item._id === movieId);
     if (!movie) return;
 
     const hadVote = !!movie.userVote;
@@ -100,7 +96,7 @@ export default function () {
     server.post("/movies/vote", { movieId, stars });
 
     movie.userVote = stars;
-    setMovies([...movies]);
+    setItems([...items]);
 
     if (!_.isNull(onboarding)) {
       let increment = 0;
@@ -113,7 +109,7 @@ export default function () {
   }
 }
 
-function Header(props: { itemsCount: number; onboarding: Onboarding }) {
+function Header(props: { total: number; onboarding: Onboarding }) {
   if (props.onboarding) {
     return (
       <View style={[s.bgMedium, s.borderPrimary, s.b0, s.r3, s.my3, s.p3]}>
@@ -139,8 +135,8 @@ function Header(props: { itemsCount: number; onboarding: Onboarding }) {
 
   return (
     <Text style={[s.text, s.my3]}>
-      Ordenamos <Text style={s.textStrong}>{props.itemsCount}</Text> itens
-      conforme o seu perfil
+      Ordenamos <Text style={s.textStrong}>{props.total}</Text>{" "}
+      {props.total === 1 ? "item" : "itens"} conforme o seu perfil
     </Text>
   );
 }
