@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import _ from "lodash";
 import { useEffect, useState } from "react";
 import {
@@ -69,7 +70,25 @@ export default function () {
         )}
       />
       <Overlay>
-        <FloatingActionButton icons={["reload", "filter", "remove-red-eye"]} />
+        <FloatingActionButton
+          icons={[
+            <MaterialCommunityIcons
+              name="reload"
+              size={14}
+              color={palette.text}
+            />,
+            <MaterialCommunityIcons
+              name="filter"
+              size={14}
+              color={palette.text}
+            />,
+            <MaterialIcons
+              name="remove-red-eye"
+              size={14}
+              color={palette.text}
+            />,
+          ]}
+        />
       </Overlay>
     </DrawerFrame>
   );
