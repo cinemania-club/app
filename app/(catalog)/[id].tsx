@@ -10,24 +10,24 @@ import DrawerFrame from "../../components/DrawerFrame";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
-import { MovieDetails } from "../../src/types";
+import { ItemDetailsData } from "../../src/types";
 
-type MovieDetailsResponse = {
-  movie: MovieDetails;
+type ItemDetailsResponse = {
+  item: ItemDetailsData;
 };
 
 export default function () {
   const { id } = useLocalSearchParams();
 
-  const [movie, setMovie] = useState<MovieDetails>();
+  const [item, setItem] = useState<ItemDetailsData>();
 
   const server = useServer();
 
   useEffect(() => {
-    getMovieDetails();
+    getItemDetails();
   }, []);
 
-  if (!movie) {
+  if (!item) {
     return (
       <View style={s.center}>
         <ActivityIndicator color={palette.primary} size="large" />
@@ -35,13 +35,13 @@ export default function () {
     );
   }
 
-  const genres = movie.genres.join("/");
+  const genres = item.genres.join("/");
 
   return (
-    <DrawerFrame title={movie.title} back>
+    <DrawerFrame title={item.title} back>
       <ImageBackground
         source={{
-          uri: `https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`,
+          uri: `https://image.tmdb.org/t/p/w1280${item.backdropPath}`,
         }}
         resizeMode="cover"
       >
@@ -49,27 +49,31 @@ export default function () {
           colors={["#454545c0", "#000000ff"]}
           style={[s.p5, s.g3]}
         >
-          <Text style={[s.textStrong, { fontSize: 14 }]}>{movie.title}</Text>
+          <Text style={[s.textStrong, { fontSize: 14 }]}>{item.title}</Text>
           <Text style={[s.text]}>{genres}</Text>
 
           <View style={[s.row, s.g3]}>
-            <Text style={[s.text]}>{getYear(movie.release_date)}</Text>
-            <Text style={[s.text]}>{movie.runtime} mins</Text>
+            <Text style={[s.text]}>{getYear(item.firstAirDate)}</Text>
+            <Text style={[s.text]}>{item.runtime} mins</Text>
           </View>
 
           <View style={[s.row, s.jcBetween]}>
-            <Vote label="Você:" vote={movie.userVote} color={palette.primary} />
+            <Vote
+              label="Geral:"
+              vote={item.rating.all}
+              color={palette.primary}
+            />
             <Vote label="Amigos:" vote={0} color={palette.text} />
-            <Vote label="Você:" vote={movie.userVote} color={palette.text} />
+            <Vote label="Você:" vote={item.rating.user} color={palette.text} />
           </View>
         </LinearGradient>
       </ImageBackground>
     </DrawerFrame>
   );
 
-  async function getMovieDetails() {
-    const response = await server.get<MovieDetailsResponse>(`/movies/${id}`);
-    setMovie(response.data.movie);
+  async function getItemDetails() {
+    const response = await server.get<ItemDetailsResponse>(`/catalog/${id}`);
+    setItem(response.data.item);
   }
 }
 
