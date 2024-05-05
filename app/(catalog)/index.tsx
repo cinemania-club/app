@@ -23,8 +23,8 @@ type CatalogResponse = {
 };
 
 type Onboarding = {
-  votes: number;
-  target: number;
+  currentRatings: number;
+  targetRatings: number;
 } | null;
 
 export default function () {
@@ -103,8 +103,8 @@ export default function () {
       if (!hadVote && hasVote) increment++;
       if (hadVote && !hasVote) increment--;
 
-      const votes = onboarding.votes + increment;
-      setOnboarding({ ...onboarding, votes });
+      const currentRatings = onboarding.currentRatings + increment;
+      setOnboarding({ ...onboarding, currentRatings });
     }
   }
 }
@@ -115,14 +115,16 @@ function Header(props: { total: number; onboarding: Onboarding }) {
       <View style={[s.bgMedium, s.borderPrimary, s.b0, s.r3, s.my3, s.p3]}>
         <Text style={[s.textBold]}>
           <Text style={[s.textStrong]}>
-            Avalie ao menos {props.onboarding.target} itens que já assistiu.
+            Avalie ao menos {props.onboarding.targetRatings} itens que já
+            assistiu.
           </Text>{" "}
           Quanto mais itens avaliar, melhores recomendações vai receber. Você já
-          avaliou <Text style={[s.textStrong]}>{props.onboarding.votes}</Text>{" "}
-          {props.onboarding.votes === 1 ? "filme" : "filmes"}.
+          avaliou{" "}
+          <Text style={[s.textStrong]}>{props.onboarding.currentRatings}</Text>{" "}
+          {props.onboarding.currentRatings === 1 ? "filme" : "filmes"}.
         </Text>
 
-        {props.onboarding.votes >= props.onboarding.target && (
+        {props.onboarding.currentRatings >= props.onboarding.targetRatings && (
           <Pressable>
             <Text style={[s.textStrong, s.taCenter, s.py4]}>
               VER RECOMENDAÇÕES
