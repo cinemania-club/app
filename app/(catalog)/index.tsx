@@ -26,8 +26,8 @@ type CatalogResponse = {
 };
 
 type Onboarding = {
-  votes: number;
-  target: number;
+  currentRatings: number;
+  targetRatings: number;
 } | null;
 
 export default function () {
@@ -108,27 +108,27 @@ export default function () {
     setLoading(false);
   }
 
-  async function rateItem(itemId: string, vote: number) {
+  async function rateItem(itemId: string, starClicked: number) {
     const item = items.find((item) => item._id === itemId);
     if (!item) return;
 
-    const hadVote = !!item.rating.user;
+    const hadRating = !!item.ratings.user;
 
-    const stars = item.rating.user === vote ? undefined : vote;
-    const hasVote = !!stars;
+    const stars = item.ratings.user === starClicked ? undefined : starClicked;
+    const hasRating = !!stars;
 
     server.post(`/catalog/${itemId}/rate`, { stars });
 
-    item.rating.user = stars;
+    item.ratings.user = stars;
     setItems([...items]);
 
     if (!_.isNull(onboarding)) {
       let increment = 0;
-      if (!hadVote && hasVote) increment++;
-      if (hadVote && !hasVote) increment--;
+      if (!hadRating && hasRating) increment++;
+      if (hadRating && !hasRating) increment--;
 
-      const votes = onboarding.votes + increment;
-      setOnboarding({ ...onboarding, votes });
+      const currentRatings = onboarding.currentRatings + increment;
+      setOnboarding({ ...onboarding, currentRatings });
     }
   }
 }
@@ -139,14 +139,16 @@ function Header(props: { total: number; onboarding: Onboarding }) {
       <View style={[s.bgMedium, s.borderPrimary, s.b0, s.r3, s.my3, s.p3]}>
         <Text style={[s.textBold]}>
           <Text style={[s.textStrong]}>
-            Avalie ao menos {props.onboarding.target} itens que já assistiu.
+            Avalie ao menos {props.onboarding.targetRatings} itens que já
+            assistiu.
           </Text>{" "}
           Quanto mais itens avaliar, melhores recomendações vai receber. Você já
-          avaliou <Text style={[s.textStrong]}>{props.onboarding.votes}</Text>{" "}
-          {props.onboarding.votes === 1 ? "filme" : "filmes"}.
+          avaliou{" "}
+          <Text style={[s.textStrong]}>{props.onboarding.currentRatings}</Text>{" "}
+          {props.onboarding.currentRatings === 1 ? "filme" : "filmes"}.
         </Text>
 
-        {props.onboarding.votes >= props.onboarding.target && (
+        {props.onboarding.currentRatings >= props.onboarding.targetRatings && (
           <Pressable>
             <Text style={[s.textStrong, s.taCenter, s.py4]}>
               VER RECOMENDAÇÕES

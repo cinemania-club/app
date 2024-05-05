@@ -2,7 +2,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { getYear } from "date-fns";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
-import _ from "lodash";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, ImageBackground, Text, View } from "react-native";
 
@@ -11,6 +10,7 @@ import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
 import { ItemDetailsData } from "../../src/types";
+import { brNumber } from "../../src/util";
 
 type ItemDetailsResponse = {
   item: ItemDetailsData;
@@ -58,13 +58,17 @@ export default function () {
           </View>
 
           <View style={[s.row, s.jcBetween]}>
-            <Vote
-              label="Geral:"
-              vote={item.rating.all}
+            <Rating
+              label="Geral"
+              stars={item.ratings.general}
               color={palette.primary}
             />
-            <Vote label="Amigos:" vote={0} color={palette.text} />
-            <Vote label="Você:" vote={item.rating.user} color={palette.text} />
+            <Rating label="Amigos" color={palette.text} />
+            <Rating
+              label="Você"
+              stars={item.ratings.user}
+              color={palette.text}
+            />
           </View>
         </LinearGradient>
       </ImageBackground>
@@ -77,14 +81,14 @@ export default function () {
   }
 }
 
-function Vote(props: { label: string; vote?: number; color: string }) {
-  if (_.isUndefined(props.vote)) return null;
+function Rating(props: { label: string; stars?: number; color: string }) {
+  const stars = props.stars ? brNumber(props.stars, 3) : "-";
 
   return (
     <View style={[s.row, s.aiCenter, s.g1]}>
       <Text style={[s.text, { color: props.color }]}>{props.label}</Text>
       <MaterialIcons name="star" size={16} color={props.color} />
-      <Text style={[s.text, { color: props.color }]}>{props.vote}</Text>
+      <Text style={[s.text, { color: props.color }]}>{stars}</Text>
     </View>
   );
 }

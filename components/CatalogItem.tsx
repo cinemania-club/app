@@ -48,7 +48,7 @@ function ItemInfo() {
 
         <View style={[s.row, s.aiCenter, s.g1]}>
           <MaterialIcons name="star" size={16} color={palette.text} />
-          <Text style={s.text}>{brNumber(item.rating.all, 3)}</Text>
+          <Text style={s.text}>{brNumber(item.ratings.general, 3)}</Text>
         </View>
       </View>
 
@@ -120,7 +120,7 @@ function ItemRating() {
         >
           <MaterialIcons
             name={
-              item.rating.user && stars <= item.rating.user
+              item.ratings.user && stars <= item.ratings.user
                 ? "star"
                 : "star-border"
             }
