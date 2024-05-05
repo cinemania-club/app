@@ -84,14 +84,14 @@ export default function () {
     setLoading(false);
   }
 
-  async function rateItem(itemId: string, vote: number) {
+  async function rateItem(itemId: string, starClicked: number) {
     const item = items.find((item) => item._id === itemId);
     if (!item) return;
 
-    const hadVote = !!item.ratings.user;
+    const hadRating = !!item.ratings.user;
 
-    const stars = item.ratings.user === vote ? undefined : vote;
-    const hasVote = !!stars;
+    const stars = item.ratings.user === starClicked ? undefined : starClicked;
+    const hasRating = !!stars;
 
     server.post(`/catalog/${itemId}/rate`, { stars });
 
@@ -100,8 +100,8 @@ export default function () {
 
     if (!_.isNull(onboarding)) {
       let increment = 0;
-      if (!hadVote && hasVote) increment++;
-      if (hadVote && !hasVote) increment--;
+      if (!hadRating && hasRating) increment++;
+      if (hadRating && !hasRating) increment--;
 
       const currentRatings = onboarding.currentRatings + increment;
       setOnboarding({ ...onboarding, currentRatings });
