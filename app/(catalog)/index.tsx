@@ -88,14 +88,14 @@ export default function () {
     const item = items.find((item) => item._id === itemId);
     if (!item) return;
 
-    const hadVote = !!item.rating.user;
+    const hadVote = !!item.ratings.user;
 
-    const stars = item.rating.user === vote ? undefined : vote;
+    const stars = item.ratings.user === vote ? undefined : vote;
     const hasVote = !!stars;
 
     server.post(`/catalog/${itemId}/rate`, { stars });
 
-    item.rating.user = stars;
+    item.ratings.user = stars;
     setItems([...items]);
 
     if (!_.isNull(onboarding)) {

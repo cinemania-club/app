@@ -60,11 +60,11 @@ export default function () {
           <View style={[s.row, s.jcBetween]}>
             <Vote
               label="Geral:"
-              vote={item.rating.all}
+              vote={item.ratings.general}
               color={palette.primary}
             />
             <Vote label="Amigos:" vote={0} color={palette.text} />
-            <Vote label="Você:" vote={item.rating.user} color={palette.text} />
+            <Vote label="Você:" vote={item.ratings.user} color={palette.text} />
           </View>
         </LinearGradient>
       </ImageBackground>

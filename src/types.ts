@@ -18,7 +18,7 @@ export type CatalogItemData = {
   runtime: number;
   firstAirDate: string;
   lastAirDate: string;
-  rating: Rating;
+  ratings: Rating;
 };
 
 export type ItemDetailsData = {
@@ -31,10 +31,10 @@ export type ItemDetailsData = {
   runtime: number;
   firstAirDate: string;
   lastAirDate: string;
-  rating: Rating;
+  ratings: Rating;
 };
 
 type Rating = {
-  all: number;
+  general: number;
   user?: number;
 };
