@@ -3,25 +3,38 @@ export type State<T> = {
   set: React.Dispatch<React.SetStateAction<T>>;
 };
 
-export type Movie = {
-  _id: number;
+export enum CatalogItemFormat {
+  MOVIE = "MOVIE",
+  SERIES = "SERIES",
+}
+
+export type CatalogItemData = {
+  _id: string;
+  format: CatalogItemFormat;
+  posterPath: string;
   title: string;
-  runtime: number;
-  release_date: string;
-  vote_average: number;
-  poster_path: string;
   overview: string;
-  userVote?: number;
+  genres: number[];
+  runtime: number;
+  firstAirDate: string;
+  lastAirDate: string;
+  rating: Rating;
 };
 
-export type MovieDetails = {
-  _id: number;
+export type ItemDetailsData = {
+  _id: string;
+  format: CatalogItemFormat;
+  backdropPath: string;
   title: string;
-  backdrop_path: string;
-  genres: string[];
-  release_date: string;
-  runtime: number;
   overview: string;
-  scaledVoteAverage: number;
-  userVote?: number;
+  genres: number[];
+  runtime: number;
+  firstAirDate: string;
+  lastAirDate: string;
+  rating: Rating;
+};
+
+type Rating = {
+  all: number;
+  user?: number;
 };

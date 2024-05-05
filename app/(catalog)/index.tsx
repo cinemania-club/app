@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
@@ -8,18 +8,18 @@ import {
   View,
 } from "react-native";
 
+import CatalogItem from "../../components/CatalogItem";
 import DrawerFrame from "../../components/DrawerFrame";
-import MovieCard from "../../components/MovieCard";
-import { MovieContext } from "../../src/contexts";
+import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
-import { Movie } from "../../src/types";
+import { CatalogItemData } from "../../src/types";
 
 type CatalogResponse = {
   onboarding: Onboarding;
   total: number;
-  items: Movie[];
+  items: CatalogItemData[];
 };
 
 type Onboarding = {
@@ -30,13 +30,13 @@ type Onboarding = {
 export default function () {
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
-  const [items, setItems] = useState<Movie[]>([]);
+  const [items, setItems] = useState<CatalogItemData[]>([]);
   const [onboarding, setOnboarding] = useState<Onboarding>(null);
 
   const server = useServer();
 
   useEffect(() => {
-    loadMovies();
+    loadCatalog();
   }, []);
 
   if (loading) {
@@ -55,24 +55,24 @@ export default function () {
         data={items}
         stickyHeaderIndices={onboarding ? [0] : undefined}
         keyExtractor={(item) => item._id.toString()}
-        onEndReached={() => loadMovies()}
+        onEndReached={() => loadCatalog()}
         ListHeaderComponent={() => (
           <Header total={total} onboarding={onboarding} />
         )}
         renderItem={({ item }) => (
-          <MovieContext.Provider
+          <CatalogItemContext.Provider
             key={item._id}
-            value={{ movie: item, vote: (stars) => rateItem(item._id, stars) }}
+            value={{ item, rate: (stars) => rateItem(item._id, stars) }}
           >
-            <MovieCard />
-          </MovieContext.Provider>
+            <CatalogItem />
+          </CatalogItemContext.Provider>
         )}
       />
     </DrawerFrame>
   );
 
-  async function loadMovies() {
-    const response = await server.post<CatalogResponse>("/movies", {
+  async function loadCatalog() {
+    const response = await server.post<CatalogResponse>("/catalog", {
       skip: items.map((item) => item._id),
     });
 
@@ -84,18 +84,18 @@ export default function () {
     setLoading(false);
   }
 
-  async function rateItem(movieId: number, vote: number) {
-    const movie = items.find((item) => item._id === movieId);
-    if (!movie) return;
+  async function rateItem(itemId: string, vote: number) {
+    const item = items.find((item) => item._id === itemId);
+    if (!item) return;
 
-    const hadVote = !!movie.userVote;
+    const hadVote = !!item.rating.user;
 
-    const stars = movie.userVote === vote ? undefined : vote;
+    const stars = item.rating.user === vote ? undefined : vote;
     const hasVote = !!stars;
 
-    server.post("/movies/vote", { movieId, stars });
+    server.post(`/catalog/${itemId}/rate`, { stars });
 
-    movie.userVote = stars;
+    item.rating.user = stars;
     setItems([...items]);
 
     if (!_.isNull(onboarding)) {
