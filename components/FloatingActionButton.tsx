@@ -10,8 +10,12 @@ type Action = { text?: string; icon: ReactNode };
 export default function (props: { actions: Action[] }) {
   const [expanded, setExpanded] = useState(true);
 
-  const topIcons = props.actions.filter((_, index) => index % 2 === 1);
-  const bottomIcons = props.actions.filter((_, index) => index % 2 === 0);
+  const topIcons = props.actions
+    .filter((_, index) => index % 2 === 1)
+    .map((e) => e.icon);
+  const bottomIcons = props.actions
+    .filter((_, index) => index % 2 === 0)
+    .map((e) => e.icon);
 
   if (expanded) {
     return (
@@ -71,8 +75,8 @@ export default function (props: { actions: Action[] }) {
       ]}
       onPress={() => setExpanded(true)}
     >
-      <View style={[s.row, s.g2]}>{topIcons.map((e) => e.icon)}</View>
-      <View style={[s.row, s.g2]}>{bottomIcons.map((e) => e.icon)}</View>
+      <View style={[s.row, s.g2]}>{topIcons}</View>
+      <View style={[s.row, s.g2]}>{bottomIcons}</View>
     </Pressable>
   );
 }
