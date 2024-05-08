@@ -73,7 +73,7 @@ export default function () {
       />
       <Overlay>
         <FloatingActionButton
-          icons={[
+          actions={[
             {
               text: "Atualizar recomendações",
               icon: (

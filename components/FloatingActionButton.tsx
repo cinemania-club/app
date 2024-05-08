@@ -5,18 +5,18 @@ import { Pressable, Text, View } from "react-native";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
-type FloatingActionButton = { text?: string; icon: ReactNode };
+type Action = { text?: string; icon: ReactNode };
 
-export default function (props: { icons: FloatingActionButton[] }) {
+export default function (props: { actions: Action[] }) {
   const [expanded, setExpanded] = useState(true);
 
-  const topIcons = props.icons.filter((_, index) => index % 2 === 1);
-  const bottomIcons = props.icons.filter((_, index) => index % 2 === 0);
+  const topIcons = props.actions.filter((_, index) => index % 2 === 1);
+  const bottomIcons = props.actions.filter((_, index) => index % 2 === 0);
 
   if (expanded) {
     return (
       <View style={[s.g3, s.m4, s.aiEnd]}>
-        {props.icons.map((e) => (
+        {props.actions.map((e) => (
           <View style={[s.row, s.aiCenter, s.g3]}>
             <Text style={s.textBold}>{e.text}</Text>
             <Pressable
