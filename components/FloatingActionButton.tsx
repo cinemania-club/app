@@ -1,9 +1,13 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ReactNode, useState } from "react";
-import { Pressable, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 
+import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
-export default function (props: { icons: ReactNode[] }) {
+type FloatingActionButton = { text?: string; icon: ReactNode };
+
+export default function (props: { icons: FloatingActionButton[] }) {
   const [expanded, setExpanded] = useState(true);
 
   const topIcons = props.icons.filter((_, index) => index % 2 === 1);
@@ -11,20 +15,25 @@ export default function (props: { icons: ReactNode[] }) {
 
   if (expanded) {
     return (
-      <View style={[s.g3, s.m4]}>
-        <Pressable
-          style={[
-            { width: 48, height: 48 },
-            s.rounded,
-            s.bgAccent,
-            s.aiCenter,
-            s.jcCenter,
-            s.g2,
-          ]}
-          onPress={() => {}}
-        >
-          <View style={[s.row, s.g2]}>{topIcons}</View>
-        </Pressable>
+      <View style={[s.g3, s.m4, s.aiEnd]}>
+        {props.icons.map((e) => (
+          <View style={[s.row, s.aiCenter, s.g3]}>
+            <Text style={s.textBold}>{e.text}</Text>
+            <Pressable
+              style={[
+                { width: 48, height: 48 },
+                s.rounded,
+                s.bgAccent,
+                s.aiCenter,
+                s.jcCenter,
+                s.g2,
+              ]}
+              onPress={() => {}}
+            >
+              <View style={[s.row, s.g2]}>{e.icon}</View>
+            </Pressable>
+          </View>
+        ))}
 
         <Pressable
           style={[
@@ -37,35 +46,13 @@ export default function (props: { icons: ReactNode[] }) {
           ]}
           onPress={() => {}}
         >
-          <View style={[s.row, s.g2]}>{topIcons}</View>
-        </Pressable>
-
-        <Pressable
-          style={[
-            { width: 48, height: 48 },
-            s.rounded,
-            s.bgAccent,
-            s.aiCenter,
-            s.jcCenter,
-            s.g2,
-          ]}
-          onPress={() => {}}
-        >
-          <View style={[s.row, s.g2]}>{topIcons}</View>
-        </Pressable>
-
-        <Pressable
-          style={[
-            { width: 48, height: 48 },
-            s.rounded,
-            s.bgAccent,
-            s.aiCenter,
-            s.jcCenter,
-            s.g2,
-          ]}
-          onPress={() => {}}
-        >
-          <View style={[s.row, s.g2]}>{topIcons}</View>
+          <View style={[s.row, s.g2]}>
+            <MaterialCommunityIcons
+              name="window-close"
+              size={30}
+              color={palette.text}
+            />
+          </View>
         </Pressable>
       </View>
     );
@@ -84,8 +71,8 @@ export default function (props: { icons: ReactNode[] }) {
       ]}
       onPress={() => setExpanded(true)}
     >
-      <View style={[s.row, s.g2]}>{topIcons}</View>
-      <View style={[s.row, s.g2]}>{bottomIcons}</View>
+      <View style={[s.row, s.g2]}>{topIcons.map((e) => e.icon)}</View>
+      <View style={[s.row, s.g2]}>{bottomIcons.map((e) => e.icon)}</View>
     </Pressable>
   );
 }

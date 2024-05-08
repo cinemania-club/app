@@ -74,21 +74,36 @@ export default function () {
       <Overlay>
         <FloatingActionButton
           icons={[
-            <MaterialCommunityIcons
-              name="reload"
-              size={14}
-              color={palette.text}
-            />,
-            <MaterialCommunityIcons
-              name="filter"
-              size={14}
-              color={palette.text}
-            />,
-            <MaterialIcons
-              name="remove-red-eye"
-              size={14}
-              color={palette.text}
-            />,
+            {
+              text: "Atualizar recomendações",
+              icon: (
+                <MaterialCommunityIcons
+                  name="reload"
+                  size={14}
+                  color={palette.text}
+                />
+              ),
+            },
+            {
+              text: "Filtrar lista",
+              icon: (
+                <MaterialCommunityIcons
+                  name="filter"
+                  size={14}
+                  color={palette.text}
+                />
+              ),
+            },
+            {
+              text: "Exibir sinopses",
+              icon: (
+                <MaterialIcons
+                  name="remove-red-eye"
+                  size={14}
+                  color={palette.text}
+                />
+              ),
+            },
           ]}
         />
       </Overlay>
