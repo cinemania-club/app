@@ -2,9 +2,9 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ReactNode, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
+import Overlay from "./Overlay";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
-import Overlay from "./Overlay";
 
 type Action = { text?: string; icon: ReactNode };
 
