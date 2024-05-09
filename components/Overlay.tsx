@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
 import { View } from "react-native";
 
-import s from "../src/theme/styles";
-
 export default function (props: { children: ReactNode }) {
   return (
     <View
@@ -15,8 +13,6 @@ export default function (props: { children: ReactNode }) {
           left: 0,
           right: 0,
         },
-        s.jcEnd,
-        s.aiEnd,
       ]}
     >
       {props.children}

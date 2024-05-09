@@ -9,7 +9,7 @@ import s from "../src/theme/styles";
 type Action = { text?: string; icon: ReactNode };
 
 export default function (props: { actions: Action[] }) {
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
 
   const topIcons = props.actions
     .filter((_, index) => index % 2 === 1)
@@ -21,7 +21,7 @@ export default function (props: { actions: Action[] }) {
   if (expanded) {
     return (
       <Overlay>
-        <View style={[s.g3, s.m4, s.aiEnd]}>
+        <View style={[s.g3, s.m4, s.aiEnd, s.jcEnd, s.flex1]}>
           {props.actions.map((e) => (
             <View style={[s.row, s.aiCenter, s.g3]}>
               <Text style={s.textBold}>{e.text}</Text>
@@ -68,7 +68,13 @@ export default function (props: { actions: Action[] }) {
   return (
     <Pressable
       style={[
-        { width: 48, height: 48 },
+        {
+          width: 48,
+          height: 48,
+          position: "absolute",
+          right: 0,
+          bottom: 0,
+        },
         s.rounded,
         s.bgAccent,
         s.m4,
