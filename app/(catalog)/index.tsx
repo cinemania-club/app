@@ -74,6 +74,7 @@ export default function () {
         actions={[
           {
             text: "Atualizar recomendações",
+            action: () => console.log("Atualizar"),
             icon: (
               <MaterialCommunityIcons
                 name="reload"
@@ -84,6 +85,7 @@ export default function () {
           },
           {
             text: "Filtrar lista",
+            action: () => console.log("Filtrar"),
             icon: (
               <MaterialCommunityIcons
                 name="filter"
@@ -94,6 +96,7 @@ export default function () {
           },
           {
             text: "Exibir sinopses",
+            action: () => console.log("Exibir"),
             icon: (
               <MaterialIcons
                 name="remove-red-eye"

@@ -6,7 +6,7 @@ import Overlay from "./Overlay";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
-type Action = { text?: string; icon: ReactNode };
+type Action = { text?: string; action: () => void; icon: ReactNode };
 
 export default function (props: { actions: Action[] }) {
   const [expanded, setExpanded] = useState(false);
@@ -34,7 +34,7 @@ export default function (props: { actions: Action[] }) {
                   s.jcCenter,
                   s.g2,
                 ]}
-                onPress={() => {}}
+                onPress={() => e.action()}
               >
                 <View style={[s.row, s.g2]}>{e.icon}</View>
               </Pressable>
