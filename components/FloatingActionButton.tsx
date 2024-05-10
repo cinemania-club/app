@@ -65,7 +65,9 @@ function Expanded(props: { actions: Action[]; collapse: () => void }) {
 }
 
 function Collapsed(props: { actions: Action[]; expand: () => void }) {
-  const icons = props.actions.map((e) => <Icon icon={e.icon} size={14} />);
+  const icons = props.actions.map((e, index) => (
+    <Icon key={index} icon={e.icon} size={14} />
+  ));
 
   const topIcons = icons.filter((_, index) => index % 2 === 1);
   const bottomIcons = icons.filter((_, index) => index % 2 === 0);
