@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import {
@@ -10,6 +11,7 @@ import {
 
 import CatalogItem from "../../components/CatalogItem";
 import DrawerFrame from "../../components/DrawerFrame";
+import FloatingActionButton from "../../components/FloatingActionButton";
 import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
@@ -67,6 +69,22 @@ export default function () {
             <CatalogItem />
           </CatalogItemContext.Provider>
         )}
+      />
+      <FloatingActionButton
+        actions={[
+          {
+            text: "Atualizar recomendações",
+            icon: <MaterialCommunityIcons name="reload" />,
+          },
+          {
+            text: "Filtrar lista",
+            icon: <MaterialCommunityIcons name="filter" />,
+          },
+          {
+            text: "Exibir sinopses",
+            icon: <MaterialIcons name="remove-red-eye" />,
+          },
+        ]}
       />
     </DrawerFrame>
   );
