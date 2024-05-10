@@ -7,6 +7,8 @@ import { Pressable, Text, View } from "react-native";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
+export const FOOTER_HEIGHT = 60;
+
 export default function (props: {
   children: ReactNode;
   title: string;
@@ -19,7 +21,15 @@ export default function (props: {
     <View style={s.flex1}>
       <View style={s.flex1}>{props.children}</View>
 
-      <View style={[s.bgPrimary, s.row, s.aiCenter, s.px5, { height: 60 }]}>
+      <View
+        style={[
+          s.bgPrimary,
+          s.row,
+          s.aiCenter,
+          s.px5,
+          { height: FOOTER_HEIGHT },
+        ]}
+      >
         {props.back ? (
           <Pressable onPress={() => router.back()}>
             <MaterialIcons name="arrow-back" size={28} color={palette.text} />

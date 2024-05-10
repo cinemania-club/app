@@ -4,6 +4,8 @@ import { Pressable, Text, View } from "react-native";
 
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
+import { FOOTER_HEIGHT } from "./DrawerFrame";
+import Overlay from "./Overlay";
 
 type Action = { text?: string; icon: ReactElement };
 
@@ -19,48 +21,59 @@ export default function (props: { actions: Action[] }) {
 
 function Expanded(props: { actions: Action[]; collapse: () => void }) {
   return (
-    <View style={[s.g3, s.p4, s.aiEnd, s.jcEnd, s.overlay]}>
-      {props.actions.map((e) => (
-        <View style={[s.row, s.aiCenter, s.g3]}>
-          <Text style={s.textBold}>{e.text}</Text>
-          <Pressable
-            style={[
-              { width: 48, height: 48 },
-              s.rounded,
-              s.bgAccent,
-              s.aiCenter,
-              s.jcCenter,
-              s.g2,
-            ]}
-            onPress={() => {}}
-          >
-            <View style={[s.row, s.g2]}>
-              <Icon icon={e.icon} size={28} />
-            </View>
-          </Pressable>
-        </View>
-      ))}
-
-      <Pressable
+    <Overlay>
+      <View
         style={[
-          { width: 48, height: 48 },
-          s.rounded,
-          s.bgAccent,
-          s.aiCenter,
-          s.jcCenter,
-          s.g2,
+          s.flex1,
+          s.g3,
+          s.p4,
+          s.aiEnd,
+          s.jcEnd,
+          { marginBottom: FOOTER_HEIGHT },
         ]}
-        onPress={() => props.collapse()}
       >
-        <View style={[s.row, s.g2]}>
-          <MaterialCommunityIcons
-            name="window-close"
-            size={28}
-            color={palette.text}
-          />
-        </View>
-      </Pressable>
-    </View>
+        {props.actions.map((e) => (
+          <View style={[s.row, s.aiCenter, s.g3]}>
+            <Text style={s.textBold}>{e.text}</Text>
+            <Pressable
+              style={[
+                { width: 48, height: 48 },
+                s.rounded,
+                s.bgAccent,
+                s.aiCenter,
+                s.jcCenter,
+                s.g2,
+              ]}
+              onPress={() => {}}
+            >
+              <View style={[s.row, s.g2]}>
+                <Icon icon={e.icon} size={28} />
+              </View>
+            </Pressable>
+          </View>
+        ))}
+
+        <Pressable
+          style={[
+            { width: 48, height: 48 },
+            s.rounded,
+            s.bgAccent,
+            s.aiCenter,
+            s.jcCenter,
+            s.g2,
+          ]}
+          onPress={() => props.collapse()}
+        >
+          <View style={[s.row, s.g2]}>
+            <MaterialCommunityIcons
+              name="window-close"
+              size={28}
+              color={palette.text}
+            />
+          </View>
+        </Pressable>
+      </View>
+    </Overlay>
   );
 }
 
