@@ -11,12 +11,12 @@ import {
 
 import CatalogItem from "../../components/CatalogItem";
 import DrawerFrame from "../../components/DrawerFrame";
-import FloatingActionButton from "../../components/FloatingActionButton";
 import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
 import { CatalogItemData } from "../../src/types";
+import FloatingActionButton from "../../components/FloatingActionButton";
 
 type CatalogResponse = {
   onboarding: Onboarding;
@@ -74,36 +74,18 @@ export default function () {
         actions={[
           {
             text: "Atualizar recomendações",
+            icon: <MaterialCommunityIcons name="reload" />,
             action: () => console.log("Atualizar"),
-            icon: (
-              <MaterialCommunityIcons
-                name="reload"
-                size={14}
-                color={palette.text}
-              />
-            ),
           },
           {
             text: "Filtrar lista",
+            icon: <MaterialCommunityIcons name="filter" />,
             action: () => console.log("Filtrar"),
-            icon: (
-              <MaterialCommunityIcons
-                name="filter"
-                size={14}
-                color={palette.text}
-              />
-            ),
           },
           {
             text: "Exibir sinopses",
+            icon: <MaterialIcons name="remove-red-eye" />,
             action: () => console.log("Exibir"),
-            icon: (
-              <MaterialIcons
-                name="remove-red-eye"
-                size={14}
-                color={palette.text}
-              />
-            ),
           },
         ]}
       />

@@ -8,6 +8,7 @@ export const palette = {
   bgDark: "#000000",
   bgMedium: "#181818",
   bgLight: "#202020",
+  overlay: "rgba(0,0,0,0.8)",
 };
 
 export default StyleSheet.create({
@@ -16,6 +17,7 @@ export default StyleSheet.create({
   bgDark: { backgroundColor: palette.bgDark },
   bgMedium: { backgroundColor: palette.bgMedium },
   bgLight: { backgroundColor: palette.bgLight },
+  bgOverlay: { backgroundColor: palette.overlay },
 
   borderPrimary: { borderColor: palette.primary },
 });

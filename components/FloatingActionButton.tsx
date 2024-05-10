@@ -1,46 +1,28 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { ReactNode, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
-import Overlay from "./Overlay";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
-type Action = { text?: string; action: () => void; icon: ReactNode };
+type Action = { text?: string; action: () => void; icon: ReactElement };
 
 export default function (props: { actions: Action[] }) {
   const [expanded, setExpanded] = useState(false);
 
-  const topIcons = props.actions
-    .filter((_, index) => index % 2 === 1)
-    .map((e) => e.icon);
-  const bottomIcons = props.actions
-    .filter((_, index) => index % 2 === 0)
-    .map((e) => e.icon);
+  return expanded ? (
+    <Expanded actions={props.actions} collapse={() => setExpanded(false)} />
+  ) : (
+    <Collapsed actions={props.actions} expand={() => setExpanded(true)} />
+  );
+}
 
-  if (expanded) {
-    return (
-      <Overlay>
-        <View style={[s.g3, s.m4, s.aiEnd, s.jcEnd, s.flex1]}>
-          {props.actions.map((e) => (
-            <View style={[s.row, s.aiCenter, s.g3]}>
-              <Text style={s.textBold}>{e.text}</Text>
-              <Pressable
-                style={[
-                  { width: 48, height: 48 },
-                  s.rounded,
-                  s.bgAccent,
-                  s.aiCenter,
-                  s.jcCenter,
-                  s.g2,
-                ]}
-                onPress={() => e.action()}
-              >
-                <View style={[s.row, s.g2]}>{e.icon}</View>
-              </Pressable>
-            </View>
-          ))}
-
+function Expanded(props: { actions: Action[]; collapse: () => void }) {
+  return (
+    <View style={[s.g3, s.p4, s.aiEnd, s.jcEnd, s.overlay]}>
+      {props.actions.map((e) => (
+        <View style={[s.row, s.aiCenter, s.g3]}>
+          <Text style={s.textBold}>{e.text}</Text>
           <Pressable
             style={[
               { width: 48, height: 48 },
@@ -50,20 +32,43 @@ export default function (props: { actions: Action[] }) {
               s.jcCenter,
               s.g2,
             ]}
-            onPress={() => setExpanded(false)}
+            onPress={() => e.action()}
           >
             <View style={[s.row, s.g2]}>
-              <MaterialCommunityIcons
-                name="window-close"
-                size={30}
-                color={palette.text}
-              />
+              <Icon icon={e.icon} size={28} />
             </View>
           </Pressable>
         </View>
-      </Overlay>
-    );
-  }
+      ))}
+
+      <Pressable
+        style={[
+          { width: 48, height: 48 },
+          s.rounded,
+          s.bgAccent,
+          s.aiCenter,
+          s.jcCenter,
+          s.g2,
+        ]}
+        onPress={() => props.collapse()}
+      >
+        <View style={[s.row, s.g2]}>
+          <MaterialCommunityIcons
+            name="window-close"
+            size={28}
+            color={palette.text}
+          />
+        </View>
+      </Pressable>
+    </View>
+  );
+}
+
+function Collapsed(props: { actions: Action[]; expand: () => void }) {
+  const icons = props.actions.map((e) => <Icon icon={e.icon} size={14} />);
+
+  const topIcons = icons.filter((_, index) => index % 2 === 1);
+  const bottomIcons = icons.filter((_, index) => index % 2 === 0);
 
   return (
     <Pressable
@@ -82,10 +87,17 @@ export default function (props: { actions: Action[] }) {
         s.jcCenter,
         s.g2,
       ]}
-      onPress={() => setExpanded(true)}
+      onPress={() => props.expand()}
     >
       <View style={[s.row, s.g2]}>{topIcons}</View>
       <View style={[s.row, s.g2]}>{bottomIcons}</View>
     </Pressable>
   );
+}
+
+function Icon(props: { icon: ReactElement; size: number }) {
+  return React.cloneElement(props.icon, {
+    size: props.size,
+    color: palette.text,
+  });
 }
