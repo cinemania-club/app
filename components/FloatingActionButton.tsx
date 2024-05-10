@@ -1,12 +1,12 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { ReactNode, useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import Overlay from "./Overlay";
 
-type Action = { text?: string; icon: ReactNode };
+type Action = { text?: string; icon: ReactElement };
 
 export default function (props: { actions: Action[] }) {
   const [expanded, setExpanded] = useState(false);
@@ -36,7 +36,9 @@ function Expanded(props: { actions: Action[]; collapse: () => void }) {
               ]}
               onPress={() => {}}
             >
-              <View style={[s.row, s.g2]}>{e.icon}</View>
+              <View style={[s.row, s.g2]}>
+                <Icon icon={e.icon} size={28} />
+              </View>
             </Pressable>
           </View>
         ))}
@@ -55,7 +57,7 @@ function Expanded(props: { actions: Action[]; collapse: () => void }) {
           <View style={[s.row, s.g2]}>
             <MaterialCommunityIcons
               name="window-close"
-              size={30}
+              size={28}
               color={palette.text}
             />
           </View>
@@ -66,12 +68,10 @@ function Expanded(props: { actions: Action[]; collapse: () => void }) {
 }
 
 function Collapsed(props: { actions: Action[]; expand: () => void }) {
-  const topIcons = props.actions
-    .filter((_, index) => index % 2 === 1)
-    .map((e) => e.icon);
-  const bottomIcons = props.actions
-    .filter((_, index) => index % 2 === 0)
-    .map((e) => e.icon);
+  const icons = props.actions.map((e) => <Icon icon={e.icon} size={14} />);
+
+  const topIcons = icons.filter((_, index) => index % 2 === 1);
+  const bottomIcons = icons.filter((_, index) => index % 2 === 0);
 
   return (
     <Pressable
@@ -96,4 +96,11 @@ function Collapsed(props: { actions: Action[]; expand: () => void }) {
       <View style={[s.row, s.g2]}>{bottomIcons}</View>
     </Pressable>
   );
+}
+
+function Icon(props: { icon: ReactElement; size: number }) {
+  return React.cloneElement(props.icon, {
+    size: props.size,
+    color: palette.text,
+  });
 }
