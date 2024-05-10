@@ -6,6 +6,7 @@ import { Drawer } from "expo-router/drawer";
 import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 
+import { SafeAreaView } from "react-native-safe-area-context";
 import AuthProvider from "../components/AuthProvider";
 import s from "../src/theme/styles";
 
@@ -47,17 +48,19 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <ThemeProvider value={DarkTheme}>
-      <AuthProvider>
-        <Drawer
-          screenOptions={{ headerShown: false }}
-          drawerContent={() => <DrawerContent />}
-        >
-          <Drawer.Screen name="(catalog)" />
-          <Drawer.Screen name="friends" />
-        </Drawer>
-      </AuthProvider>
-    </ThemeProvider>
+    <SafeAreaView style={s.flex1}>
+      <ThemeProvider value={DarkTheme}>
+        <AuthProvider>
+          <Drawer
+            screenOptions={{ headerShown: false }}
+            drawerContent={() => <DrawerContent />}
+          >
+            <Drawer.Screen name="(catalog)" />
+            <Drawer.Screen name="friends" />
+          </Drawer>
+        </AuthProvider>
+      </ThemeProvider>
+    </SafeAreaView>
   );
 }
 
