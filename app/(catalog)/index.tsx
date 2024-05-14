@@ -17,6 +17,7 @@ import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
 import { CatalogItemData } from "../../src/types";
 import FloatingActionButton from "../../components/FloatingActionButton";
+import Filter from "../../components/Filter";
 
 type CatalogResponse = {
   onboarding: Onboarding;
@@ -70,6 +71,7 @@ export default function () {
           </CatalogItemContext.Provider>
         )}
       />
+      <Filter />
       <FloatingActionButton
         actions={[
           {
