@@ -44,7 +44,10 @@ function Expanded(props: { actions: Action[]; collapse: () => void }) {
                 s.jcCenter,
                 s.g2,
               ]}
-              onPress={() => e.action()}
+              onPress={() => {
+                e.action();
+                props.collapse();
+              }}
             >
               <View style={[s.row, s.g2]}>
                 <Icon icon={e.icon} size={28} />

@@ -3,9 +3,9 @@ import { Modal, View } from "react-native";
 
 import s from "../src/theme/styles";
 
-export default function () {
+export default function (props: { visible: boolean }) {
   return (
-    <Modal>
+    <Modal visible={props.visible}>
       <View style={[s.bgDark, s.flex1, s.p3]}>
         <View style={[s.bgMedium, s.flex1, s.r4]} />
       </View>
