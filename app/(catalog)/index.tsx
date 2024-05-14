@@ -35,7 +35,7 @@ export default function () {
   const [total, setTotal] = useState(0);
   const [items, setItems] = useState<CatalogItemData[]>([]);
   const [onboarding, setOnboarding] = useState<Onboarding>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   const server = useServer();
 
