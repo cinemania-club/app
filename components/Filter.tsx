@@ -9,7 +9,7 @@ export default function (props: { visible: boolean }) {
   return (
     <Modal visible={props.visible}>
       <View style={[s.bgDark, s.flex1, s.p3]}>
-        <View style={[s.bgMedium, s.flex1, s.r4, s.p4]}>
+        <View style={[s.bgMedium, s.flex1, s.r4, s.p4, s.g4]}>
           <View style={[s.row, s.aiCenter, s.g3]}>
             <MaterialCommunityIcons
               name="filter"
@@ -17,6 +17,18 @@ export default function (props: { visible: boolean }) {
               size={20}
             />
             <Text style={[s.textStrong, { fontSize: 16 }]}>Filtrar Lista</Text>
+          </View>
+
+          <View style={[s.g3]}>
+            <Text style={[s.textStrong]}>Tipo</Text>
+            <View style={[s.row, s.aiCenter, s.g2]}>
+              <MaterialCommunityIcons
+                name="checkbox-blank-outline"
+                color={palette.primary}
+                size={20}
+              />
+              <Text style={[s.text]}>Filme</Text>
+            </View>
           </View>
         </View>
       </View>
