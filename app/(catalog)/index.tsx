@@ -81,7 +81,7 @@ export default function () {
             action: () => console.log("Atualizar"),
           },
           {
-            text: "Filtrar lista",
+            text: "Filtrar catálogo",
             icon: <MaterialCommunityIcons name="filter" />,
             action: () => setVisible(true),
           },
