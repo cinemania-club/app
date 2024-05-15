@@ -21,17 +21,26 @@ export default function (props: { visible: boolean }) {
 
           <View style={[s.g3]}>
             <Text style={[s.textStrong]}>Tipo</Text>
-            <View style={[s.row, s.aiCenter, s.g2]}>
-              <MaterialCommunityIcons
-                name="checkbox-blank-outline"
-                color={palette.primary}
-                size={20}
-              />
-              <Text style={[s.text]}>Filme</Text>
+            <View style={[s.row, s.g5]}>
+              <CheckboxField label="Filme" />
+              <CheckboxField label="Série" />
             </View>
           </View>
         </View>
       </View>
     </Modal>
+  );
+}
+
+function CheckboxField(props: { label: string }) {
+  return (
+    <View style={[s.row, s.aiCenter, s.g2]}>
+      <MaterialCommunityIcons
+        name="checkbox-blank-outline"
+        color={palette.primary}
+        size={20}
+      />
+      <Text style={[s.text]}>{props.label}</Text>
+    </View>
   );
 }
