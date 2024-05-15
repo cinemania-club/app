@@ -72,7 +72,13 @@ export default function () {
           </CatalogItemContext.Provider>
         )}
       />
-      <Filter visible={visible} setVisible={setVisible} />
+      <Filter
+        visible={visible}
+        onFilter={() => {
+          console.log("Filtrou");
+          setVisible(false);
+        }}
+      />
       <FloatingActionButton
         actions={[
           {

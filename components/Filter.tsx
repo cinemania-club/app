@@ -5,10 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
-export default function (props: {
-  visible: boolean;
-  setVisible: (visible: boolean) => void;
-}) {
+export default function (props: { visible: boolean; onFilter: () => void }) {
   return (
     <Modal visible={props.visible}>
       <View style={[s.bgDark, s.flex1, s.p3]}>
@@ -42,7 +39,7 @@ export default function (props: {
               s.p3,
               s.g3,
             ]}
-            onPress={() => props.setVisible(false)}
+            onPress={() => props.onFilter()}
           >
             <MaterialCommunityIcons
               name="filter"
