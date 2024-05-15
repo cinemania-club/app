@@ -72,7 +72,7 @@ export default function () {
           </CatalogItemContext.Provider>
         )}
       />
-      <Filter visible={visible} />
+      <Filter visible={visible} setVisible={setVisible} />
       <FloatingActionButton
         actions={[
           {
