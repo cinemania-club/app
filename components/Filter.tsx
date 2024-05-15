@@ -1,5 +1,5 @@
-import React from "react";
-import { Modal, Text, View } from "react-native";
+import React, { useState } from "react";
+import { Modal, Pressable, Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { palette } from "../src/theme/colors";
@@ -33,13 +33,17 @@ export default function (props: { visible: boolean }) {
 }
 
 function CheckboxField(props: { label: string }) {
+  const [checked, setChecked] = useState(false);
+
   return (
     <View style={[s.row, s.aiCenter, s.g2]}>
-      <MaterialCommunityIcons
-        name="checkbox-blank-outline"
-        color={palette.primary}
-        size={20}
-      />
+      <Pressable onPress={() => setChecked(!checked)}>
+        <MaterialCommunityIcons
+          name={checked ? "checkbox-marked" : "checkbox-blank-outline"}
+          color={palette.primary}
+          size={20}
+        />
+      </Pressable>
       <Text style={[s.text]}>{props.label}</Text>
     </View>
   );
