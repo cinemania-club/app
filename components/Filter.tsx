@@ -5,7 +5,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
-export default function (props: { visible: boolean; onFilter: () => void }) {
+export default function (props: {
+  visible: boolean;
+  onFilter: (movieChecked: boolean, seriesChecked: boolean) => void;
+}) {
+  const [movieChecked, setMovieChecked] = useState(false);
+  const [seriesChecked, setSeriesChecked] = useState(false);
+
   return (
     <Modal visible={props.visible}>
       <View style={[s.bgDark, s.flex1, s.p3]}>
@@ -22,8 +28,16 @@ export default function (props: { visible: boolean; onFilter: () => void }) {
           <View style={[s.g3]}>
             <Text style={[s.textStrong]}>Tipo</Text>
             <View style={[s.row, s.g5]}>
-              <CheckboxField label="Filme" />
-              <CheckboxField label="Série" />
+              <CheckboxField
+                label="Filme"
+                checked={movieChecked}
+                setChecked={setMovieChecked}
+              />
+              <CheckboxField
+                label="Série"
+                checked={seriesChecked}
+                setChecked={setSeriesChecked}
+              />
             </View>
           </View>
         </View>
@@ -39,7 +53,7 @@ export default function (props: { visible: boolean; onFilter: () => void }) {
               s.p3,
               s.g3,
             ]}
-            onPress={() => props.onFilter()}
+            onPress={() => props.onFilter(movieChecked, seriesChecked)}
           >
             <MaterialCommunityIcons
               name="filter"
@@ -54,14 +68,16 @@ export default function (props: { visible: boolean; onFilter: () => void }) {
   );
 }
 
-function CheckboxField(props: { label: string }) {
-  const [checked, setChecked] = useState(false);
-
+function CheckboxField(props: {
+  label: string;
+  checked: boolean;
+  setChecked: (checked: boolean) => void;
+}) {
   return (
     <View style={[s.row, s.aiCenter, s.g2]}>
-      <Pressable onPress={() => setChecked(!checked)}>
+      <Pressable onPress={() => props.setChecked(!props.checked)}>
         <MaterialCommunityIcons
-          name={checked ? "checkbox-marked" : "checkbox-blank-outline"}
+          name={props.checked ? "checkbox-marked" : "checkbox-blank-outline"}
           color={palette.primary}
           size={20}
         />

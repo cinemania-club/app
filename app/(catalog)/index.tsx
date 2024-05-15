@@ -74,8 +74,8 @@ export default function () {
       />
       <Filter
         visible={visible}
-        onFilter={() => {
-          console.log("Filtrou");
+        onFilter={(movieChecked, seriesChecked) => {
+          console.log(movieChecked, seriesChecked);
           setVisible(false);
         }}
       />
