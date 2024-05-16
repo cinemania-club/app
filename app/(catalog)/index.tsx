@@ -36,12 +36,14 @@ export default function () {
   const [items, setItems] = useState<CatalogItemData[]>([]);
   const [onboarding, setOnboarding] = useState<Onboarding>(null);
   const [visible, setVisible] = useState(false);
+  const [movieChecked, setMovieChecked] = useState(true);
+  const [seriesChecked, setSeriesChecked] = useState(false);
 
   const server = useServer();
 
   useEffect(() => {
-    loadCatalog(true, true);
-  }, []);
+    loadCatalog(true);
+  }, [movieChecked, seriesChecked]);
 
   if (loading) {
     return (
@@ -59,7 +61,7 @@ export default function () {
         data={items}
         stickyHeaderIndices={onboarding ? [0] : undefined}
         keyExtractor={(item) => item._id.toString()}
-        // onEndReached={() => loadCatalog()}
+        onEndReached={() => loadCatalog()}
         ListHeaderComponent={() => (
           <Header total={total} onboarding={onboarding} />
         )}
@@ -75,7 +77,8 @@ export default function () {
       <Filter
         visible={visible}
         onFilter={(movieChecked, seriesChecked) => {
-          loadCatalog(movieChecked, seriesChecked, true);
+          setMovieChecked(movieChecked);
+          setSeriesChecked(seriesChecked);
           setVisible(false);
         }}
       />
@@ -101,11 +104,7 @@ export default function () {
     </DrawerFrame>
   );
 
-  async function loadCatalog(
-    movieChecked: boolean,
-    seriesChecked: boolean,
-    clear = false,
-  ) {
+  async function loadCatalog(refresh = false) {
     const formats = [];
     if (movieChecked) formats.push("MOVIE");
     if (seriesChecked) formats.push("SERIES");
@@ -118,7 +117,7 @@ export default function () {
     const data = response.data;
 
     setTotal(data.total);
-    setItems(clear ? data.items : [...items, ...data.items]);
+    setItems(refresh ? data.items : [...items, ...data.items]);
     setOnboarding(data.onboarding);
     setLoading(false);
   }
