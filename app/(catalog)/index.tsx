@@ -11,7 +11,7 @@ import {
 
 import CatalogItem from "../../components/CatalogItem";
 import DrawerFrame from "../../components/DrawerFrame";
-import Filter from "../../components/Filter";
+import Filter, { initialFilters } from "../../components/Filter";
 import FloatingActionButton from "../../components/FloatingActionButton";
 import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
@@ -36,14 +36,13 @@ export default function () {
   const [items, setItems] = useState<CatalogItemData[]>([]);
   const [onboarding, setOnboarding] = useState<Onboarding>(null);
   const [visible, setVisible] = useState(false);
-  const [movieChecked, setMovieChecked] = useState(true);
-  const [seriesChecked, setSeriesChecked] = useState(false);
+  const [filters, setFilters] = useState(initialFilters);
 
   const server = useServer();
 
   useEffect(() => {
     loadCatalog(true);
-  }, [movieChecked, seriesChecked]);
+  }, [filters]);
 
   if (loading) {
     return (
@@ -76,9 +75,8 @@ export default function () {
       />
       <Filter
         visible={visible}
-        onFilter={(movieChecked, seriesChecked) => {
-          setMovieChecked(movieChecked);
-          setSeriesChecked(seriesChecked);
+        onFilter={(filters) => {
+          setFilters(filters);
           setVisible(false);
         }}
       />
@@ -106,8 +104,8 @@ export default function () {
 
   async function loadCatalog(refresh = false) {
     const formats = [];
-    if (movieChecked) formats.push("MOVIE");
-    if (seriesChecked) formats.push("SERIES");
+    if (filters.formats.movie) formats.push("MOVIE");
+    if (filters.formats.series) formats.push("SERIES");
 
     const response = await server.post<CatalogResponse>("/catalog", {
       formats,

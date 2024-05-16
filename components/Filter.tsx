@@ -5,12 +5,13 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
+export const initialFilters = { formats: { movie: true, series: true } };
+
 export default function (props: {
   visible: boolean;
-  onFilter: (movieChecked: boolean, seriesChecked: boolean) => void;
+  onFilter: (filters: typeof initialFilters) => void;
 }) {
-  const [movieChecked, setMovieChecked] = useState(false);
-  const [seriesChecked, setSeriesChecked] = useState(false);
+  const [filters, setFilters] = useState(initialFilters);
 
   return (
     <Modal visible={props.visible}>
@@ -30,13 +31,21 @@ export default function (props: {
             <View style={[s.row, s.g5]}>
               <CheckboxField
                 label="Filme"
-                checked={movieChecked}
-                setChecked={setMovieChecked}
+                checked={filters.formats.movie}
+                setChecked={(checked) =>
+                  setFilters({
+                    formats: { movie: checked, series: filters.formats.series },
+                  })
+                }
               />
               <CheckboxField
                 label="Série"
-                checked={seriesChecked}
-                setChecked={setSeriesChecked}
+                checked={filters.formats.series}
+                setChecked={(checked) =>
+                  setFilters({
+                    formats: { movie: filters.formats.movie, series: checked },
+                  })
+                }
               />
             </View>
           </View>
@@ -53,7 +62,7 @@ export default function (props: {
               s.p3,
               s.g3,
             ]}
-            onPress={() => props.onFilter(movieChecked, seriesChecked)}
+            onPress={() => props.onFilter(filters)}
           >
             <MaterialCommunityIcons
               name="filter"
