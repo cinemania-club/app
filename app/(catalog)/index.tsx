@@ -73,13 +73,7 @@ export default function () {
           </CatalogItemContext.Provider>
         )}
       />
-      <Filter
-        visible={visible}
-        onFilter={(filters) => {
-          setFilters(filters);
-          setVisible(false);
-        }}
-      />
+
       <FloatingActionButton
         actions={[
           {
@@ -99,6 +93,15 @@ export default function () {
           },
         ]}
       />
+
+      {visible && (
+        <Filter
+          onFilter={(filters) => {
+            setFilters(filters);
+            setVisible(false);
+          }}
+        />
+      )}
     </DrawerFrame>
   );
 

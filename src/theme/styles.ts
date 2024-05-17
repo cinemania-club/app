@@ -19,6 +19,8 @@ const props = StyleSheet.create({
   jcEnd: { justifyContent: "flex-end" },
 
   flex1: { flex: 1 },
+
+  absolute: { position: "absolute", top: 0, bottom: 0, left: 0, right: 0 },
 });
 
 const components = StyleSheet.create({
