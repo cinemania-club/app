@@ -8,7 +8,7 @@ export default function (props: { label: string }) {
     <View style={[s.row, s.aiCenter, s.g3]}>
       <MaterialCommunityIcons
         name="checkbox-blank-outline"
-        size={24}
+        size={22}
         color={palette.primary}
       />
       <Text style={[s.text]}>{props.label}</Text>

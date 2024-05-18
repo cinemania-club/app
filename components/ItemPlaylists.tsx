@@ -3,7 +3,7 @@ import s from "../src/theme/styles";
 
 import { palette } from "../src/theme/colors";
 
-import { Ionicons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import React from "react";
 import CheckBox from "./CheckBox";
@@ -17,10 +17,14 @@ export default function () {
           <Text style={[s.textStrong]}>Adicione à playlist</Text>
           <CheckBox label="Assistir mais tarde" />
           <CheckBox label="Arquivados" />
-          <CheckBox label="Filmes para assistir oioioi oioioioioi oioim mozão HHHHHHHHHHHHHHH HHHHHHHHHHHH HHHHHHHH HHHHHHH HHHHHH" />
+          <CheckBox label="Filmes para assistir com mozao" />
           <CheckBox label="Para rir" />
           <View style={[s.row, s.aiCenter, s.g1]}>
-            <Ionicons name="add-sharp" size={30} color={palette.primary} />
+            <MaterialCommunityIcons
+              name="plus"
+              size={24}
+              color={palette.primary}
+            />
             <Text style={[s.textPrimary]}>Nova playlist</Text>
           </View>
           <Text style={[s.textPrimary, s.taCenter, { fontWeight: "bold" }]}>
