@@ -23,6 +23,7 @@ const props = StyleSheet.create({
 
 const components = StyleSheet.create({
   text: { color: palette.text, fontSize: 12, lineHeight: 18 },
+  textPrimary: { color: palette.primary, fontSize: 12, lineHeight: 18 },
   textBold: {
     color: palette.text,
     fontSize: 12,

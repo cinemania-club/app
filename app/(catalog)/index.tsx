@@ -12,6 +12,7 @@ import {
 import CatalogItem from "../../components/CatalogItem";
 import DrawerFrame from "../../components/DrawerFrame";
 import FloatingActionButton from "../../components/FloatingActionButton";
+import ModalAddPlaylist from "../../components/ModalAddPlaylist";
 import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
@@ -86,6 +87,7 @@ export default function () {
           },
         ]}
       />
+      <ModalAddPlaylist />
     </DrawerFrame>
   );
 
