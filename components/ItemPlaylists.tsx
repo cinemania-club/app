@@ -6,7 +6,7 @@ import { palette } from "../src/theme/colors";
 import { Ionicons } from "@expo/vector-icons";
 
 import React from "react";
-import CheckBoxComponent from "./CheckBoxComponent";
+import CheckBox from "./CheckBox";
 import Overlay from "./Overlay";
 
 export default function () {
@@ -14,10 +14,10 @@ export default function () {
     <Overlay>
       <View style={[styles.poster, s.bgLight, s.r4, s.g4, s.p4]}>
         <Text style={[s.textStrong]}>Adicione à playlist</Text>
-        <CheckBoxComponent title="Assistir mais tarde" />
-        <CheckBoxComponent title="Arquivados" />
-        <CheckBoxComponent title="Filmes para assistir com mozão" />
-        <CheckBoxComponent title="Para rir" />
+        <CheckBox title="Assistir mais tarde" />
+        <CheckBox title="Arquivados" />
+        <CheckBox title="Filmes para assistir com mozão" />
+        <CheckBox title="Para rir" />
         <View style={[s.row, s.aiCenter, s.g1]}>
           <Ionicons name="add-sharp" size={30} color={palette.primary} />
           <Text style={[s.textPrimary]}>Nova playlist</Text>
