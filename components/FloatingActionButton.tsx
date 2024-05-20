@@ -7,7 +7,7 @@ import s from "../src/theme/styles";
 import { FOOTER_HEIGHT } from "./DrawerFrame";
 import Overlay from "./Overlay";
 
-type Action = { text?: string; icon: ReactElement };
+type Action = { text?: string; action: () => void; icon: ReactElement };
 
 export default function (props: { actions: Action[] }) {
   const [expanded, setExpanded] = useState(false);
@@ -44,7 +44,10 @@ function Expanded(props: { actions: Action[]; collapse: () => void }) {
                 s.jcCenter,
                 s.g2,
               ]}
-              onPress={() => {}}
+              onPress={() => {
+                e.action();
+                props.collapse();
+              }}
             >
               <View style={[s.row, s.g2]}>
                 <Icon icon={e.icon} size={28} />

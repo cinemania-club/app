@@ -11,8 +11,8 @@ import {
 
 import CatalogItem from "../../components/CatalogItem";
 import DrawerFrame from "../../components/DrawerFrame";
+import Filter from "../../components/Filter";
 import FloatingActionButton from "../../components/FloatingActionButton";
-import ItemPlaylists from "../../components/ItemPlaylists";
 import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
@@ -30,17 +30,23 @@ type Onboarding = {
   targetRatings: number;
 } | null;
 
+const INITIAL_FILTERS = { formats: { movie: true, series: true } };
+
+export type Filters = typeof INITIAL_FILTERS;
+
 export default function () {
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
   const [items, setItems] = useState<CatalogItemData[]>([]);
   const [onboarding, setOnboarding] = useState<Onboarding>(null);
+  const [visible, setVisible] = useState(false);
+  const [filters, setFilters] = useState(INITIAL_FILTERS);
 
   const server = useServer();
 
   useEffect(() => {
     loadCatalog();
-  }, []);
+  }, [filters]);
 
   if (loading) {
     return (
@@ -71,28 +77,50 @@ export default function () {
           </CatalogItemContext.Provider>
         )}
       />
+
       <FloatingActionButton
         actions={[
           {
             text: "Atualizar recomendações",
             icon: <MaterialCommunityIcons name="reload" />,
+            action: () => console.log("Atualizar"),
           },
           {
-            text: "Filtrar lista",
+            text: "Filtrar catálogo",
             icon: <MaterialCommunityIcons name="filter" />,
+            action: () => setVisible(true),
           },
           {
             text: "Exibir sinopses",
             icon: <MaterialIcons name="remove-red-eye" />,
+            action: () => console.log("Exibir"),
           },
         ]}
       />
-      <ItemPlaylists />
+
+      {visible && (
+        <Filter
+          filters={filters}
+          onFilter={(filters) => {
+            setFilters(filters);
+            setVisible(false);
+            setLoading(true);
+            setItems([]);
+          }}
+        />
+      )}
+
+      {/* <ItemPlaylists /> */}
     </DrawerFrame>
   );
 
   async function loadCatalog() {
+    const formats = [];
+    if (filters.formats.movie) formats.push("MOVIE");
+    if (filters.formats.series) formats.push("SERIES");
+
     const response = await server.post<CatalogResponse>("/catalog", {
+      formats,
       skip: items.map((item) => item._id),
     });
 
