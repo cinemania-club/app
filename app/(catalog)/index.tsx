@@ -45,7 +45,7 @@ export default function () {
   const server = useServer();
 
   useEffect(() => {
-    loadCatalog(true);
+    loadCatalog();
   }, [filters]);
 
   if (loading) {
@@ -105,13 +105,14 @@ export default function () {
             setFilters(filters);
             setVisible(false);
             setLoading(true);
+            setItems([]);
           }}
         />
       )}
     </DrawerFrame>
   );
 
-  async function loadCatalog(refresh = false) {
+  async function loadCatalog() {
     const formats = [];
     if (filters.formats.movie) formats.push("MOVIE");
     if (filters.formats.series) formats.push("SERIES");
@@ -124,7 +125,7 @@ export default function () {
     const data = response.data;
 
     setTotal(data.total);
-    setItems(refresh ? data.items : [...items, ...data.items]);
+    setItems([...items, ...data.items]);
     setOnboarding(data.onboarding);
     setLoading(false);
   }
