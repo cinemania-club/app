@@ -104,6 +104,7 @@ export default function () {
           onFilter={(filters) => {
             setFilters(filters);
             setVisible(false);
+            setLoading(true);
           }}
         />
       )}
