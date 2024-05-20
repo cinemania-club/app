@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Filters } from "../app/(catalog)";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
-export const initialFilters = { formats: { movie: true, series: true } };
-
 export default function (props: {
-  onFilter: (filters: typeof initialFilters) => void;
+  filters: Filters;
+  onFilter: (filters: Filters) => void;
 }) {
-  const [filters, setFilters] = useState(initialFilters);
+  const [filters, setFilters] = useState(props.filters);
 
   return (
     <View style={[s.bgDark, s.flex1, s.p3, s.absolute]}>
