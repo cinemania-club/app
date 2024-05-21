@@ -9,6 +9,7 @@ import { CatalogItemContext } from "../src/contexts";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { brNumber } from "../src/util";
+import ItemPlaylists from "./ItemPlaylists";
 
 export default function () {
   const { item } = useContext(CatalogItemContext)!;
@@ -77,6 +78,8 @@ function ItemActions() {
 
   const [showSynopsis, setShowSynopsis] = useState(false);
 
+  const [showItemPlaylists, setShowItemPlaylists] = useState(false);
+
   return (
     <View style={[s.bgLight, s.p3, s.g3]}>
       {showSynopsis && <Text style={[s.text]}>{item.overview}</Text>}
@@ -85,12 +88,18 @@ function ItemActions() {
         <ItemRating />
 
         <View style={[s.row, s.aiCenter, s.g4]}>
-          <MaterialIcons
-            name="bookmark-outline"
-            size={20}
-            color={palette.primary}
-          />
-
+          <Pressable
+            style={[s.pressable]}
+            onPress={() => setShowItemPlaylists(true)}
+          >
+            <MaterialIcons
+              name="bookmark-outline"
+              size={20}
+              color={palette.primary}
+            />
+          </Pressable>
+          {/* {showItemPlaylists && <ItemPlaylists />} */}
+          <ItemPlaylists />
           <Pressable
             style={[s.pressable]}
             onPress={() => setShowSynopsis(!showSynopsis)}
