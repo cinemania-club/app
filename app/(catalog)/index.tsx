@@ -30,7 +30,10 @@ type Onboarding = {
   targetRatings: number;
 } | null;
 
-const INITIAL_FILTERS = { formats: { movie: true, series: true } };
+const INITIAL_FILTERS = {
+  formats: { movie: true, series: true },
+  genres: { action: false, lgbt: false },
+};
 
 export type Filters = typeof INITIAL_FILTERS;
 

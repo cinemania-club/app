@@ -38,6 +38,7 @@ export default function (props: {
               checked: filters.formats.movie,
               setChecked: (checked) =>
                 setFilters({
+                  ...filters,
                   formats: { movie: checked, series: filters.formats.series },
                 }),
             },
@@ -46,7 +47,32 @@ export default function (props: {
               checked: filters.formats.series,
               setChecked: (checked) =>
                 setFilters({
+                  ...filters,
                   formats: { movie: filters.formats.movie, series: checked },
+                }),
+            },
+          ]}
+        />
+
+        <CheckboxFilter
+          name="Gênero"
+          fields={[
+            {
+              label: "Ação",
+              checked: filters.genres.action,
+              setChecked: (checked) =>
+                setFilters({
+                  ...filters,
+                  genres: { action: checked, lgbt: filters.genres.lgbt },
+                }),
+            },
+            {
+              label: "lgbt",
+              checked: filters.genres.lgbt,
+              setChecked: (checked) =>
+                setFilters({
+                  ...filters,
+                  genres: { action: filters.genres.action, lgbt: checked },
                 }),
             },
           ]}
