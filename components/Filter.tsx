@@ -6,6 +6,12 @@ import { Filters } from "../app/(catalog)";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
+type CheckboxFieldType = {
+  label: string;
+  checked: boolean;
+  setChecked: (checked: boolean) => void;
+};
+
 export default function (props: {
   filters: Filters;
   onFilter: (filters: Filters) => void;
@@ -24,29 +30,27 @@ export default function (props: {
           <Text style={[s.textStrong, { fontSize: 16 }]}>Filtrar Lista</Text>
         </View>
 
-        <View style={[s.g3]}>
-          <Text style={[s.textStrong]}>Tipo</Text>
-          <View style={[s.row, s.g5]}>
-            <CheckboxField
-              label="Filme"
-              checked={filters.formats.movie}
-              setChecked={(checked) =>
+        <CheckboxFilter
+          name="Tipo"
+          fields={[
+            {
+              label: "Filme",
+              checked: filters.formats.movie,
+              setChecked: (checked) =>
                 setFilters({
                   formats: { movie: checked, series: filters.formats.series },
-                })
-              }
-            />
-            <CheckboxField
-              label="Série"
-              checked={filters.formats.series}
-              setChecked={(checked) =>
+                }),
+            },
+            {
+              label: "Série",
+              checked: filters.formats.series,
+              setChecked: (checked) =>
                 setFilters({
                   formats: { movie: filters.formats.movie, series: checked },
-                })
-              }
-            />
-          </View>
-        </View>
+                }),
+            },
+          ]}
+        />
       </View>
 
       <View style={[s.bgLight, s.p4, s.rb4]}>
@@ -61,6 +65,23 @@ export default function (props: {
           />
           <Text style={[s.textBold, { fontSize: 14 }]}>Filtrar Catálogo</Text>
         </Pressable>
+      </View>
+    </View>
+  );
+}
+
+function CheckboxFilter(props: { name: string; fields: CheckboxFieldType[] }) {
+  return (
+    <View style={[s.g3]}>
+      <Text style={[s.textStrong]}>{props.name}</Text>
+      <View style={[s.row, s.g5]}>
+        {props.fields.map((field) => (
+          <CheckboxField
+            label={field.label}
+            checked={field.checked}
+            setChecked={field.setChecked}
+          />
+        ))}
       </View>
     </View>
   );
