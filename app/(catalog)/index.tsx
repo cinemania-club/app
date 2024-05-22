@@ -42,6 +42,8 @@ export default function () {
   const [visible, setVisible] = useState(false);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
 
+  const willExpand = items.some((item) => !item.showOverview);
+
   const server = useServer();
 
   useEffect(() => {
@@ -103,10 +105,15 @@ export default function () {
             action: () => setVisible(true),
           },
           {
-            text: "Exibir sinopses",
+            text: willExpand ? "Exibir sinopses" : "Ocultar sinopses",
             icon: <MaterialIcons name="remove-red-eye" />,
             action: () =>
-              setItems(items.map((item) => ({ ...item, showOverview: true }))),
+              setItems(
+                items.map((item) => ({
+                  ...item,
+                  showOverview: willExpand,
+                })),
+              ),
           },
         ]}
       />
