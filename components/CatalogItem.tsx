@@ -98,8 +98,10 @@ function ItemActions() {
               color={palette.primary}
             />
           </Pressable>
-          {/* {showItemPlaylists && <ItemPlaylists />} */}
-          <ItemPlaylists />
+          {showItemPlaylists && (
+            <ItemPlaylists onClose={() => setShowItemPlaylists(false)} />
+          )}
+
           <Pressable
             style={[s.pressable]}
             onPress={() => setShowSynopsis(!showSynopsis)}

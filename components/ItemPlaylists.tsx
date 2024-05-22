@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import CheckBox from "./CheckBox";
 import Overlay from "./Overlay";
 
-export default function () {
+export default function (props: { onClose: () => void }) {
   const [showTextInput, setShowTextInput] = useState(false);
 
   return (
@@ -18,7 +18,7 @@ export default function () {
         <View style={[s.bgLight, s.r4, s.g4, s.p4, { maxWidth: 400 }]}>
           <View style={[s.row, s.jcBetween]}>
             <Text style={[s.textStrong]}>Adicione à playlist</Text>
-            <Pressable onPress={() => {}}>
+            <Pressable onPress={() => props.onClose()}>
               <MaterialCommunityIcons
                 name="close"
                 size={22}
