@@ -100,7 +100,7 @@ function CheckboxFilter<T>(props: {
       checkedOptions.delete(payload.value);
     }
 
-    return checkedOptions;
+    return new Set([...checkedOptions]);
   }
 }
 
@@ -111,7 +111,7 @@ function CheckboxField(props: {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    props.onChange(!checked);
+    props.onChange(checked);
   }, [checked]);
 
   return (
