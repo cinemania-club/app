@@ -19,6 +19,7 @@ export type CatalogItemData = {
   firstAirDate: string;
   lastAirDate: string;
   ratings: Rating;
+  showOverview: boolean;
 };
 
 export type ItemDetailsData = {

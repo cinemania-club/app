@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { getYear } from "date-fns";
 import { router } from "expo-router";
 import _ from "lodash";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { CatalogItemContext } from "../src/contexts";
@@ -73,13 +73,11 @@ function ItemInfo() {
 }
 
 function ItemActions() {
-  const { item } = useContext(CatalogItemContext)!;
-
-  const [showSynopsis, setShowSynopsis] = useState(false);
+  const { item, showOverview } = useContext(CatalogItemContext)!;
 
   return (
     <View style={[s.bgLight, s.p3, s.g3]}>
-      {showSynopsis && <Text style={[s.text]}>{item.overview}</Text>}
+      {item.showOverview && <Text style={[s.text]}>{item.overview}</Text>}
 
       <View style={[s.row, s.aiCenter, s.jcBetween, s.g4]}>
         <ItemRating />
@@ -93,10 +91,12 @@ function ItemActions() {
 
           <Pressable
             style={[s.pressable]}
-            onPress={() => setShowSynopsis(!showSynopsis)}
+            onPress={() => showOverview(!item.showOverview)}
           >
             <MaterialIcons
-              name={showSynopsis ? "keyboard-arrow-up" : "keyboard-arrow-down"}
+              name={
+                item.showOverview ? "keyboard-arrow-up" : "keyboard-arrow-down"
+              }
               size={24}
               color={palette.primary}
             />

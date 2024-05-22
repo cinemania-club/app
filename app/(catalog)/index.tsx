@@ -71,7 +71,20 @@ export default function () {
         renderItem={({ item }) => (
           <CatalogItemContext.Provider
             key={item._id}
-            value={{ item, rate: (stars) => rateItem(item._id, stars) }}
+            value={{
+              item,
+              showOverview: (show) => {
+                const newItems = [...items];
+                const newItem = newItems.find(
+                  (newItem) => newItem._id === item._id,
+                );
+                if (!newItem) return;
+
+                newItem.showOverview = show;
+                setItems(newItems);
+              },
+              rate: (stars) => rateItem(item._id, stars),
+            }}
           >
             <CatalogItem />
           </CatalogItemContext.Provider>
