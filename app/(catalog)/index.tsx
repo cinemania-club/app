@@ -105,7 +105,8 @@ export default function () {
           {
             text: "Exibir sinopses",
             icon: <MaterialIcons name="remove-red-eye" />,
-            action: () => console.log("Exibir"),
+            action: () =>
+              setItems(items.map((item) => ({ ...item, showOverview: true }))),
           },
         ]}
       />
