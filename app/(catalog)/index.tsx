@@ -31,8 +31,8 @@ type Onboarding = {
 } | null;
 
 const INITIAL_FILTERS = {
-  formats: { movie: true, series: true },
-  genres: { action: false, lgbt: false },
+  formats: ["MOVIE", "SERIES"],
+  genres: [] as number[],
 };
 
 export type Filters = typeof INITIAL_FILTERS;
@@ -118,12 +118,8 @@ export default function () {
   );
 
   async function loadCatalog() {
-    const formats = [];
-    if (filters.formats.movie) formats.push("MOVIE");
-    if (filters.formats.series) formats.push("SERIES");
-
     const response = await server.post<CatalogResponse>("/catalog", {
-      formats,
+      ...filters,
       skip: items.map((item) => item._id),
     });
 
