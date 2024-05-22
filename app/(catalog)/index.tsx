@@ -74,14 +74,13 @@ export default function () {
             value={{
               item,
               showOverview: (show) => {
-                const newItems = [...items];
-                const newItem = newItems.find(
-                  (newItem) => newItem._id === item._id,
+                const actionItem = items.find(
+                  (actionItem) => actionItem._id === item._id,
                 );
-                if (!newItem) return;
+                if (!actionItem) return;
 
-                newItem.showOverview = show;
-                setItems(newItems);
+                actionItem.showOverview = show;
+                setItems([...items]);
               },
               rate: (stars) => rateItem(item._id, stars),
             }}
