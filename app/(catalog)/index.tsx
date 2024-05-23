@@ -42,6 +42,8 @@ export default function () {
   const [visible, setVisible] = useState(false);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
 
+  const willExpand = items.some((item) => !item.showOverview);
+
   const server = useServer();
 
   useEffect(() => {
@@ -71,7 +73,19 @@ export default function () {
         renderItem={({ item }) => (
           <CatalogItemContext.Provider
             key={item._id}
-            value={{ item, rate: (stars) => rateItem(item._id, stars) }}
+            value={{
+              item,
+              showOverview: (show) => {
+                const actionItem = items.find(
+                  (actionItem) => actionItem._id === item._id,
+                );
+                if (!actionItem) return;
+
+                actionItem.showOverview = show;
+                setItems([...items]);
+              },
+              rate: (stars) => rateItem(item._id, stars),
+            }}
           >
             <CatalogItem />
           </CatalogItemContext.Provider>
@@ -91,9 +105,15 @@ export default function () {
             action: () => setVisible(true),
           },
           {
-            text: "Exibir sinopses",
+            text: willExpand ? "Exibir sinopses" : "Ocultar sinopses",
             icon: <MaterialIcons name="remove-red-eye" />,
-            action: () => console.log("Exibir"),
+            action: () =>
+              setItems(
+                items.map((item) => ({
+                  ...item,
+                  showOverview: willExpand,
+                })),
+              ),
           },
         ]}
       />

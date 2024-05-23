@@ -4,6 +4,7 @@ import { CatalogItemData } from "./types";
 
 type CatalogItemPayload = {
   item: CatalogItemData;
+  showOverview: (show: boolean) => void;
   rate: (stars: number) => void;
 };
 
