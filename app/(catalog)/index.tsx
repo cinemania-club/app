@@ -93,7 +93,7 @@ export default function () {
           {
             text: "Atualizar recomendações",
             icon: <MaterialCommunityIcons name="reload" />,
-            action: () => console.log("Atualizar"),
+            action: () => refreshCatalog(),
           },
           {
             text: "Filtrar catálogo",
@@ -118,10 +118,8 @@ export default function () {
         <Filters
           filters={filters}
           onFilter={(filters) => {
-            setFilters(filters);
             setVisible(false);
-            setLoading(true);
-            setItems([]);
+            refreshCatalog(filters);
           }}
         />
       )}
@@ -140,6 +138,12 @@ export default function () {
     setItems([...items, ...data.items]);
     setOnboarding(data.onboarding);
     setLoading(false);
+  }
+
+  function refreshCatalog(applyFilters?: FiltersType) {
+    setItems([]);
+    setLoading(true);
+    setFilters({ ...(applyFilters || filters) });
   }
 
   async function rateItem(itemId: string, starClicked: number) {
