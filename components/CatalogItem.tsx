@@ -2,13 +2,14 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { getYear } from "date-fns";
 import { router } from "expo-router";
 import _ from "lodash";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { CatalogItemContext } from "../src/contexts";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { brNumber } from "../src/util";
+import ItemPlaylists from "./ItemPlaylists";
 
 export default function () {
   const { item } = useContext(CatalogItemContext)!;
@@ -75,6 +76,8 @@ function ItemInfo() {
 function ItemActions() {
   const { item, showOverview } = useContext(CatalogItemContext)!;
 
+  const [showItemPlaylists, setShowItemPlaylists] = useState(false);
+
   return (
     <View style={[s.bgLight, s.p3, s.g3]}>
       {item.showOverview && <Text style={[s.text]}>{item.overview}</Text>}
@@ -83,11 +86,19 @@ function ItemActions() {
         <ItemRating />
 
         <View style={[s.row, s.aiCenter, s.g4]}>
-          <MaterialIcons
-            name="bookmark-outline"
-            size={20}
-            color={palette.primary}
-          />
+          <Pressable
+            style={[s.pressable]}
+            onPress={() => setShowItemPlaylists(true)}
+          >
+            <MaterialIcons
+              name="bookmark-outline"
+              size={20}
+              color={palette.primary}
+            />
+          </Pressable>
+          {showItemPlaylists && (
+            <ItemPlaylists onClose={() => setShowItemPlaylists(false)} />
+          )}
 
           <Pressable
             style={[s.pressable]}
