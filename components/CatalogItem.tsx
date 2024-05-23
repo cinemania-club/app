@@ -2,7 +2,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { getYear } from "date-fns";
 import { router } from "expo-router";
 import _ from "lodash";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
 import { CatalogItemContext } from "../src/contexts";

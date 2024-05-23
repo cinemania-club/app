@@ -16,38 +16,13 @@ export default function (props: { onClose: () => void }) {
     <Overlay>
       <View style={[s.aiCenter, s.jcCenter, s.flex1, s.p4]}>
         <View style={[s.bgLight, s.r4, s.g4, s.p4, { maxWidth: 400 }]}>
-          <View style={[s.row, s.jcBetween]}>
-            <Text style={[s.textStrong]}>Adicione à playlist</Text>
-            <Pressable onPress={() => props.onClose()}>
-              <MaterialCommunityIcons
-                name="close"
-                size={22}
-                color={palette.primary}
-              />
-            </Pressable>
-          </View>
+          <Text style={[s.textStrong]}>Adicione à playlist</Text>
           <CheckBox label="Assistir mais tarde" />
           <CheckBox label="Arquivados" />
           <CheckBox label="Filmes para assistir com mozao" />
           <CheckBox label="Para rir" />
-          {showTextInput === false && (
-            <Pressable
-              onPress={() => {
-                setShowTextInput(!showTextInput);
-                console.log(showTextInput);
-              }}
-            >
-              <View style={[s.row, s.aiCenter, s.g1]}>
-                <MaterialCommunityIcons
-                  name="plus"
-                  size={24}
-                  color={palette.primary}
-                />
-                <Text style={[s.textPrimary]}>Nova playlist</Text>
-              </View>
-            </Pressable>
-          )}
-          {showTextInput && (
+
+          {showTextInput ? (
             <View
               style={[
                 s.row,
@@ -73,10 +48,29 @@ export default function (props: { onClose: () => void }) {
                 color={palette.primary}
               />
             </View>
+          ) : (
+            <Pressable
+              onPress={() => {
+                setShowTextInput(!showTextInput);
+                console.log(showTextInput);
+              }}
+            >
+              <View style={[s.row, s.aiCenter, s.g1]}>
+                <MaterialCommunityIcons
+                  name="plus"
+                  size={24}
+                  color={palette.primary}
+                />
+                <Text style={[s.textPrimary]}>Nova playlist</Text>
+              </View>
+            </Pressable>
           )}
-          <Text style={[s.textPrimary, s.taCenter, { fontWeight: "bold" }]}>
-            OK
-          </Text>
+
+          <Pressable onPress={() => props.onClose()}>
+            <Text style={[s.textPrimary, s.taCenter, { fontWeight: "bold" }]}>
+              OK
+            </Text>
+          </Pressable>
         </View>
       </View>
     </Overlay>
