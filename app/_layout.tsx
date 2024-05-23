@@ -72,6 +72,10 @@ function DrawerContent() {
       </View>
 
       <View style={[s.p5, s.g5]}>
+        <Link href="/signup" style={[s.pressable]}>
+          <Text style={[s.textStrong]}>Cadastrar conta</Text>
+        </Link>
+
         <Link href="/" style={[s.pressable]}>
           <Text style={[s.textBold]}>Catálogo</Text>
         </Link>
