@@ -2,7 +2,6 @@ import React, { useEffect, useReducer, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { FiltersType } from "../app/(catalog)";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { CatalogItemFormat } from "../src/types";
@@ -11,6 +10,11 @@ type CheckboxOption<T> = {
   label: string;
   value: T;
   initial: boolean;
+};
+
+export type FiltersType = {
+  formats?: CatalogItemFormat[];
+  genres?: number[];
 };
 
 export default function (props: {
@@ -37,12 +41,12 @@ export default function (props: {
             {
               label: "Filmes",
               value: CatalogItemFormat.MOVIE,
-              initial: filters.formats.includes(CatalogItemFormat.MOVIE),
+              initial: !!filters.formats?.includes(CatalogItemFormat.MOVIE),
             },
             {
               label: "Séries",
               value: CatalogItemFormat.SERIES,
-              initial: filters.formats.includes(CatalogItemFormat.SERIES),
+              initial: !!filters.formats?.includes(CatalogItemFormat.SERIES),
             },
           ]}
           onChange={(formats) => setFilters({ ...filters, formats })}
@@ -51,11 +55,15 @@ export default function (props: {
         <CheckboxFilter<number>
           name="Gênero"
           options={[
-            { label: "Ação", value: 18, initial: filters.genres.includes(18) },
+            {
+              label: "Ação",
+              value: 18,
+              initial: !!filters.genres?.includes(18),
+            },
             {
               label: "Comédia",
               value: 91,
-              initial: filters.genres.includes(91),
+              initial: !!filters.genres?.includes(91),
             },
           ]}
           onChange={(genres) => setFilters({ ...filters, genres })}
