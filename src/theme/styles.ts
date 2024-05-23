@@ -22,6 +22,8 @@ const props = StyleSheet.create({
   wrap: { flexWrap: "wrap" },
 
   absolute: { position: "absolute", top: 0, bottom: 0, left: 0, right: 0 },
+
+  italic: { fontStyle: "italic" },
 });
 
 const components = StyleSheet.create({
