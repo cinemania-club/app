@@ -11,13 +11,13 @@ import {
 
 import CatalogItem from "../../components/CatalogItem";
 import DrawerFrame from "../../components/DrawerFrame";
-import Filter from "../../components/Filter";
+import Filters from "../../components/Filters";
 import FloatingActionButton from "../../components/FloatingActionButton";
 import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
-import { CatalogItemData } from "../../src/types";
+import { CatalogItemData, CatalogItemFormat } from "../../src/types";
 
 type CatalogResponse = {
   onboarding: Onboarding;
@@ -31,11 +31,11 @@ type Onboarding = {
 } | null;
 
 const INITIAL_FILTERS = {
-  formats: ["MOVIE", "SERIES"],
+  formats: [] as CatalogItemFormat[],
   genres: [] as number[],
 };
 
-export type Filters = typeof INITIAL_FILTERS;
+export type FiltersType = typeof INITIAL_FILTERS;
 
 export default function () {
   const [loading, setLoading] = useState(true);
@@ -122,7 +122,7 @@ export default function () {
       />
 
       {visible && (
-        <Filter
+        <Filters
           filters={filters}
           onFilter={(filters) => {
             setFilters(filters);

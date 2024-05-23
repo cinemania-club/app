@@ -2,18 +2,20 @@ import React, { useEffect, useReducer, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Filters } from "../app/(catalog)";
+import { FiltersType } from "../app/(catalog)";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
+import { CatalogItemFormat } from "../src/types";
 
 type CheckboxOption<T> = {
   label: string;
   value: T;
+  initial: boolean;
 };
 
 export default function (props: {
-  filters: Filters;
-  onFilter: (filters: Filters) => void;
+  filters: FiltersType;
+  onFilter: (filters: FiltersType) => void;
 }) {
   const [filters, setFilters] = useState(props.filters);
 
@@ -32,17 +34,29 @@ export default function (props: {
         <CheckboxFilter
           name="Tipo"
           options={[
-            { label: "Filmes", value: "MOVIE" },
-            { label: "Séries", value: "SERIES" },
+            {
+              label: "Filmes",
+              value: CatalogItemFormat.MOVIE,
+              initial: filters.formats.includes(CatalogItemFormat.MOVIE),
+            },
+            {
+              label: "Séries",
+              value: CatalogItemFormat.SERIES,
+              initial: filters.formats.includes(CatalogItemFormat.SERIES),
+            },
           ]}
           onChange={(formats) => setFilters({ ...filters, formats })}
         />
 
-        <CheckboxFilter
+        <CheckboxFilter<number>
           name="Gênero"
           options={[
-            { label: "Ação", value: 18 },
-            { label: "Comédia", value: 91 },
+            { label: "Ação", value: 18, initial: filters.genres.includes(18) },
+            {
+              label: "Comédia",
+              value: 91,
+              initial: filters.genres.includes(91),
+            },
           ]}
           onChange={(genres) => setFilters({ ...filters, genres })}
         />
@@ -70,7 +84,14 @@ function CheckboxFilter<T>(props: {
   options: CheckboxOption<T>[];
   onChange: (value: T[]) => void;
 }) {
-  const [options, setChecked] = useReducer(setOptions, new Set<T>());
+  const [options, setChecked] = useReducer(
+    setOptions,
+    new Set<T>(
+      props.options
+        .filter((option) => option.initial)
+        .map((option) => option.value),
+    ),
+  );
 
   useEffect(() => {
     props.onChange([...options]);
@@ -83,6 +104,7 @@ function CheckboxFilter<T>(props: {
         {props.options.map((option) => (
           <CheckboxField
             label={option.label}
+            initial={option.initial}
             onChange={(checked) => setChecked({ value: option.value, checked })}
           />
         ))}
@@ -106,24 +128,26 @@ function CheckboxFilter<T>(props: {
 
 function CheckboxField(props: {
   label: string;
+  initial: boolean;
   onChange: (checked: boolean) => void;
 }) {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(props.initial);
 
   useEffect(() => {
     props.onChange(checked);
   }, [checked]);
 
   return (
-    <View style={[s.row, s.aiCenter, s.g2]}>
-      <Pressable onPress={() => setChecked(!checked)}>
-        <MaterialCommunityIcons
-          name={checked ? "checkbox-marked" : "checkbox-blank-outline"}
-          color={palette.primary}
-          size={20}
-        />
-      </Pressable>
+    <Pressable
+      style={[s.row, s.aiCenter, s.g2]}
+      onPress={() => setChecked(!checked)}
+    >
+      <MaterialCommunityIcons
+        name={checked ? "checkbox-marked" : "checkbox-blank-outline"}
+        color={palette.primary}
+        size={20}
+      />
       <Text style={[s.text]}>{props.label}</Text>
-    </View>
+    </Pressable>
   );
 }
