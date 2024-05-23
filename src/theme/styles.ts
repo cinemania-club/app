@@ -19,6 +19,7 @@ const props = StyleSheet.create({
   jcEnd: { justifyContent: "flex-end" },
 
   flex1: { flex: 1 },
+  wrap: { flexWrap: "wrap" },
 
   absolute: { position: "absolute", top: 0, bottom: 0, left: 0, right: 0 },
 });

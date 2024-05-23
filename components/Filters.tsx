@@ -2,6 +2,8 @@ import React, { useEffect, useReducer, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { chunk } from "lodash";
+import { GENRES } from "../src/filters";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { CatalogItemFormat } from "../src/types";
@@ -54,18 +56,10 @@ export default function (props: {
 
         <CheckboxFilter<number>
           name="Gênero"
-          options={[
-            {
-              label: "Ação",
-              value: 18,
-              initial: !!filters.genres?.includes(18),
-            },
-            {
-              label: "Comédia",
-              value: 91,
-              initial: !!filters.genres?.includes(91),
-            },
-          ]}
+          options={GENRES.map((genre) => ({
+            ...genre,
+            initial: !!filters.genres?.includes(genre.value),
+          }))}
           onChange={(genres) => setFilters({ ...filters, genres })}
         />
       </View>
@@ -105,16 +99,26 @@ function CheckboxFilter<T>(props: {
     props.onChange([...options]);
   }, [options]);
 
+  const optionsChunks = chunk(props.options, 2);
+
   return (
     <View style={[s.g3]}>
       <Text style={[s.textStrong]}>{props.name}</Text>
-      <View style={[s.row, s.g5]}>
-        {props.options.map((option) => (
-          <CheckboxField
-            label={option.label}
-            initial={option.initial}
-            onChange={(checked) => setChecked({ value: option.value, checked })}
-          />
+      <View style={[s.g3]}>
+        {optionsChunks.map((optionsChunk) => (
+          <View style={[s.row, s.g5]}>
+            {optionsChunk.map((option) => (
+              <View style={[s.flex1]}>
+                <CheckboxField
+                  label={option.label}
+                  initial={option.initial}
+                  onChange={(checked) =>
+                    setChecked({ value: option.value, checked })
+                  }
+                />
+              </View>
+            ))}
+          </View>
         ))}
       </View>
     </View>
