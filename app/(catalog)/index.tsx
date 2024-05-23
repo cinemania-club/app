@@ -11,7 +11,7 @@ import {
 
 import CatalogItem from "../../components/CatalogItem";
 import DrawerFrame from "../../components/DrawerFrame";
-import Filter from "../../components/Filter";
+import Filters, { FiltersType } from "../../components/Filters";
 import FloatingActionButton from "../../components/FloatingActionButton";
 import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
@@ -30,17 +30,13 @@ type Onboarding = {
   targetRatings: number;
 } | null;
 
-const INITIAL_FILTERS = { formats: { movie: true, series: true } };
-
-export type Filters = typeof INITIAL_FILTERS;
-
 export default function () {
   const [loading, setLoading] = useState(true);
   const [total, setTotal] = useState(0);
   const [items, setItems] = useState<CatalogItemData[]>([]);
   const [onboarding, setOnboarding] = useState<Onboarding>(null);
   const [visible, setVisible] = useState(false);
-  const [filters, setFilters] = useState(INITIAL_FILTERS);
+  const [filters, setFilters] = useState<FiltersType>({});
 
   const willExpand = items.some((item) => !item.showOverview);
 
@@ -119,7 +115,7 @@ export default function () {
       />
 
       {visible && (
-        <Filter
+        <Filters
           filters={filters}
           onFilter={(filters) => {
             setFilters(filters);
@@ -135,12 +131,8 @@ export default function () {
   );
 
   async function loadCatalog() {
-    const formats = [];
-    if (filters.formats.movie) formats.push("MOVIE");
-    if (filters.formats.series) formats.push("SERIES");
-
     const response = await server.post<CatalogResponse>("/catalog", {
-      formats,
+      ...filters,
       skip: items.map((item) => item._id),
     });
 
