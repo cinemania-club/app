@@ -1,4 +1,4 @@
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import s from "../src/theme/styles";
 
 import { palette } from "../src/theme/colors";
@@ -8,6 +8,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useState } from "react";
 import CheckBox from "./CheckBox";
 import Overlay from "./Overlay";
+import TextField from "./TextField";
 
 export default function (props: { onClose: () => void }) {
   const [createPlaylist, setCreatePlaylist] = useState(false);
@@ -24,26 +25,13 @@ export default function (props: { onClose: () => void }) {
           <CheckBox label="Para rir" />
 
           {createPlaylist ? (
-            <View
-              style={[
-                s.row,
-                s.jcBetween,
-                s.aiCenter,
-                s.pb1,
-                s.bb1,
-                s.borderPrimary,
-              ]}
-            >
-              <TextInput
-                placeholder="Digite o nome da playlist"
-                style={[s.text, s.italic]}
-              />
+            <TextField placeholder="Digite o nome da playlist">
               <MaterialCommunityIcons
                 name="plus"
                 size={24}
                 color={palette.primary}
               />
-            </View>
+            </TextField>
           ) : (
             <Pressable onPress={() => setCreatePlaylist(true)}>
               <View style={[s.row, s.aiCenter, s.g1]}>
