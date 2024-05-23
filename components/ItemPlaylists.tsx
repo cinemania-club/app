@@ -1,11 +1,8 @@
-import { Pressable, Text, View } from "react-native";
-import s from "../src/theme/styles";
-
-import { palette } from "../src/theme/colors";
-
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import React, { useState } from "react";
+import { Pressable, Text, View } from "react-native";
+import { palette } from "../src/theme/colors";
+import s from "../src/theme/styles";
 import CheckBox from "./CheckBox";
 import Overlay from "./Overlay";
 import TextField from "./TextField";
