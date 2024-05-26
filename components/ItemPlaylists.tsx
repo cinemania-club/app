@@ -4,11 +4,13 @@ import { Pressable, Text, View } from "react-native";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import CheckBox from "./CheckBox";
+import InfoArchived from "./InfoArchived";
 import Overlay from "./Overlay";
 import TextField from "./TextField";
 
 export default function (props: { onClose: () => void }) {
   const [createPlaylist, setCreatePlaylist] = useState(false);
+  const [openModalArchived, setOpenModalArchived] = useState(false);
 
   return (
     <Overlay>
@@ -17,9 +19,26 @@ export default function (props: { onClose: () => void }) {
           <Text style={[s.textStrong]}>Adicione à playlist</Text>
 
           <CheckBox label="Assistir mais tarde" />
-          <CheckBox label="Arquivados" />
-          <CheckBox label="Filmes para assistir com mozao" />
+          <CheckBox label="Arquivados">
+            <MaterialCommunityIcons
+              name="information"
+              size={14}
+              color={palette.primary}
+              onPress={() => {
+                setOpenModalArchived(true);
+              }}
+            />
+          </CheckBox>
+          <CheckBox label="Filmes para assistir com mozão" />
           <CheckBox label="Para rir" />
+
+          {openModalArchived && (
+            <InfoArchived
+              onClose={() => {
+                setOpenModalArchived(false);
+              }}
+            />
+          )}
 
           {createPlaylist ? (
             <TextField placeholder="Digite o nome da playlist">
