@@ -24,6 +24,13 @@ export default function () {
             size={20}
           />
         </Field>
+        <Field title="Confirmar senha" placeholder="Digite sua senha novamente">
+          <MaterialIcons
+            name="remove-red-eye"
+            color={palette.primary}
+            size={20}
+          />
+        </Field>
       </View>
     </DrawerFrame>
   );
