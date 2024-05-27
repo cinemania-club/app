@@ -3,7 +3,7 @@ import { Pressable, Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { chunk } from "lodash";
-import { GENRES } from "../src/filters";
+import { MOVIE_GENRES } from "../src/filters";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { CatalogItemFormat } from "../src/types";
@@ -56,7 +56,7 @@ export default function (props: {
 
         <CheckboxFilter<number>
           name="Gênero"
-          options={GENRES.map((genre) => ({
+          options={MOVIE_GENRES.map((genre) => ({
             ...genre,
             initial: !!filters.genres?.includes(genre.value),
           }))}
