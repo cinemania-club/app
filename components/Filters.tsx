@@ -66,7 +66,11 @@ export default function (props: {
       </View>
 
       <View style={[s.bgLight, s.p4, s.rb4]}>
-        <ActionButton onPress={() => props.onFilter(filters)} />
+        <ActionButton
+          icon={<MaterialCommunityIcons name="filter" />}
+          title="Filtrar Catálogo"
+          onPress={() => props.onFilter(filters)}
+        />
       </View>
     </View>
   );
