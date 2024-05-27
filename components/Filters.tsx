@@ -7,6 +7,7 @@ import { MOVIE_GENRES } from "../src/filters";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { CatalogItemFormat } from "../src/types";
+import ActionButton from "./ActionButton";
 
 type CheckboxOption<T> = {
   label: string;
@@ -65,17 +66,7 @@ export default function (props: {
       </View>
 
       <View style={[s.bgLight, s.p4, s.rb4]}>
-        <Pressable
-          style={[s.bgAccent, s.r3, s.row, s.aiCenter, s.jcCenter, s.p3, s.g3]}
-          onPress={() => props.onFilter(filters)}
-        >
-          <MaterialCommunityIcons
-            name="filter"
-            color={palette.text}
-            size={20}
-          />
-          <Text style={[s.textBold, { fontSize: 14 }]}>Filtrar Catálogo</Text>
-        </Pressable>
+        <ActionButton onPress={() => props.onFilter(filters)} />
       </View>
     </View>
   );
