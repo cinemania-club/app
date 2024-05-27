@@ -10,6 +10,7 @@ const props = StyleSheet.create({
 
   center: { flex: 1, justifyContent: "center", alignItems: "center" },
   row: { flexDirection: "row" },
+  rowReverse: { flexDirection: "row-reverse" },
 
   aiCenter: { alignItems: "center" },
   aiEnd: { alignItems: "flex-end" },

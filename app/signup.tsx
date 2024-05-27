@@ -17,6 +17,13 @@ export default function () {
           placeholder="Digite seu telefone com DDD"
         />
         <Field title="Nome" placeholder="Digite seu nome" />
+        <Field
+          title="Nome de usuário"
+          placeholder="Escolha um nome de usuário"
+          reverse
+        >
+          <Text style={s.textPrimary}>@</Text>
+        </Field>
         <Field title="Senha" placeholder="Digite sua senha">
           <MaterialIcons
             name="remove-red-eye"
@@ -40,11 +47,14 @@ function Field(props: {
   title: string;
   placeholder: string;
   children?: ReactNode;
+  reverse?: boolean;
 }) {
   return (
     <View style={[s.g2, s.px5]}>
       <Text style={s.textStrong}>{props.title}</Text>
-      <TextField placeholder={props.placeholder}>{props.children}</TextField>
+      <TextField placeholder={props.placeholder} reverse={props.reverse}>
+        {props.children}
+      </TextField>
     </View>
   );
 }
