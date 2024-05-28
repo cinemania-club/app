@@ -9,7 +9,7 @@ import s from "../src/theme/styles";
 
 export default function () {
   return (
-    <DrawerFrame title="Cadastro">
+    <DrawerFrame title="Cadastro" noSearch>
       <ScrollView
         style={[s.flex1]}
         contentContainerStyle={[s.g4, s.p5, s.jcEnd, { minHeight: "100%" }]}
