@@ -5,13 +5,13 @@ import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
 export default function (props: { label: string }) {
-  const [changeName, setChangeName] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   return (
     <View style={[s.row, s.aiCenter, s.g3]}>
-      <Pressable onPress={() => setChangeName(!changeName)}>
+      <Pressable onPress={() => setChecked(!checked)}>
         <MaterialCommunityIcons
-          name={changeName ? "checkbox-marked" : "checkbox-blank-outline"}
+          name={checked ? "checkbox-marked" : "checkbox-blank-outline"}
           size={22}
           color={palette.primary}
         />

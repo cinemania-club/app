@@ -4,42 +4,35 @@ import { Pressable, Text, View } from "react-native";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import CheckBox from "./CheckBox";
-import DefaultModal from "./DefaultModal";
 import InfoArchived from "./InfoArchived";
+import Modal from "./Modal";
 import TextField from "./TextField";
 
 export default function (props: { onClose: () => void }) {
   const [createPlaylist, setCreatePlaylist] = useState(false);
-  const [openModalArchived, setOpenModalArchived] = useState(false);
+  const [openInfoArchived, setOpenInfoArchived] = useState(false);
 
   return (
-    <DefaultModal>
+    <Modal>
       <Text style={[s.textStrong]}>Adicione à playlist</Text>
 
       <CheckBox label="Assistir mais tarde" />
       <View style={[s.row, s.aiCenter, s.g2]}>
         <CheckBox label="Arquivados" />
-        <Pressable
-          onPress={() => {
-            setOpenModalArchived(true);
-          }}
-        >
+        <Pressable onPress={() => setOpenInfoArchived(true)}>
           <MaterialCommunityIcons
             name="information"
             size={14}
             color={palette.primary}
+            style={[s.pressable]}
           />
         </Pressable>
       </View>
       <CheckBox label="Filmes para assistir com mozão" />
       <CheckBox label="Para rir" />
 
-      {openModalArchived && (
-        <InfoArchived
-          onClose={() => {
-            setOpenModalArchived(false);
-          }}
-        />
+      {openInfoArchived && (
+        <InfoArchived onClose={() => setOpenInfoArchived(false)} />
       )}
 
       {createPlaylist ? (
@@ -66,6 +59,6 @@ export default function (props: { onClose: () => void }) {
       <Pressable onPress={() => props.onClose()}>
         <Text style={[s.textStrong, s.taCenter]}>OK</Text>
       </Pressable>
-    </DefaultModal>
+    </Modal>
   );
 }
