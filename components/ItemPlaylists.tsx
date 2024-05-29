@@ -16,9 +16,9 @@ export default function (props: { onClose: () => void }) {
     <Modal>
       <Text style={[s.textStrong]}>Adicione à playlist</Text>
 
-      <CheckBox label="Assistir mais tarde" />
+      <CheckBox label="Assistir mais tarde" playlistUser={false} />
       <View style={[s.row, s.aiCenter, s.g2]}>
-        <CheckBox label="Arquivados" />
+        <CheckBox label="Arquivados" playlistUser={false} />
         <Pressable onPress={() => setOpenInfoArchived(true)}>
           <MaterialCommunityIcons
             name="information"
@@ -28,8 +28,9 @@ export default function (props: { onClose: () => void }) {
           />
         </Pressable>
       </View>
-      <CheckBox label="Filmes para assistir com mozão" />
-      <CheckBox label="Para rir" />
+
+      <CheckBox label="Filmes pra ver com mozão" playlistUser />
+      <CheckBox label="Pra rir" playlistUser />
 
       {openInfoArchived && (
         <InfoArchived onClose={() => setOpenInfoArchived(false)} />
