@@ -8,9 +8,16 @@ export enum CatalogItemFormat {
   SERIES = "SERIES",
 }
 
+export enum PlaylistType {
+  WATCH_LATER = "WATCH_LATER",
+  ARCHIVED = "ARCHIVED",
+  CUSTOM = "CUSTOM",
+}
+
 type Playlist = {
   _id: string;
   name: string;
+  type: PlaylistType;
 };
 
 export type CatalogItemData = {
