@@ -1,6 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import { CatalogItemContext } from "../src/contexts";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import CheckBox from "./CheckBox";
@@ -11,6 +12,8 @@ import TextField from "./TextField";
 export default function (props: { onClose: () => void }) {
   const [createPlaylist, setCreatePlaylist] = useState(false);
   const [openInfoArchived, setOpenInfoArchived] = useState(false);
+
+  const { item } = useContext(CatalogItemContext)!;
 
   return (
     <Modal>
@@ -28,8 +31,10 @@ export default function (props: { onClose: () => void }) {
           />
         </Pressable>
       </View>
-      <CheckBox label="Filmes para assistir com mozão" />
-      <CheckBox label="Para rir" />
+
+      {item.playlists.map((playlist) => (
+        <CheckBox label={playlist.name} />
+      ))}
 
       {openInfoArchived && (
         <InfoArchived onClose={() => setOpenInfoArchived(false)} />

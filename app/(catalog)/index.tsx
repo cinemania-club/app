@@ -135,7 +135,13 @@ export default function () {
     const data = response.data;
 
     setTotal(data.total);
-    setItems([...items, ...data.items]);
+    setItems([
+      ...items,
+      ...data.items.map((item) => ({
+        ...item,
+        playlists: [{ _id: "123", name: "Minha playlist" }],
+      })),
+    ]);
     setOnboarding(data.onboarding);
     setLoading(false);
   }

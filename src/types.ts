@@ -8,6 +8,11 @@ export enum CatalogItemFormat {
   SERIES = "SERIES",
 }
 
+type Playlist = {
+  _id: string;
+  name: string;
+};
+
 export type CatalogItemData = {
   _id: string;
   format: CatalogItemFormat;
@@ -20,6 +25,7 @@ export type CatalogItemData = {
   lastAirDate: string;
   ratings: Rating;
   showOverview: boolean;
+  playlists: Playlist[];
 };
 
 export type ItemDetailsData = {
