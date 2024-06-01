@@ -39,7 +39,8 @@ export default function (props: { onClose: () => void }) {
       {listeOfFilms.map((item) => {
         return (
           <>
-            <CheckBox label={item}>
+            <View style={[s.row, s.jcBetween, s.g2]}>
+              <CheckBox label={item} />
               <Pressable
                 style={[s.pressable]}
                 onPress={() => {
@@ -53,7 +54,7 @@ export default function (props: { onClose: () => void }) {
                   color={palette.primary}
                 />
               </Pressable>
-            </CheckBox>
+            </View>
             {openInfoDelete && (
               <DeletePlaylist
                 onClose={() => setOpenInfoDelete(false)}
