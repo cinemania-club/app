@@ -4,6 +4,7 @@ import { Pressable, Text, View } from "react-native";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import CheckBox from "./CheckBox";
+import DeletePlaylist from "./DeletePlaylist";
 import InfoArchived from "./InfoArchived";
 import Modal from "./Modal";
 import TextField from "./TextField";
@@ -12,13 +13,19 @@ export default function (props: { onClose: () => void }) {
   const [createPlaylist, setCreatePlaylist] = useState(false);
   const [openInfoArchived, setOpenInfoArchived] = useState(false);
 
+  const [openInfoDelete, setOpenInfoDelete] = useState(false);
+
+  const [namePlaylist, setNamePlaylist] = useState("");
+
+  const listeOfFilms = ["Assistir com o mozão", "Terror", "Para rir"];
+
   return (
     <Modal>
       <Text style={[s.textStrong]}>Adicione à playlist</Text>
 
-      <CheckBox label="Assistir mais tarde" playlistUser={false} />
+      <CheckBox label="Assistir mais tarde" />
       <View style={[s.row, s.aiCenter, s.g2]}>
-        <CheckBox label="Arquivados" playlistUser={false} />
+        <CheckBox label="Arquivados" />
         <Pressable onPress={() => setOpenInfoArchived(true)}>
           <MaterialCommunityIcons
             name="information"
@@ -29,8 +36,34 @@ export default function (props: { onClose: () => void }) {
         </Pressable>
       </View>
 
-      <CheckBox label="Filmes pra ver com mozão" playlistUser />
-      <CheckBox label="Pra rir" playlistUser />
+      {listeOfFilms.map((item) => {
+        return (
+          <>
+            <CheckBox label={item}>
+              <Pressable
+                style={[s.pressable]}
+                onPress={() => {
+                  setNamePlaylist(item);
+                  setOpenInfoDelete(true);
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="trash-can-outline"
+                  size={20}
+                  color={palette.primary}
+                />
+              </Pressable>
+            </CheckBox>
+            {openInfoDelete && (
+              <DeletePlaylist
+                onClose={() => setOpenInfoDelete(false)}
+                onDelete={() => setOpenInfoDelete(false)}
+                name={namePlaylist}
+              />
+            )}
+          </>
+        );
+      })}
 
       {openInfoArchived && (
         <InfoArchived onClose={() => setOpenInfoArchived(false)} />

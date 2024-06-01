@@ -5,13 +5,13 @@ import Modal from "./Modal";
 export default function (props: {
   onClose: () => void;
   onDelete: () => void;
-  namePlaylist: string;
+  name: string;
 }) {
   return (
     <Modal>
       <View style={[s.p3]}>
         <Text style={[s.textSemiBold]}>
-          Você tem certeza que deseja excluir a playlist "{props.namePlaylist}"
+          Você tem certeza que deseja excluir a playlist "{props.name}"
         </Text>
 
         <View style={[s.row, s.jcBetween, s.mt4]}>
