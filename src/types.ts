@@ -14,7 +14,7 @@ export enum PlaylistType {
   CUSTOM = "CUSTOM",
 }
 
-type Playlist = {
+export type Playlist = {
   _id: string;
   name: string;
   type: PlaylistType;
@@ -32,7 +32,7 @@ export type CatalogItemData = {
   lastAirDate: string;
   ratings: Rating;
   showOverview: boolean;
-  playlists: Playlist[];
+  playlists: string[];
 };
 
 export type ItemDetailsData = {

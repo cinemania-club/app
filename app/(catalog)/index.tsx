@@ -17,11 +17,12 @@ import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
-import { CatalogItemData, PlaylistType } from "../../src/types";
+import { CatalogItemData, Playlist, PlaylistType } from "../../src/types";
 
 type CatalogResponse = {
   onboarding: Onboarding;
   total: number;
+  playlists: Playlist[];
   items: CatalogItemData[];
 };
 
