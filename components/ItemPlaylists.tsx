@@ -12,10 +12,6 @@ export default function (props: { onClose: () => void }) {
   const [createPlaylist, setCreatePlaylist] = useState(false);
   const [openInfoArchived, setOpenInfoArchived] = useState(false);
 
-  const [openInfoDelete, setOpenInfoDelete] = useState(false);
-
-  const [namePlaylist, setNamePlaylist] = useState("");
-
   const playlists = ["Assistir com o mozão", "Terror", "Para rir"];
 
   return (
@@ -69,59 +65,53 @@ export default function (props: { onClose: () => void }) {
       </Pressable>
     </Modal>
   );
+}
 
-  function UserPlaylist(props: { item: string }) {
-    return (
-      <>
-        <View style={[s.row, s.jcBetween, s.g2]}>
-          <CheckBox label={props.item} />
-          <Pressable
-            style={[s.pressable]}
-            onPress={() => {
-              setNamePlaylist(props.item);
-              setOpenInfoDelete(true);
-            }}
-          >
-            <MaterialCommunityIcons
-              name="trash-can-outline"
-              size={20}
-              color={palette.primary}
-            />
+function UserPlaylist(props: { item: string }) {
+  const [openInfoDelete, setOpenInfoDelete] = useState(false);
+
+  return (
+    <View style={[s.row, s.jcBetween, s.g2]}>
+      <CheckBox label={props.item} />
+      <Pressable style={[s.pressable]} onPress={() => setOpenInfoDelete(true)}>
+        <MaterialCommunityIcons
+          name="trash-can-outline"
+          size={20}
+          color={palette.primary}
+        />
+      </Pressable>
+      {openInfoDelete && (
+        <DeletePlaylist
+          onClose={() => setOpenInfoDelete(false)}
+          onDelete={() => setOpenInfoDelete(false)}
+          name={props.item}
+        />
+      )}
+    </View>
+  );
+}
+
+function DeletePlaylist(props: {
+  onClose: () => void;
+  onDelete: () => void;
+  name: string;
+}) {
+  return (
+    <Modal>
+      <View style={[s.p3]}>
+        <Text style={[s.textBold]}>
+          Você tem certeza que deseja excluir a playlist "{props.name}"
+        </Text>
+
+        <View style={[s.row, s.jcBetween, s.mt4]}>
+          <Pressable onPress={() => props.onClose()}>
+            <Text style={[s.textStrong]}>CANCELAR</Text>
+          </Pressable>
+          <Pressable onPress={() => props.onDelete()}>
+            <Text style={[s.textStrong]}>EXCLUIR</Text>
           </Pressable>
         </View>
-        {openInfoDelete && (
-          <DeletePlaylist
-            onClose={() => setOpenInfoDelete(false)}
-            onDelete={() => setOpenInfoDelete(false)}
-            name={namePlaylist}
-          />
-        )}
-      </>
-    );
-  }
-
-  function DeletePlaylist(props: {
-    onClose: () => void;
-    onDelete: () => void;
-    name: string;
-  }) {
-    return (
-      <Modal>
-        <View style={[s.p3]}>
-          <Text style={[s.textBold]}>
-            Você tem certeza que deseja excluir a playlist "{props.name}"
-          </Text>
-
-          <View style={[s.row, s.jcBetween, s.mt4]}>
-            <Pressable onPress={() => props.onClose()}>
-              <Text style={[s.textStrong]}>CANCELAR</Text>
-            </Pressable>
-            <Pressable onPress={() => props.onDelete()}>
-              <Text style={[s.textStrong]}>EXCLUIR</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-    );
-  }
+      </View>
+    </Modal>
+  );
 }

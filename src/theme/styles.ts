@@ -36,7 +36,6 @@ const components = StyleSheet.create({
     lineHeight: 18,
     fontWeight: "bold",
   },
-
   textStrong: {
     color: palette.primary,
     fontSize: 12,
