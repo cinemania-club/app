@@ -1,8 +1,9 @@
 import { createContext } from "react";
 
-import { CatalogItemData } from "./types";
+import { CatalogItemData, Playlist } from "./types";
 
 type CatalogItemPayload = {
+  playlists: Playlist[];
   item: CatalogItemData;
   showOverview: (show: boolean) => void;
   rate: (stars: number) => void;

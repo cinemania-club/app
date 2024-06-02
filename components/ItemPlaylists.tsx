@@ -14,18 +14,18 @@ export default function (props: { onClose: () => void }) {
   const [createPlaylist, setCreatePlaylist] = useState(false);
   const [openInfoArchived, setOpenInfoArchived] = useState(false);
 
-  const { item } = useContext(CatalogItemContext)!;
+  const { playlists } = useContext(CatalogItemContext)!;
 
   return (
     <Modal>
       <Text style={[s.textStrong]}>Adicione à playlist</Text>
 
-      {item.playlists
+      {playlists
         .filter((playlist) => playlist.type === PlaylistType.WATCH_LATER)
         .map((playlist) => (
           <CheckBox label={playlist.name} />
         ))}
-      {item.playlists
+      {playlists
         .filter((playlist) => playlist.type === PlaylistType.ARCHIVED)
         .map((playlist) => (
           <View style={[s.row, s.aiCenter, s.g2]}>
@@ -41,7 +41,7 @@ export default function (props: { onClose: () => void }) {
           </View>
         ))}
 
-      {item.playlists
+      {playlists
         .filter((playlist) => playlist.type === PlaylistType.CUSTOM)
         .map((playlist) => (
           <CustomPlaylist name={playlist.name} />
