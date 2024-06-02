@@ -25,7 +25,6 @@ export default function (props: { onClose: () => void }) {
         .map((playlist) => (
           <CheckBox label={playlist.name} />
         ))}
-
       {item.playlists
         .filter((playlist) => playlist.type === PlaylistType.ARCHIVED)
         .map((playlist) => (
@@ -45,10 +44,7 @@ export default function (props: { onClose: () => void }) {
       {item.playlists
         .filter((playlist) => playlist.type === PlaylistType.CUSTOM)
         .map((playlist) => (
-          <>
-            <CheckBox label={playlist.name} />
-            <Text>Lixeira</Text>
-          </>
+          <CustomPlaylist name={playlist.name} />
         ))}
 
       {openInfoArchived && (
@@ -79,6 +75,58 @@ export default function (props: { onClose: () => void }) {
       <Pressable onPress={() => props.onClose()}>
         <Text style={[s.textStrong, s.taCenter]}>OK</Text>
       </Pressable>
+    </Modal>
+  );
+}
+
+function CustomPlaylist(props: { name: string }) {
+  const [openDeletePlaylist, setOpenDeletePlaylist] = useState(false);
+
+  return (
+    <View style={[s.row, s.jcBetween, s.g2]}>
+      <CheckBox label={props.name} />
+      <Pressable
+        style={[s.pressable]}
+        onPress={() => setOpenDeletePlaylist(true)}
+      >
+        <MaterialCommunityIcons
+          name="trash-can-outline"
+          size={20}
+          color={palette.primary}
+        />
+      </Pressable>
+      {openDeletePlaylist && (
+        <DeletePlaylist
+          name={props.name}
+          onClose={() => setOpenDeletePlaylist(false)}
+          onDelete={() => setOpenDeletePlaylist(false)}
+        />
+      )}
+    </View>
+  );
+}
+
+function DeletePlaylist(props: {
+  name: string;
+  onClose: () => void;
+  onDelete: () => void;
+}) {
+  return (
+    <Modal>
+      <View style={[s.p3, s.g4]}>
+        <Text style={[s.textBold]}>
+          Você tem certeza que deseja excluir a playlist "{props.name}"
+        </Text>
+
+        <View style={[s.row, s.jcBetween]}>
+          <Pressable onPress={() => props.onClose()}>
+            <Text style={[s.textStrong]}>CANCELAR</Text>
+          </Pressable>
+          <Pressable onPress={() => props.onDelete()}>
+            <Text style={[s.textStrong]}>EXCLUIR</Text>
+          </Pressable>
+        </View>
+      </View>
     </Modal>
   );
 }
