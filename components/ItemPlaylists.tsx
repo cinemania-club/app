@@ -1,8 +1,10 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import { CatalogItemContext } from "../src/contexts";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
+import { PlaylistType } from "../src/types";
 import CheckBox from "./CheckBox";
 import InfoArchived from "./InfoArchived";
 import Modal from "./Modal";
@@ -12,28 +14,38 @@ export default function (props: { onClose: () => void }) {
   const [createPlaylist, setCreatePlaylist] = useState(false);
   const [openInfoArchived, setOpenInfoArchived] = useState(false);
 
-  const playlists = ["Assistir com o mozão", "Terror", "Para rir"];
+  const { item } = useContext(CatalogItemContext)!;
 
   return (
     <Modal>
       <Text style={[s.textStrong]}>Adicione à playlist</Text>
 
-      <CheckBox label="Assistir mais tarde" />
-      <View style={[s.row, s.aiCenter, s.g2]}>
-        <CheckBox label="Arquivados" />
-        <Pressable onPress={() => setOpenInfoArchived(true)}>
-          <MaterialCommunityIcons
-            name="information"
-            size={14}
-            color={palette.primary}
-            style={[s.pressable]}
-          />
-        </Pressable>
-      </View>
+      {item.playlists
+        .filter((playlist) => playlist.type === PlaylistType.WATCH_LATER)
+        .map((playlist) => (
+          <CheckBox label={playlist.name} />
+        ))}
+      {item.playlists
+        .filter((playlist) => playlist.type === PlaylistType.ARCHIVED)
+        .map((playlist) => (
+          <View style={[s.row, s.aiCenter, s.g2]}>
+            <CheckBox label={playlist.name} />
+            <Pressable onPress={() => setOpenInfoArchived(true)}>
+              <MaterialCommunityIcons
+                name="information"
+                size={14}
+                color={palette.primary}
+                style={[s.pressable]}
+              />
+            </Pressable>
+          </View>
+        ))}
 
-      {playlists.map((item) => (
-        <CustomPlaylist name={item} />
-      ))}
+      {item.playlists
+        .filter((playlist) => playlist.type === PlaylistType.CUSTOM)
+        .map((playlist) => (
+          <CustomPlaylist name={playlist.name} />
+        ))}
 
       {openInfoArchived && (
         <InfoArchived onClose={() => setOpenInfoArchived(false)} />

@@ -17,7 +17,7 @@ import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
-import { CatalogItemData } from "../../src/types";
+import { CatalogItemData, PlaylistType } from "../../src/types";
 
 type CatalogResponse = {
   onboarding: Onboarding;
@@ -135,7 +135,23 @@ export default function () {
     const data = response.data;
 
     setTotal(data.total);
-    setItems([...items, ...data.items]);
+    setItems([
+      ...items,
+      ...data.items.map((item) => ({
+        ...item,
+        playlists: [
+          {
+            _id: "123",
+            name: "Assistir mais tarde",
+            type: PlaylistType.WATCH_LATER,
+          },
+          { _id: "123", name: "Arquivdos", type: PlaylistType.ARCHIVED },
+          { _id: "123", name: "Minha playlist", type: PlaylistType.CUSTOM },
+          { _id: "123", name: "Minha playlist", type: PlaylistType.CUSTOM },
+          { _id: "123", name: "Minha playlist", type: PlaylistType.CUSTOM },
+        ],
+      })),
+    ]);
     setOnboarding(data.onboarding);
     setLoading(false);
   }
