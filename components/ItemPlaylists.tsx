@@ -4,7 +4,6 @@ import { Pressable, Text, View } from "react-native";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import CheckBox from "./CheckBox";
-import DeletePlaylist from "./DeletePlaylist";
 import InfoArchived from "./InfoArchived";
 import Modal from "./Modal";
 import TextField from "./TextField";
@@ -17,7 +16,7 @@ export default function (props: { onClose: () => void }) {
 
   const [namePlaylist, setNamePlaylist] = useState("");
 
-  const listeOfFilms = ["Assistir com o mozão", "Terror", "Para rir"];
+  const playlists = ["Assistir com o mozão", "Terror", "Para rir"];
 
   return (
     <Modal>
@@ -36,34 +35,8 @@ export default function (props: { onClose: () => void }) {
         </Pressable>
       </View>
 
-      {listeOfFilms.map((item) => {
-        return (
-          <>
-            <View style={[s.row, s.jcBetween, s.g2]}>
-              <CheckBox label={item} />
-              <Pressable
-                style={[s.pressable]}
-                onPress={() => {
-                  setNamePlaylist(item);
-                  setOpenInfoDelete(true);
-                }}
-              >
-                <MaterialCommunityIcons
-                  name="trash-can-outline"
-                  size={20}
-                  color={palette.primary}
-                />
-              </Pressable>
-            </View>
-            {openInfoDelete && (
-              <DeletePlaylist
-                onClose={() => setOpenInfoDelete(false)}
-                onDelete={() => setOpenInfoDelete(false)}
-                name={namePlaylist}
-              />
-            )}
-          </>
-        );
+      {playlists.map((item) => {
+        return <UserPlaylist item={item} />;
       })}
 
       {openInfoArchived && (
@@ -96,4 +69,59 @@ export default function (props: { onClose: () => void }) {
       </Pressable>
     </Modal>
   );
+
+  function UserPlaylist(props: { item: string }) {
+    return (
+      <>
+        <View style={[s.row, s.jcBetween, s.g2]}>
+          <CheckBox label={props.item} />
+          <Pressable
+            style={[s.pressable]}
+            onPress={() => {
+              setNamePlaylist(props.item);
+              setOpenInfoDelete(true);
+            }}
+          >
+            <MaterialCommunityIcons
+              name="trash-can-outline"
+              size={20}
+              color={palette.primary}
+            />
+          </Pressable>
+        </View>
+        {openInfoDelete && (
+          <DeletePlaylist
+            onClose={() => setOpenInfoDelete(false)}
+            onDelete={() => setOpenInfoDelete(false)}
+            name={namePlaylist}
+          />
+        )}
+      </>
+    );
+  }
+
+  function DeletePlaylist(props: {
+    onClose: () => void;
+    onDelete: () => void;
+    name: string;
+  }) {
+    return (
+      <Modal>
+        <View style={[s.p3]}>
+          <Text style={[s.textBold]}>
+            Você tem certeza que deseja excluir a playlist "{props.name}"
+          </Text>
+
+          <View style={[s.row, s.jcBetween, s.mt4]}>
+            <Pressable onPress={() => props.onClose()}>
+              <Text style={[s.textStrong]}>CANCELAR</Text>
+            </Pressable>
+            <Pressable onPress={() => props.onDelete()}>
+              <Text style={[s.textStrong]}>EXCLUIR</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+    );
+  }
 }

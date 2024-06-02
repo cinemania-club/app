@@ -36,12 +36,7 @@ const components = StyleSheet.create({
     lineHeight: 18,
     fontWeight: "bold",
   },
-  textSemiBold: {
-    color: palette.text,
-    fontSize: 12,
-    lineHeight: 18,
-    fontWeight: "500",
-  },
+
   textStrong: {
     color: palette.primary,
     fontSize: 12,
