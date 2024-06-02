@@ -31,9 +31,9 @@ export default function (props: { onClose: () => void }) {
         </Pressable>
       </View>
 
-      {playlists.map((item) => {
-        return <UserPlaylist item={item} />;
-      })}
+      {playlists.map((item) => (
+        <CustomPlaylist name={item} />
+      ))}
 
       {openInfoArchived && (
         <InfoArchived onClose={() => setOpenInfoArchived(false)} />
@@ -67,24 +67,27 @@ export default function (props: { onClose: () => void }) {
   );
 }
 
-function UserPlaylist(props: { item: string }) {
-  const [openInfoDelete, setOpenInfoDelete] = useState(false);
+function CustomPlaylist(props: { name: string }) {
+  const [openDeletePlaylist, setOpenDeletePlaylist] = useState(false);
 
   return (
     <View style={[s.row, s.jcBetween, s.g2]}>
-      <CheckBox label={props.item} />
-      <Pressable style={[s.pressable]} onPress={() => setOpenInfoDelete(true)}>
+      <CheckBox label={props.name} />
+      <Pressable
+        style={[s.pressable]}
+        onPress={() => setOpenDeletePlaylist(true)}
+      >
         <MaterialCommunityIcons
           name="trash-can-outline"
           size={20}
           color={palette.primary}
         />
       </Pressable>
-      {openInfoDelete && (
+      {openDeletePlaylist && (
         <DeletePlaylist
-          onClose={() => setOpenInfoDelete(false)}
-          onDelete={() => setOpenInfoDelete(false)}
-          name={props.item}
+          name={props.name}
+          onClose={() => setOpenDeletePlaylist(false)}
+          onDelete={() => setOpenDeletePlaylist(false)}
         />
       )}
     </View>
@@ -92,18 +95,18 @@ function UserPlaylist(props: { item: string }) {
 }
 
 function DeletePlaylist(props: {
+  name: string;
   onClose: () => void;
   onDelete: () => void;
-  name: string;
 }) {
   return (
     <Modal>
-      <View style={[s.p3]}>
+      <View style={[s.p3, s.g4]}>
         <Text style={[s.textBold]}>
           Você tem certeza que deseja excluir a playlist "{props.name}"
         </Text>
 
-        <View style={[s.row, s.jcBetween, s.mt4]}>
+        <View style={[s.row, s.jcBetween]}>
           <Pressable onPress={() => props.onClose()}>
             <Text style={[s.textStrong]}>CANCELAR</Text>
           </Pressable>
