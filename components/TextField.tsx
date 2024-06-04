@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { TextInput, View } from "react-native";
 import s from "../src/theme/styles";
 
@@ -7,6 +7,8 @@ export default function (props: {
   children?: ReactNode;
   reverse?: boolean;
 }) {
+  const [value, setValue] = useState("");
+
   return (
     <View
       style={[
@@ -20,7 +22,9 @@ export default function (props: {
     >
       <TextInput
         placeholder={props.placeholder}
-        style={[s.text, s.italic, s.flex1, { outline: "none" }]}
+        style={[s.text, !value && s.italic, s.flex1, { outline: "none" }]}
+        value={value}
+        onChangeText={(text) => setValue(text)}
       />
       {props.children}
     </View>
