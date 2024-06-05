@@ -65,6 +65,8 @@ export default function () {
         stickyHeaderIndices={onboarding ? [0] : undefined}
         keyExtractor={(item) => item._id.toString()}
         onEndReached={() => loadCatalog()}
+        onRefresh={() => refreshCatalog()}
+        refreshing={loading}
         ListHeaderComponent={() => (
           <Header total={total} onboarding={onboarding} />
         )}
@@ -114,10 +116,7 @@ export default function () {
             icon: <MaterialIcons name="remove-red-eye" />,
             action: () =>
               setItems(
-                items.map((item) => ({
-                  ...item,
-                  showOverview: willExpand,
-                })),
+                items.map((item) => ({ ...item, showOverview: willExpand })),
               ),
           },
         ]}
