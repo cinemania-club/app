@@ -6,6 +6,7 @@ type CatalogItemPayload = {
   item: CatalogItemData;
   playlists: Playlist[];
   addPlaylist: (id: string, name: string) => void;
+  deletePlaylist: (id: string) => void;
   showOverview: (show: boolean) => void;
   rate: (stars: number) => void;
 };

@@ -5,7 +5,7 @@ import { CatalogItemContext } from "../src/contexts";
 import { useServer } from "../src/hooks";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
-import { PlaylistType } from "../src/types";
+import { Playlist, PlaylistType } from "../src/types";
 import CheckBox from "./CheckBox";
 import InfoArchived from "./InfoArchived";
 import Modal from "./Modal";
@@ -29,6 +29,7 @@ export default function (props: { onClose: () => void }) {
         .map((playlist) => (
           <CheckBox label={playlist.name} />
         ))}
+
       {playlists
         .filter((playlist) => playlist.type === PlaylistType.ARCHIVED)
         .map((playlist) => (
@@ -48,7 +49,7 @@ export default function (props: { onClose: () => void }) {
       {playlists
         .filter((playlist) => playlist.type === PlaylistType.CUSTOM)
         .map((playlist) => (
-          <CustomPlaylist name={playlist.name} />
+          <CustomPlaylist playlist={playlist} />
         ))}
 
       {openInfoArchived && (
@@ -98,12 +99,12 @@ export default function (props: { onClose: () => void }) {
   }
 }
 
-function CustomPlaylist(props: { name: string }) {
+function CustomPlaylist(props: { playlist: Playlist }) {
   const [openDeletePlaylist, setOpenDeletePlaylist] = useState(false);
 
   return (
     <View style={[s.row, s.jcBetween, s.g2]}>
-      <CheckBox label={props.name} />
+      <CheckBox label={props.playlist.name} />
       <Pressable
         style={[s.pressable]}
         onPress={() => setOpenDeletePlaylist(true)}
@@ -116,36 +117,42 @@ function CustomPlaylist(props: { name: string }) {
       </Pressable>
       {openDeletePlaylist && (
         <DeletePlaylist
-          name={props.name}
+          playlist={props.playlist}
           onClose={() => setOpenDeletePlaylist(false)}
-          onDelete={() => setOpenDeletePlaylist(false)}
         />
       )}
     </View>
   );
 }
 
-function DeletePlaylist(props: {
-  name: string;
-  onClose: () => void;
-  onDelete: () => void;
-}) {
+function DeletePlaylist(props: { playlist: Playlist; onClose: () => void }) {
+  const { deletePlaylist } = useContext(CatalogItemContext)!;
+
+  const server = useServer();
+
   return (
     <Modal>
       <View style={[s.p3, s.g4]}>
         <Text style={[s.textBold]}>
-          Você tem certeza que deseja excluir a playlist "{props.name}"
+          Você tem certeza que deseja excluir a playlist "{props.playlist.name}"
         </Text>
 
         <View style={[s.row, s.jcBetween]}>
           <Pressable onPress={() => props.onClose()}>
             <Text style={[s.textStrong]}>CANCELAR</Text>
           </Pressable>
-          <Pressable onPress={() => props.onDelete()}>
+
+          <Pressable onPress={() => onDelete()}>
             <Text style={[s.textStrong]}>EXCLUIR</Text>
           </Pressable>
         </View>
       </View>
     </Modal>
   );
+
+  async function onDelete() {
+    await server.delete(`/playlists/${props.playlist._id}`);
+    deletePlaylist(props.playlist._id);
+    props.onClose();
+  }
 }

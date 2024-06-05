@@ -82,6 +82,11 @@ export default function () {
                   { _id: id, name, type: PlaylistType.CUSTOM },
                 ]);
               },
+              deletePlaylist: (id) => {
+                setPlaylists(
+                  playlists.filter((playlist) => playlist._id !== id),
+                );
+              },
               showOverview: (show) => {
                 const actionItem = items.find(
                   (actionItem) => actionItem._id === item._id,
