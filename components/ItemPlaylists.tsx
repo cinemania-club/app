@@ -6,7 +6,7 @@ import { useServer } from "../src/hooks";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { Playlist, PlaylistType } from "../src/types";
-import CheckBox from "./CheckBox";
+import CheckboxField from "./CheckboxField";
 import InfoArchived from "./InfoArchived";
 import Modal from "./Modal";
 import TextField from "./TextField";
@@ -27,14 +27,14 @@ export default function (props: { onClose: () => void }) {
       {playlists
         .filter((playlist) => playlist.type === PlaylistType.WATCH_LATER)
         .map((playlist) => (
-          <CheckBox label={playlist.name} />
+          <CheckboxField label={playlist.name} onChange={() => {}} />
         ))}
 
       {playlists
         .filter((playlist) => playlist.type === PlaylistType.ARCHIVED)
         .map((playlist) => (
           <View style={[s.row, s.aiCenter, s.g2]}>
-            <CheckBox label={playlist.name} />
+            <CheckboxField label={playlist.name} onChange={() => {}} />
             <Pressable onPress={() => setOpenInfoArchived(true)}>
               <MaterialCommunityIcons
                 name="information"
@@ -104,7 +104,7 @@ function CustomPlaylist(props: { playlist: Playlist }) {
 
   return (
     <View style={[s.row, s.jcBetween, s.g2]}>
-      <CheckBox label={props.playlist.name} />
+      <CheckboxField label={props.playlist.name} onChange={() => {}} />
       <Pressable
         style={[s.pressable]}
         onPress={() => setOpenDeletePlaylist(true)}
