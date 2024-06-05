@@ -55,8 +55,8 @@ function RootLayoutNav() {
             screenOptions={{ headerShown: false }}
             drawerContent={() => <DrawerContent />}
           >
-            <Drawer.Screen name="signup" />
             <Drawer.Screen name="(catalog)" />
+            <Drawer.Screen name="signup" />
             <Drawer.Screen name="friends" />
           </Drawer>
         </AuthProvider>

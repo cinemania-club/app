@@ -17,7 +17,7 @@ import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
-import { CatalogItemData, Playlist } from "../../src/types";
+import { CatalogItemData, Playlist, PlaylistType } from "../../src/types";
 
 type CatalogResponse = {
   onboarding: Onboarding;
@@ -72,8 +72,14 @@ export default function () {
           <CatalogItemContext.Provider
             key={item._id}
             value={{
-              playlists,
               item,
+              playlists,
+              addPlaylist: (id, name) => {
+                setPlaylists([
+                  ...playlists,
+                  { _id: id, name, type: PlaylistType.CUSTOM },
+                ]);
+              },
               showOverview: (show) => {
                 const actionItem = items.find(
                   (actionItem) => actionItem._id === item._id,

@@ -2,6 +2,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useContext, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { CatalogItemContext } from "../src/contexts";
+import { useServer } from "../src/hooks";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { PlaylistType } from "../src/types";
@@ -11,10 +12,13 @@ import Modal from "./Modal";
 import TextField from "./TextField";
 
 export default function (props: { onClose: () => void }) {
-  const [createPlaylist, setCreatePlaylist] = useState(false);
+  const [creatingPlaylist, setCreatingPlaylist] = useState(false);
   const [openInfoArchived, setOpenInfoArchived] = useState(false);
+  const [playlistName, setPlaylistName] = useState("");
 
-  const { playlists } = useContext(CatalogItemContext)!;
+  const { playlists, addPlaylist } = useContext(CatalogItemContext)!;
+
+  const server = useServer();
 
   return (
     <Modal>
@@ -51,16 +55,21 @@ export default function (props: { onClose: () => void }) {
         <InfoArchived onClose={() => setOpenInfoArchived(false)} />
       )}
 
-      {createPlaylist ? (
-        <TextField placeholder="Digite o nome da playlist">
-          <MaterialCommunityIcons
-            name="plus"
-            size={24}
-            color={palette.primary}
-          />
+      {creatingPlaylist ? (
+        <TextField
+          placeholder="Digite o nome da playlist"
+          onChangeText={(text) => setPlaylistName(text)}
+        >
+          <Pressable onPress={() => createPlaylist()}>
+            <MaterialCommunityIcons
+              name="plus"
+              size={24}
+              color={palette.primary}
+            />
+          </Pressable>
         </TextField>
       ) : (
-        <Pressable onPress={() => setCreatePlaylist(true)}>
+        <Pressable onPress={() => setCreatingPlaylist(true)}>
           <View style={[s.row, s.aiCenter, s.g1]}>
             <MaterialCommunityIcons
               name="plus"
@@ -77,6 +86,13 @@ export default function (props: { onClose: () => void }) {
       </Pressable>
     </Modal>
   );
+
+  async function createPlaylist() {
+    const response = await server.post<{ id: string }>("/playlists", {
+      name: playlistName,
+    });
+    addPlaylist(response.data.id, playlistName);
+  }
 }
 
 function CustomPlaylist(props: { name: string }) {
