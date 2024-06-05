@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { chunk } from "lodash";
@@ -8,6 +8,7 @@ import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { CatalogItemFormat } from "../src/types";
 import ActionButton from "./ActionButton";
+import CheckboxField from "./CheckboxField";
 
 type CheckboxOption<T> = {
   label: string;
@@ -131,30 +132,4 @@ function CheckboxFilter<T>(props: {
 
     return new Set([...checkedOptions]);
   }
-}
-
-function CheckboxField(props: {
-  label: string;
-  initial: boolean;
-  onChange: (checked: boolean) => void;
-}) {
-  const [checked, setChecked] = useState(props.initial);
-
-  useEffect(() => {
-    props.onChange(checked);
-  }, [checked]);
-
-  return (
-    <Pressable
-      style={[s.row, s.aiCenter, s.g2]}
-      onPress={() => setChecked(!checked)}
-    >
-      <MaterialCommunityIcons
-        name={checked ? "checkbox-marked" : "checkbox-blank-outline"}
-        color={palette.primary}
-        size={20}
-      />
-      <Text style={[s.text]}>{props.label}</Text>
-    </Pressable>
-  );
 }
