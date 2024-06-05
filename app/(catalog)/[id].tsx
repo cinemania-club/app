@@ -1,11 +1,12 @@
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { getYear } from "date-fns";
 import { LinearGradient } from "expo-linear-gradient";
 import { useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator, ImageBackground, Text, View } from "react-native";
 
 import DrawerFrame from "../../components/DrawerFrame";
+import { MOVIE_GENRES } from "../../src/filters";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
@@ -35,7 +36,12 @@ export default function () {
     );
   }
 
-  const genres = item.genres.join("/");
+  const mapGenres = item.genres
+    .map((genreId) => {
+      const genre = MOVIE_GENRES.find((g) => g.value === genreId);
+      return genre ? genre.label : null;
+    })
+    .filter((genre) => genre !== null);
 
   return (
     <DrawerFrame title={item.title} back>
@@ -47,28 +53,106 @@ export default function () {
       >
         <LinearGradient
           colors={["#454545c0", "#000000ff"]}
-          style={[s.p5, s.g3]}
+          style={[s.p4, s.g3]}
         >
-          <Text style={[s.textStrong, { fontSize: 14 }]}>{item.title}</Text>
-          <Text style={[s.text]}>{genres}</Text>
+          <View style={[s.mx4, s.g3]}>
+            <Text style={[s.textStrong, { fontSize: 14 }]}>{item.title}</Text>
+            <View style={[s.row, s.g3]}>
+              {mapGenres.map((item) => (
+                <Text style={[s.text]}>{item}</Text>
+              ))}
+            </View>
 
-          <View style={[s.row, s.g3]}>
-            <Text style={[s.text]}>{getYear(item.firstAirDate)}</Text>
-            <Text style={[s.text]}>{item.runtime} mins</Text>
+            <View style={[s.row, s.aiCenter, s.g3]}>
+              <View style={[s.row, s.g3]}>
+                <Text style={[s.text]}>{getYear(item.firstAirDate)}</Text>
+                <Text style={[s.text]}>{item.runtime} mins</Text>
+              </View>
+              <View style={[s.row, s.g1, s.aiCenter]}>
+                <MaterialCommunityIcons
+                  name="alpha-n-box"
+                  size={26}
+                  color="black"
+                />
+                <MaterialCommunityIcons
+                  name="alpha-n-box"
+                  size={26}
+                  color="black"
+                />
+                <MaterialCommunityIcons
+                  name="alpha-n-box"
+                  size={26}
+                  color="black"
+                />
+                <MaterialCommunityIcons
+                  name="alpha-n-box"
+                  size={26}
+                  color="black"
+                />
+              </View>
+            </View>
+
+            <View style={[s.row, s.jcBetween]}>
+              <Text style={[s.text]}>
+                <Text style={[s.textStrong]}>90%</Text> indicado
+              </Text>
+              <Rating
+                label="Seguidos:"
+                stars={item.ratings.user}
+                color={palette.text}
+              />
+              <Rating
+                label="Geral:"
+                stars={item.ratings.general}
+                color={palette.text}
+              />
+            </View>
           </View>
-
-          <View style={[s.row, s.jcBetween]}>
-            <Rating
-              label="Geral"
-              stars={item.ratings.general}
+          <View style={[s.row, s.aiCenter, s.jcBetween, s.bgLight, s.p3, s.r3]}>
+            <MaterialIcons
+              name="bookmark-outline"
+              size={20}
               color={palette.primary}
             />
-            <Rating label="Amigos" color={palette.text} />
-            <Rating
-              label="Você"
-              stars={item.ratings.user}
-              color={palette.text}
-            />
+            <View style={[s.row, s.aiCenter, s.jcBetween, s.g2]}>
+              <MaterialCommunityIcons
+                name="star-outline"
+                size={20}
+                color={palette.primary}
+              />
+              <MaterialCommunityIcons
+                name="star-outline"
+                size={20}
+                color={palette.primary}
+              />
+              <MaterialCommunityIcons
+                name="star-outline"
+                size={20}
+                color={palette.primary}
+              />
+              <MaterialCommunityIcons
+                name="star-outline"
+                size={20}
+                color={palette.primary}
+              />
+              <MaterialCommunityIcons
+                name="star-outline"
+                size={20}
+                color={palette.primary}
+              />
+            </View>
+            <View style={[s.row, s.aiCenter, s.g4]}>
+              <MaterialCommunityIcons
+                name="comment-processing"
+                size={18}
+                color={palette.primary}
+              />
+              <MaterialCommunityIcons
+                name="alert-octagon-outline"
+                size={20}
+                color={palette.primary}
+              />
+            </View>
           </View>
         </LinearGradient>
       </ImageBackground>
