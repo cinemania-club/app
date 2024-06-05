@@ -92,6 +92,7 @@ export default function (props: { onClose: () => void }) {
       name: playlistName,
     });
     addPlaylist(response.data.id, playlistName);
+    setCreatingPlaylist(false);
   }
 }
 
