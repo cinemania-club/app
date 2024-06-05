@@ -88,6 +88,8 @@ export default function (props: { onClose: () => void }) {
   );
 
   async function createPlaylist() {
+    if (!playlistName) return;
+
     const response = await server.post<{ id: string }>("/playlists", {
       name: playlistName,
     });
