@@ -21,7 +21,7 @@ export default function (props: { onClose: () => void }) {
   const server = useServer();
 
   return (
-    <Modal>
+    <Modal onClose={() => props.onClose()}>
       <Text style={[s.textStrong]}>Adicione à playlist</Text>
 
       {playlists
@@ -131,7 +131,7 @@ function DeletePlaylist(props: { playlist: Playlist; onClose: () => void }) {
   const server = useServer();
 
   return (
-    <Modal>
+    <Modal onClose={() => props.onClose()}>
       <View style={[s.p3, s.g4]}>
         <Text style={[s.textBold]}>
           Você tem certeza que deseja excluir a playlist "{props.playlist.name}"
