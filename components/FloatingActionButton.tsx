@@ -21,7 +21,7 @@ export default function (props: { actions: Action[] }) {
 
 function Expanded(props: { actions: Action[]; collapse: () => void }) {
   return (
-    <Overlay>
+    <Overlay onClose={() => props.collapse()}>
       <View
         style={[
           s.flex1,
