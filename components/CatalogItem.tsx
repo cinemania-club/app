@@ -1,7 +1,6 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { getYear } from "date-fns";
 import { router } from "expo-router";
-import _ from "lodash";
 import React, { useContext, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -10,6 +9,7 @@ import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { brNumber } from "../src/util";
 import ItemPlaylists from "./ItemPlaylists";
+import ItemRating from "./ItemRating";
 
 export default function () {
   const { item } = useContext(CatalogItemContext)!;
@@ -114,32 +114,6 @@ function ItemActions() {
           </Pressable>
         </View>
       </View>
-    </View>
-  );
-}
-
-function ItemRating() {
-  const { item, rate } = useContext(CatalogItemContext)!;
-
-  return (
-    <View style={[s.row, s.g4]}>
-      {_.range(1, 6).map((stars) => (
-        <Pressable
-          key={stars}
-          style={[s.pressable]}
-          onPress={() => rate(stars)}
-        >
-          <MaterialIcons
-            name={
-              item.ratings.user && stars <= item.ratings.user
-                ? "star"
-                : "star-border"
-            }
-            size={20}
-            color={palette.primary}
-          />
-        </Pressable>
-      ))}
     </View>
   );
 }
