@@ -74,7 +74,7 @@ function ItemInfo() {
 }
 
 function ItemActions() {
-  const { item, showOverview } = useContext(CatalogItemContext)!;
+  const { item, rate, showOverview } = useContext(CatalogItemContext)!;
 
   const [showItemPlaylists, setShowItemPlaylists] = useState(false);
 
@@ -83,7 +83,7 @@ function ItemActions() {
       {item.showOverview && <Text style={[s.text]}>{item.overview}</Text>}
 
       <View style={[s.row, s.aiCenter, s.jcBetween, s.g4]}>
-        <ItemRating />
+        <ItemRating stars={item.ratings.user} rate={rate} />
 
         <View style={[s.row, s.aiCenter, s.g4]}>
           <Pressable

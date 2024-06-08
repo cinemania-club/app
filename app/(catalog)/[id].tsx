@@ -7,12 +7,11 @@ import { ActivityIndicator, ImageBackground, Text, View } from "react-native";
 
 import DrawerFrame from "../../components/DrawerFrame";
 import ItemRating from "../../components/ItemRating";
-import { CatalogItemContext } from "../../src/contexts";
 import { MOVIE_GENRES } from "../../src/filters";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
-import { CatalogItemData, ItemDetailsData } from "../../src/types";
+import { ItemDetailsData } from "../../src/types";
 import { brNumber } from "../../src/util";
 
 type ItemDetailsResponse = {
@@ -117,18 +116,10 @@ export default function () {
               color={palette.primary}
             />
 
-            <CatalogItemContext.Provider
-              value={{
-                item: item as unknown as CatalogItemData,
-                playlists: [],
-                addPlaylist: (id, name) => {},
-                deletePlaylist: (id) => {},
-                showOverview: (show) => {},
-                rate: (stars) => console.log("Implementar"),
-              }}
-            >
-              <ItemRating />
-            </CatalogItemContext.Provider>
+            <ItemRating
+              stars={item.ratings.user}
+              rate={(stars) => console.log("Implementar")}
+            />
 
             <View style={[s.row, s.aiCenter, s.g4]}>
               <MaterialCommunityIcons
