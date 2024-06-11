@@ -12,12 +12,15 @@ import Modal from "./Modal";
 import TextField from "./TextField";
 
 export default function (props: { onClose: () => void }) {
+  const { item, playlists, addPlaylist, setItemPlaylists } =
+    useContext(CatalogItemContext)!;
+
   const [creatingPlaylist, setCreatingPlaylist] = useState(false);
   const [openInfoArchived, setOpenInfoArchived] = useState(false);
   const [playlistName, setPlaylistName] = useState("");
-  const [checkedPlaylists, setCheckedPlaylists] = useState<string[]>([]);
-
-  const { item, playlists, addPlaylist } = useContext(CatalogItemContext)!;
+  const [checkedPlaylists, setCheckedPlaylists] = useState<string[]>(
+    item.playlists,
+  );
 
   const server = useServer();
 
@@ -31,6 +34,7 @@ export default function (props: { onClose: () => void }) {
           <CheckboxField
             label={playlist.name}
             onChange={(checked) => setPlaylistChecked(playlist._id, checked)}
+            initial={checkedPlaylists.includes(playlist._id)}
           />
         ))}
 
@@ -41,6 +45,7 @@ export default function (props: { onClose: () => void }) {
             <CheckboxField
               label={playlist.name}
               onChange={(checked) => setPlaylistChecked(playlist._id, checked)}
+              initial={checkedPlaylists.includes(playlist._id)}
             />
             <Pressable onPress={() => setOpenInfoArchived(true)}>
               <MaterialCommunityIcons
@@ -58,6 +63,7 @@ export default function (props: { onClose: () => void }) {
         .map((playlist) => (
           <CustomPlaylist
             playlist={playlist}
+            initial={checkedPlaylists.includes(playlist._id)}
             setChecked={(checked) => setPlaylistChecked(playlist._id, checked)}
           />
         ))}
@@ -121,12 +127,14 @@ export default function (props: { onClose: () => void }) {
       itemId: item._id,
       playlists: checkedPlaylists,
     });
+    setItemPlaylists(checkedPlaylists);
     props.onClose();
   }
 }
 
 function CustomPlaylist(props: {
   playlist: Playlist;
+  initial: boolean;
   setChecked: (checked: boolean) => void;
 }) {
   const [openDeletePlaylist, setOpenDeletePlaylist] = useState(false);
@@ -136,6 +144,7 @@ function CustomPlaylist(props: {
       <CheckboxField
         label={props.playlist.name}
         onChange={(checked) => props.setChecked(checked)}
+        initial={props.initial}
       />
       <Pressable
         style={[s.pressable]}
