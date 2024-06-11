@@ -87,6 +87,10 @@ export default function () {
                   playlists.filter((playlist) => playlist._id !== id),
                 );
               },
+              setItemPlaylists: (playlistsIds: string[]) => {
+                item.playlists = playlistsIds;
+                setItems([...items]);
+              },
               showOverview: (show) => {
                 const actionItem = items.find(
                   (actionItem) => actionItem._id === item._id,
