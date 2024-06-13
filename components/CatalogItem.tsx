@@ -91,7 +91,7 @@ function ItemActions() {
             onPress={() => setShowItemPlaylists(true)}
           >
             <MaterialIcons
-              name="bookmark-outline"
+              name={item.playlists.length ? "bookmark" : "bookmark-outline"}
               size={20}
               color={palette.primary}
             />

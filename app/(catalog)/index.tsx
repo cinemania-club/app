@@ -17,7 +17,7 @@ import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
 import { palette } from "../../src/theme/colors";
 import s from "../../src/theme/styles";
-import { CatalogItemData, Playlist } from "../../src/types";
+import { CatalogItemData, Playlist, PlaylistType } from "../../src/types";
 
 type CatalogResponse = {
   onboarding: Onboarding;
@@ -65,6 +65,8 @@ export default function () {
         stickyHeaderIndices={onboarding ? [0] : undefined}
         keyExtractor={(item) => item._id.toString()}
         onEndReached={() => loadCatalog()}
+        onRefresh={() => refreshCatalog()}
+        refreshing={loading}
         ListHeaderComponent={() => (
           <Header total={total} onboarding={onboarding} />
         )}
@@ -72,8 +74,23 @@ export default function () {
           <CatalogItemContext.Provider
             key={item._id}
             value={{
-              playlists,
               item,
+              playlists,
+              addPlaylist: (id, name) => {
+                setPlaylists([
+                  ...playlists,
+                  { _id: id, name, type: PlaylistType.CUSTOM },
+                ]);
+              },
+              deletePlaylist: (id) => {
+                setPlaylists(
+                  playlists.filter((playlist) => playlist._id !== id),
+                );
+              },
+              setItemPlaylists: (playlistsIds: string[]) => {
+                item.playlists = playlistsIds;
+                setItems([...items]);
+              },
               showOverview: (show) => {
                 const actionItem = items.find(
                   (actionItem) => actionItem._id === item._id,
@@ -108,10 +125,7 @@ export default function () {
             icon: <MaterialIcons name="remove-red-eye" />,
             action: () =>
               setItems(
-                items.map((item) => ({
-                  ...item,
-                  showOverview: willExpand,
-                })),
+                items.map((item) => ({ ...item, showOverview: willExpand })),
               ),
           },
         ]}

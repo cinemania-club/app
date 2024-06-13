@@ -5,7 +5,7 @@ import Modal from "./Modal";
 
 export default function (props: { onClose: () => void }) {
   return (
-    <Modal>
+    <Modal onClose={() => props.onClose()}>
       <Text style={[s.text]}>
         Itens <Text style={[s.textPrimary]}>Arquivados</Text> são retirados das
         listas de recomendações para você e filtragens.
