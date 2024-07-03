@@ -1,4 +1,5 @@
 import { MaterialIcons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { ReactNode, useState } from "react";
 import { ScrollView, Text, View } from "react-native";
 import ActionButton from "../components/ActionButton";
@@ -15,6 +16,7 @@ export default function () {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [error, setError] = useState("");
 
   const server = useServer();
 
@@ -75,17 +77,24 @@ export default function () {
             size={20}
           />
         </Field>
+        <Text style={s.textPrimary}>{error}</Text>
         <ActionButton
           icon={<MaterialIcons name="login" />}
           title="Cadastrar"
           onPress={async () => {
-            await server.post("/user/sign-up", {
-              username,
-              email,
-              password,
-              name,
-              phone,
-            });
+            try {
+              await server.post("/user/sign-up", {
+                username,
+                email,
+                password,
+                name,
+                phone,
+              });
+
+              router.push("/");
+            } catch (error: any) {
+              setError(error.response.data.message[0]);
+            }
           }}
         />
       </ScrollView>
