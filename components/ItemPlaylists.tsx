@@ -75,6 +75,7 @@ export default function (props: { onClose: () => void }) {
       {creatingPlaylist ? (
         <TextField
           placeholder="Digite o nome da playlist"
+          value={playlistName}
           onChangeText={(text) => setPlaylistName(text)}
         >
           <Pressable onPress={() => createPlaylist()}>
