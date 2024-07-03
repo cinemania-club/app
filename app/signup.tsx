@@ -4,10 +4,13 @@ import { ScrollView, Text, View } from "react-native";
 import ActionButton from "../components/ActionButton";
 import DrawerFrame from "../components/DrawerFrame";
 import TextField from "../components/TextField";
+import { useServer } from "../src/hooks";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
 export default function () {
+  const server = useServer();
+
   return (
     <DrawerFrame title="Cadastro" noSearch>
       <ScrollView
@@ -44,7 +47,15 @@ export default function () {
         <ActionButton
           icon={<MaterialIcons name="login" />}
           title="Cadastrar"
-          onPress={() => {}}
+          onPress={async () => {
+            await server.post("/user/sign-up", {
+              username: "joaozinho",
+              email: "joao@cinemania.club",
+              password: "S54kh01!",
+              name: "João",
+              phone: "21987654321",
+            });
+          }}
         />
       </ScrollView>
     </DrawerFrame>
