@@ -6,6 +6,7 @@ export default function (props: {
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
+  hideText?: boolean;
   reverse?: boolean;
   children?: ReactNode;
 }) {
@@ -25,6 +26,7 @@ export default function (props: {
         style={[s.text, !props.value && s.italic, s.flex1, { outline: "none" }]}
         value={props.value}
         onChangeText={(text) => props.onChangeText(text)}
+        secureTextEntry={props.hideText}
       />
       {props.children}
     </View>

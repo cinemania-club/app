@@ -1,7 +1,7 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { ReactNode, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import ActionButton from "../components/ActionButton";
 import DrawerFrame from "../components/DrawerFrame";
 import TextField from "../components/TextField";
@@ -17,6 +17,9 @@ export default function () {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [error, setError] = useState("");
+  const [hidePassword, setHidePassword] = useState(true);
+  const [hidePasswordConfirmation, setHidePasswordConfirmation] =
+    useState(true);
 
   const server = useServer();
 
@@ -58,24 +61,34 @@ export default function () {
           placeholder="Digite sua senha"
           value={password}
           onChangeText={(text) => setPassword(text)}
+          hideText={hidePassword}
         >
-          <MaterialIcons
-            name="remove-red-eye"
-            color={palette.primary}
-            size={20}
-          />
+          <Pressable onPress={() => setHidePassword(!hidePassword)}>
+            <MaterialIcons
+              name="remove-red-eye"
+              color={palette.primary}
+              size={20}
+            />
+          </Pressable>
         </Field>
         <Field
           title="Confirmar senha"
           placeholder="Digite sua senha novamente"
           value={passwordConfirmation}
           onChangeText={(text) => setPasswordConfirmation(text)}
+          hideText={hidePasswordConfirmation}
         >
-          <MaterialIcons
-            name="remove-red-eye"
-            color={palette.primary}
-            size={20}
-          />
+          <Pressable
+            onPress={() =>
+              setHidePasswordConfirmation(!hidePasswordConfirmation)
+            }
+          >
+            <MaterialIcons
+              name="remove-red-eye"
+              color={palette.primary}
+              size={20}
+            />
+          </Pressable>
         </Field>
         <Text style={s.textPrimary}>{error}</Text>
         <ActionButton
@@ -107,6 +120,7 @@ function Field(props: {
   placeholder: string;
   value: string;
   onChangeText: (text: string) => void;
+  hideText?: boolean;
   reverse?: boolean;
   children?: ReactNode;
 }) {
@@ -117,6 +131,7 @@ function Field(props: {
         placeholder={props.placeholder}
         value={props.value}
         onChangeText={(text) => props.onChangeText(text)}
+        hideText={props.hideText}
         reverse={props.reverse}
       >
         {props.children}
