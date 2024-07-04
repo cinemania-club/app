@@ -9,6 +9,14 @@ import { useServer } from "../src/hooks";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
+type SignupErrors = {
+  email?: string;
+  phone?: string;
+  name?: string;
+  username?: string;
+  password?: string;
+};
+
 export default function () {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -16,7 +24,7 @@ export default function () {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState<SignupErrors>({});
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirmation, setHidePasswordConfirmation] =
     useState(true);
@@ -34,18 +42,21 @@ export default function () {
           placeholder="Digite seu email"
           value={email}
           onChangeText={(text) => setEmail(text)}
+          error={errors.email}
         />
         <Field
           title="Telefone (opcional)"
           placeholder="Digite seu telefone com DDD"
           value={phone}
           onChangeText={(text) => setPhone(text)}
+          error={errors.phone}
         />
         <Field
           title="Nome"
           placeholder="Digite seu nome"
           value={name}
           onChangeText={(text) => setName(text)}
+          error={errors.name}
         />
         <Field
           title="Nome de usuário"
@@ -53,6 +64,7 @@ export default function () {
           value={username}
           onChangeText={(text) => setUsername(text)}
           reverse
+          error={errors.username}
         >
           <Text style={s.textPrimary}>@</Text>
         </Field>
@@ -62,6 +74,7 @@ export default function () {
           value={password}
           onChangeText={(text) => setPassword(text)}
           hideText={hidePassword}
+          error={errors.password}
         >
           <Pressable onPress={() => setHidePassword(!hidePassword)}>
             <MaterialIcons
@@ -90,7 +103,6 @@ export default function () {
             />
           </Pressable>
         </Field>
-        <Text style={s.textPrimary}>{error}</Text>
         <ActionButton
           icon={<MaterialIcons name="login" />}
           title="Cadastrar"
@@ -106,7 +118,7 @@ export default function () {
 
               router.push("/");
             } catch (error: any) {
-              setError(error.response.data.message[0]);
+              setErrors(error.response.data);
             }
           }}
         />
@@ -123,6 +135,7 @@ function Field(props: {
   hideText?: boolean;
   reverse?: boolean;
   children?: ReactNode;
+  error?: string;
 }) {
   return (
     <View style={[s.g2]}>
@@ -136,6 +149,7 @@ function Field(props: {
       >
         {props.children}
       </TextField>
+      {props.error && <Text style={s.textPrimary}>{props.error}</Text>}
     </View>
   );
 }
