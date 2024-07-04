@@ -106,25 +106,30 @@ export default function () {
         <ActionButton
           icon={<MaterialIcons name="login" />}
           title="Cadastrar"
-          onPress={async () => {
-            try {
-              await server.post("/user/sign-up", {
-                username,
-                email,
-                password,
-                name,
-                phone,
-              });
-
-              router.push("/");
-            } catch (error: any) {
-              setErrors(error.response.data);
-            }
-          }}
+          disabled={
+            !username || !email || !password || !passwordConfirmation || !name
+          }
+          onPress={() => signup()}
         />
       </ScrollView>
     </DrawerFrame>
   );
+
+  async function signup() {
+    try {
+      await server.post("/user/sign-up", {
+        username,
+        email,
+        password,
+        name,
+        phone,
+      });
+
+      router.push("/");
+    } catch (error: any) {
+      setErrors(error.response.data);
+    }
+  }
 }
 
 function Field(props: {
