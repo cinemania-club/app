@@ -17,6 +17,8 @@ type SignupErrors = {
   password?: string;
 };
 
+const UNMATCHED_PASSWORD_ERROR = "As senhas não combinam";
+
 export default function () {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -25,6 +27,7 @@ export default function () {
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState<SignupErrors>({});
+  const [matchingPassword, setMatchingPassword] = useState(true);
   const [hidePassword, setHidePassword] = useState(true);
   const [hidePasswordConfirmation, setHidePasswordConfirmation] =
     useState(true);
@@ -90,6 +93,7 @@ export default function () {
           value={passwordConfirmation}
           onChangeText={(text) => setPasswordConfirmation(text)}
           hideText={hidePasswordConfirmation}
+          error={!matchingPassword ? UNMATCHED_PASSWORD_ERROR : undefined}
         >
           <Pressable
             onPress={() =>
@@ -116,6 +120,10 @@ export default function () {
   );
 
   async function signup() {
+    const matching = password === passwordConfirmation;
+    setMatchingPassword(matching);
+    if (!matching) return;
+
     try {
       await server.post("/user/sign-up", {
         username,
