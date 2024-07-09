@@ -130,7 +130,7 @@ export default function () {
         email,
         password,
         name,
-        phone,
+        phone: phone || undefined,
       });
 
       router.push("/");
