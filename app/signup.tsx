@@ -50,8 +50,8 @@ export default function () {
         <Field
           title="Telefone (opcional)"
           placeholder="Digite seu telefone com DDD"
-          value={phone}
-          onChangeText={(text) => phoneMask(text)}
+          value={phoneMask(phone)}
+          onChangeText={(text) => setPhone(text.replace(/[^0-9]/g, ""))}
           error={errors.phone}
         />
         <Field
@@ -119,20 +119,13 @@ export default function () {
     </DrawerFrame>
   );
 
-  function phoneMask(text: string) {
-    const digits = text.replace(/[^0-9]/g, "");
+  function phoneMask(digits: string) {
+    if (!digits) return "";
+    if (digits.length <= 2) return `(${digits}`;
+    if (digits.length <= 7)
+      return `(${digits.substring(0, 2)}) ${digits.substring(2)}`;
 
-    if (!digits) {
-      setPhone("");
-    } else if (digits.length <= 2) {
-      setPhone(`(${digits}`);
-    } else if (digits.length <= 7) {
-      setPhone(`(${digits.substring(0, 2)}) ${digits.substring(2)}`);
-    } else {
-      setPhone(
-        `(${digits.substring(0, 2)}) ${digits.substring(2, 7)}-${digits.substring(7)}`,
-      );
-    }
+    return `(${digits.substring(0, 2)}) ${digits.substring(2, 7)}-${digits.substring(7)}`;
   }
 
   async function signup() {
@@ -146,7 +139,7 @@ export default function () {
         email,
         password,
         name,
-        phone: phone.replace(/[^0-9]/g, "") || undefined,
+        phone: phone || undefined,
       });
 
       router.push("/");
