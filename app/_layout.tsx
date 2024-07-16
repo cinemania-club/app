@@ -56,7 +56,7 @@ function RootLayoutNav() {
             drawerContent={() => <DrawerContent />}
           >
             <Drawer.Screen name="(catalog)" />
-            <Drawer.Screen name="signup" />
+            <Drawer.Screen name="signup" options={{ unmountOnBlur: true }} />
             <Drawer.Screen name="friends" />
           </Drawer>
         </AuthProvider>
