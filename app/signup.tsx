@@ -129,6 +129,8 @@ export default function () {
   }
 
   async function signup() {
+    setErrors({});
+
     const matching = password === passwordConfirmation;
     setMatchingPassword(matching);
     if (!matching) return;
