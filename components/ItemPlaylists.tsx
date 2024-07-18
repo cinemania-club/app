@@ -6,10 +6,10 @@ import { useServer } from "../src/hooks";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { Playlist, PlaylistType } from "../src/types";
-import CheckboxField from "./CheckboxField";
+import CheckboxField from "./form/CheckboxField";
+import TextField from "./form/TextField";
 import InfoArchived from "./InfoArchived";
 import Modal from "./Modal";
-import TextField from "./TextField";
 
 export default function (props: { onClose: () => void }) {
   const { item, playlists, addPlaylist, setItemPlaylists } =

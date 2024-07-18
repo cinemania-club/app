@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { TextInput, View } from "react-native";
-import s from "../src/theme/styles";
+import s from "../../src/theme/styles";
 
 export default function (props: {
   placeholder: string;

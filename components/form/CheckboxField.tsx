@@ -1,8 +1,8 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useEffect, useState } from "react";
 import { Pressable, Text } from "react-native";
-import { palette } from "../src/theme/colors";
-import s from "../src/theme/styles";
+import { palette } from "../../src/theme/colors";
+import s from "../../src/theme/styles";
 
 export default function (props: {
   label: string;
