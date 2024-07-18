@@ -14,6 +14,7 @@ type CatalogItemPayload = {
 
 type AuthPayload = {
   auth: string;
+  isLogged: boolean;
   saveToken: (token: string) => void;
 };
 

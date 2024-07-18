@@ -12,6 +12,7 @@ import s from "../src/theme/styles";
 
 export default function (props: { children: ReactNode }) {
   const [auth, setAuth] = useState<string>("");
+  const isLogged = auth.includes("Bearer");
 
   const server = useServer();
 
@@ -28,7 +29,7 @@ export default function (props: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ auth, saveToken }}>
+    <AuthContext.Provider value={{ auth, isLogged, saveToken }}>
       {props.children}
     </AuthContext.Provider>
   );
