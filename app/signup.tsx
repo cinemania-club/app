@@ -1,10 +1,11 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useContext, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import ActionButton from "../components/ActionButton";
 import DrawerFrame from "../components/DrawerFrame";
 import TextField from "../components/TextField";
+import { AuthContext } from "../src/contexts";
 import { useServer } from "../src/hooks";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
@@ -33,6 +34,7 @@ export default function () {
     useState(true);
 
   const server = useServer();
+  const { saveToken } = useContext(AuthContext)!;
 
   return (
     <DrawerFrame title="Cadastro" noSearch>
@@ -136,13 +138,14 @@ export default function () {
     if (!matching) return;
 
     try {
-      await server.post("/user/sign-up", {
+      const response = await server.post<{ token: string }>("/user/sign-up", {
         username,
         email,
         password,
         name,
         phone: phone || undefined,
       });
+      saveToken(response.data.token);
 
       router.push("/");
     } catch (error: any) {
