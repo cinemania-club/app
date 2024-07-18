@@ -3,11 +3,12 @@ import { DarkTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Link, SplashScreen } from "expo-router";
 import { Drawer } from "expo-router/drawer";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Text, View } from "react-native";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 import AuthProvider from "../components/AuthProvider";
+import { AuthContext } from "../src/contexts";
 import s from "../src/theme/styles";
 
 export {
@@ -56,7 +57,7 @@ function RootLayoutNav() {
             drawerContent={() => <DrawerContent />}
           >
             <Drawer.Screen name="(catalog)" />
-            <Drawer.Screen name="signup" />
+            <Drawer.Screen name="signup" options={{ unmountOnBlur: true }} />
             <Drawer.Screen name="friends" />
           </Drawer>
         </AuthProvider>
@@ -66,6 +67,8 @@ function RootLayoutNav() {
 }
 
 function DrawerContent() {
+  const isLogged = useContext(AuthContext)?.isLogged;
+
   return (
     <View style={[s.flex1, s.bgMedium]}>
       <View style={[{ height: 200 }, s.bgPrimary, s.aiCenter, s.jcCenter]}>
@@ -73,9 +76,11 @@ function DrawerContent() {
       </View>
 
       <View style={[s.p5, s.g5]}>
-        <Link href="/signup" style={[s.pressable]}>
-          <Text style={[s.textStrong]}>Cadastrar conta</Text>
-        </Link>
+        {!isLogged && (
+          <Link href="/signup" style={[s.pressable]}>
+            <Text style={[s.textStrong]}>Cadastrar conta</Text>
+          </Link>
+        )}
 
         <Link href="/" style={[s.pressable]}>
           <Text style={[s.textBold]}>Catálogo</Text>

@@ -26,7 +26,7 @@ export default function (props: {
         s.p3,
         s.g3,
       ]}
-      onPress={() => props.onPress()}
+      onPress={() => !props.disabled && props.onPress()}
     >
       {icon}
       <Text style={[s.textBold, { fontSize: 14 }]}>{props.title}</Text>

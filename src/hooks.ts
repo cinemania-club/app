@@ -4,12 +4,12 @@ import { useContext } from "react";
 import { AuthContext } from "./contexts";
 
 export function useServer() {
-  const token = useContext(AuthContext);
+  const auth = useContext(AuthContext)?.auth;
 
   return axios.create({
     baseURL: process.env.EXPO_PUBLIC_API_URL,
     headers: {
-      Authorization: token,
+      Authorization: auth,
     },
   });
 }

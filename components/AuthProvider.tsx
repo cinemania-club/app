@@ -11,15 +11,16 @@ import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 
 export default function (props: { children: ReactNode }) {
-  const [token, setToken] = useState<string>("");
+  const [auth, setAuth] = useState<string>("");
+  const isLogged = auth.includes("Bearer");
 
   const server = useServer();
 
   useEffect(() => {
-    initToken();
+    initAuth();
   }, []);
 
-  if (!token) {
+  if (!auth) {
     return (
       <View style={s.center}>
         <ActivityIndicator color={palette.primary} size="large" />
@@ -28,27 +29,36 @@ export default function (props: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={token}>{props.children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ auth, isLogged, saveToken }}>
+      {props.children}
+    </AuthContext.Provider>
   );
 
-  async function initToken() {
-    const token = await getToken();
-    setToken(token);
+  async function initAuth() {
+    const auth = await getAuth();
+    setAuth(auth);
   }
 
-  async function getToken() {
-    const token = await AsyncStorage.getItem("token");
-    if (token) return token;
+  async function getAuth() {
+    const auth = await AsyncStorage.getItem("auth");
+    if (auth) return auth;
 
     return createAnonymousUser();
   }
 
   async function createAnonymousUser() {
-    const token = uuidv4();
+    const uuid = uuidv4();
 
-    await server.post(`/user`, { uuid: token });
+    await server.post(`/user`, { uuid });
 
-    await AsyncStorage.setItem("token", token);
-    return token;
+    await AsyncStorage.setItem("auth", uuid);
+    return uuid;
+  }
+
+  async function saveToken(token: string) {
+    const bearerToken = `Bearer ${token}`;
+
+    await AsyncStorage.setItem("auth", bearerToken);
+    setAuth(bearerToken);
   }
 }

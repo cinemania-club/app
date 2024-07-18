@@ -12,7 +12,13 @@ type CatalogItemPayload = {
   rate: (stars: number) => void;
 };
 
-export const AuthContext = createContext("");
+type AuthPayload = {
+  auth: string;
+  isLogged: boolean;
+  saveToken: (token: string) => void;
+};
+
+export const AuthContext = createContext<AuthPayload | undefined>(undefined);
 
 export const CatalogItemContext = createContext<CatalogItemPayload | undefined>(
   undefined,
