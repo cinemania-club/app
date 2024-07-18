@@ -1,10 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { ReactNode, useContext, useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import React, { useContext, useState } from "react";
+import { Pressable, ScrollView, Text } from "react-native";
 import DrawerFrame from "../components/DrawerFrame";
 import ActionButton from "../components/form/ActionButton";
-import TextField from "../components/form/TextField";
+import TextGroup from "../components/form/TextGroup";
 import { AuthContext } from "../src/contexts";
 import { useServer } from "../src/hooks";
 import { palette } from "../src/theme/colors";
@@ -34,14 +34,14 @@ export default function () {
         style={[s.flex1]}
         contentContainerStyle={[s.g4, s.p5, s.jcEnd, { minHeight: "100%" }]}
       >
-        <Field
+        <TextGroup
           title="Email"
           placeholder="Digite seu email"
           value={email}
           onChangeText={(text) => setEmail(text)}
           error={errors.email}
         />
-        <Field
+        <TextGroup
           title="Senha"
           placeholder="Digite sua senha"
           value={password}
@@ -56,7 +56,7 @@ export default function () {
               size={20}
             />
           </Pressable>
-        </Field>
+        </TextGroup>
 
         <ActionButton
           icon={<MaterialIcons name="login" />}
@@ -73,10 +73,9 @@ export default function () {
     setErrors({});
 
     try {
-      const response = await server.post<{ token: string }>("/user/sign-up", {
+      const response = await server.post<{ token: string }>("/user/sign-in", {
         email,
         password,
-        name,
       });
       saveToken(response.data.token);
 
@@ -85,31 +84,4 @@ export default function () {
       setErrors(error.response.data);
     }
   }
-}
-
-function Field(props: {
-  title: string;
-  placeholder: string;
-  value: string;
-  onChangeText: (text: string) => void;
-  hideText?: boolean;
-  reverse?: boolean;
-  children?: ReactNode;
-  error?: string;
-}) {
-  return (
-    <View style={[s.g2]}>
-      <Text style={s.textStrong}>{props.title}</Text>
-      <TextField
-        placeholder={props.placeholder}
-        value={props.value}
-        onChangeText={(text) => props.onChangeText(text)}
-        hideText={props.hideText}
-        reverse={props.reverse}
-      >
-        {props.children}
-      </TextField>
-      {props.error && <Text style={s.textPrimary}>{props.error}</Text>}
-    </View>
-  );
 }
