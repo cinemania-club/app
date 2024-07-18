@@ -7,8 +7,8 @@ import { MOVIE_GENRES } from "../src/filters";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { CatalogItemFormat } from "../src/types";
-import ActionButton from "./ActionButton";
-import CheckboxField from "./CheckboxField";
+import ActionButton from "./form/ActionButton";
+import CheckboxField from "./form/CheckboxField";
 
 type CheckboxOption<T> = {
   label: string;
