@@ -1,10 +1,10 @@
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React, { ReactNode, useContext, useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import React, { useContext, useState } from "react";
+import { Pressable, ScrollView, Text } from "react-native";
 import DrawerFrame from "../components/DrawerFrame";
 import ActionButton from "../components/form/ActionButton";
-import TextField from "../components/form/TextField";
+import TextGroup from "../components/form/TextGroup";
 import { AuthContext } from "../src/contexts";
 import { useServer } from "../src/hooks";
 import { palette } from "../src/theme/colors";
@@ -43,28 +43,28 @@ export default function () {
         style={[s.flex1]}
         contentContainerStyle={[s.g4, s.p5, s.jcEnd, { minHeight: "100%" }]}
       >
-        <Field
+        <TextGroup
           title="Email"
           placeholder="Digite seu email"
           value={email}
           onChangeText={(text) => setEmail(text)}
           error={errors.email}
         />
-        <Field
+        <TextGroup
           title="Telefone (opcional)"
           placeholder="Digite seu telefone com DDD"
           value={phoneMask(phone)}
           onChangeText={(text) => setPhone(text.replace(/[^0-9]/g, ""))}
           error={errors.phone}
         />
-        <Field
+        <TextGroup
           title="Nome"
           placeholder="Digite seu nome"
           value={name}
           onChangeText={(text) => setName(text)}
           error={errors.name}
         />
-        <Field
+        <TextGroup
           title="Nome de usuário"
           placeholder="Escolha um nome de usuário"
           value={username}
@@ -73,8 +73,8 @@ export default function () {
           error={errors.username}
         >
           <Text style={s.textPrimary}>@</Text>
-        </Field>
-        <Field
+        </TextGroup>
+        <TextGroup
           title="Senha"
           placeholder="Digite sua senha"
           value={password}
@@ -89,8 +89,8 @@ export default function () {
               size={20}
             />
           </Pressable>
-        </Field>
-        <Field
+        </TextGroup>
+        <TextGroup
           title="Confirmar senha"
           placeholder="Digite sua senha novamente"
           value={passwordConfirmation}
@@ -109,7 +109,7 @@ export default function () {
               size={20}
             />
           </Pressable>
-        </Field>
+        </TextGroup>
         {errors.message && (
           <Text style={[s.textPrimary, s.taCenter]}>{errors.message}</Text>
         )}
@@ -156,31 +156,4 @@ export default function () {
       setErrors(error.response.data);
     }
   }
-}
-
-function Field(props: {
-  title: string;
-  placeholder: string;
-  value: string;
-  onChangeText: (text: string) => void;
-  hideText?: boolean;
-  reverse?: boolean;
-  children?: ReactNode;
-  error?: string;
-}) {
-  return (
-    <View style={[s.g2]}>
-      <Text style={s.textStrong}>{props.title}</Text>
-      <TextField
-        placeholder={props.placeholder}
-        value={props.value}
-        onChangeText={(text) => props.onChangeText(text)}
-        hideText={props.hideText}
-        reverse={props.reverse}
-      >
-        {props.children}
-      </TextField>
-      {props.error && <Text style={s.textPrimary}>{props.error}</Text>}
-    </View>
-  );
 }
