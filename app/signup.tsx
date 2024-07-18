@@ -16,6 +16,7 @@ type SignupErrors = {
   name?: string;
   username?: string;
   password?: string;
+  message?: string;
 };
 
 const UNMATCHED_PASSWORD_ERROR = "As senhas não combinam";
@@ -109,6 +110,9 @@ export default function () {
             />
           </Pressable>
         </Field>
+        {errors.message && (
+          <Text style={[s.textPrimary, s.taCenter]}>{errors.message}</Text>
+        )}
         <ActionButton
           icon={<MaterialIcons name="login" />}
           title="Cadastrar"
