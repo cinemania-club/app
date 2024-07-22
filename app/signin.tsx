@@ -12,9 +12,6 @@ import s from "../src/theme/styles";
 
 type SignupErrors = {
   email?: string;
-  phone?: string;
-  name?: string;
-  username?: string;
   password?: string;
   message?: string;
 };
