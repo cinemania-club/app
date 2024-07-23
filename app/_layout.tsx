@@ -58,6 +58,7 @@ function RootLayoutNav() {
           >
             <Drawer.Screen name="(catalog)" />
             <Drawer.Screen name="signup" options={{ unmountOnBlur: true }} />
+            <Drawer.Screen name="signin" options={{ unmountOnBlur: true }} />
             <Drawer.Screen name="friends" />
           </Drawer>
         </AuthProvider>
@@ -79,6 +80,12 @@ function DrawerContent() {
         {!isLogged && (
           <Link href="/signup" style={[s.pressable]}>
             <Text style={[s.textStrong]}>Cadastrar conta</Text>
+          </Link>
+        )}
+
+        {!isLogged && (
+          <Link href="/signin" style={[s.pressable]}>
+            <Text style={[s.textStrong]}>Logar</Text>
           </Link>
         )}
 

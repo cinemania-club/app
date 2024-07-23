@@ -26,82 +26,88 @@ export default function (props: { onClose: () => void }) {
 
   return (
     <Modal onClose={() => props.onClose()}>
-      <Text style={[s.textStrong]}>Adicione à playlist</Text>
+      <View style={s.g4}>
+        <Text style={[s.textStrong]}>Adicione à playlist</Text>
 
-      {playlists
-        .filter((playlist) => playlist.type === PlaylistType.WATCH_LATER)
-        .map((playlist) => (
-          <CheckboxField
-            label={playlist.name}
-            onChange={(checked) => setPlaylistChecked(playlist._id, checked)}
-            initial={checkedPlaylists.includes(playlist._id)}
-          />
-        ))}
-
-      {playlists
-        .filter((playlist) => playlist.type === PlaylistType.ARCHIVED)
-        .map((playlist) => (
-          <View style={[s.row, s.aiCenter, s.g2]}>
+        {playlists
+          .filter((playlist) => playlist.type === PlaylistType.WATCH_LATER)
+          .map((playlist) => (
             <CheckboxField
               label={playlist.name}
               onChange={(checked) => setPlaylistChecked(playlist._id, checked)}
               initial={checkedPlaylists.includes(playlist._id)}
             />
-            <Pressable onPress={() => setOpenInfoArchived(true)}>
+          ))}
+
+        {playlists
+          .filter((playlist) => playlist.type === PlaylistType.ARCHIVED)
+          .map((playlist) => (
+            <View style={[s.row, s.aiCenter, s.g2]}>
+              <CheckboxField
+                label={playlist.name}
+                onChange={(checked) =>
+                  setPlaylistChecked(playlist._id, checked)
+                }
+                initial={checkedPlaylists.includes(playlist._id)}
+              />
+              <Pressable onPress={() => setOpenInfoArchived(true)}>
+                <MaterialCommunityIcons
+                  name="information"
+                  size={14}
+                  color={palette.primary}
+                  style={[s.pressable]}
+                />
+              </Pressable>
+            </View>
+          ))}
+
+        {playlists
+          .filter((playlist) => playlist.type === PlaylistType.CUSTOM)
+          .map((playlist) => (
+            <CustomPlaylist
+              playlist={playlist}
+              initial={checkedPlaylists.includes(playlist._id)}
+              setChecked={(checked) =>
+                setPlaylistChecked(playlist._id, checked)
+              }
+            />
+          ))}
+
+        {openInfoArchived && (
+          <InfoArchived onClose={() => setOpenInfoArchived(false)} />
+        )}
+
+        {creatingPlaylist ? (
+          <TextField
+            placeholder="Digite o nome da playlist"
+            value={playlistName}
+            onChangeText={(text) => setPlaylistName(text)}
+          >
+            <Pressable onPress={() => createPlaylist()}>
               <MaterialCommunityIcons
-                name="information"
-                size={14}
+                name="plus"
+                size={24}
                 color={palette.primary}
-                style={[s.pressable]}
               />
             </Pressable>
-          </View>
-        ))}
-
-      {playlists
-        .filter((playlist) => playlist.type === PlaylistType.CUSTOM)
-        .map((playlist) => (
-          <CustomPlaylist
-            playlist={playlist}
-            initial={checkedPlaylists.includes(playlist._id)}
-            setChecked={(checked) => setPlaylistChecked(playlist._id, checked)}
-          />
-        ))}
-
-      {openInfoArchived && (
-        <InfoArchived onClose={() => setOpenInfoArchived(false)} />
-      )}
-
-      {creatingPlaylist ? (
-        <TextField
-          placeholder="Digite o nome da playlist"
-          value={playlistName}
-          onChangeText={(text) => setPlaylistName(text)}
-        >
-          <Pressable onPress={() => createPlaylist()}>
-            <MaterialCommunityIcons
-              name="plus"
-              size={24}
-              color={palette.primary}
-            />
+          </TextField>
+        ) : (
+          <Pressable onPress={() => setCreatingPlaylist(true)}>
+            <View style={[s.row, s.aiCenter, s.g1]}>
+              <MaterialCommunityIcons
+                name="plus"
+                size={24}
+                color={palette.primary}
+              />
+              <Text style={[s.textPrimary]}>Nova playlist</Text>
+            </View>
           </Pressable>
-        </TextField>
-      ) : (
-        <Pressable onPress={() => setCreatingPlaylist(true)}>
-          <View style={[s.row, s.aiCenter, s.g1]}>
-            <MaterialCommunityIcons
-              name="plus"
-              size={24}
-              color={palette.primary}
-            />
-            <Text style={[s.textPrimary]}>Nova playlist</Text>
-          </View>
-        </Pressable>
-      )}
+        )}
 
-      <Pressable onPress={() => addItemToPlaylists()}>
-        <Text style={[s.textStrong, s.taCenter]}>OK</Text>
-      </Pressable>
+        <Pressable onPress={() => addItemToPlaylists()}>
+          <Text style={[s.textStrong, s.taCenter]}>OK</Text>
+        </Pressable>
+      </View>
     </Modal>
   );
 
