@@ -3,6 +3,7 @@ import { router } from "expo-router";
 import React, { useContext, useState } from "react";
 import { Pressable, ScrollView, Text } from "react-native";
 import DrawerFrame from "../components/DrawerFrame";
+import ModalError from "../components/ModalError";
 import ActionButton from "../components/form/ActionButton";
 import TextGroup from "../components/form/TextGroup";
 import { AuthContext } from "../src/contexts";
@@ -55,6 +56,9 @@ export default function () {
           </Pressable>
         </TextGroup>
 
+        {errors.message && (
+          <ModalError message={errors.message} onClose={() => setErrors({})} />
+        )}
         <ActionButton
           icon={<MaterialIcons name="login" />}
           title="Logar"

@@ -14,6 +14,7 @@ const props = StyleSheet.create({
 
   aiCenter: { alignItems: "center" },
   aiEnd: { alignItems: "flex-end" },
+  aiStretch: { alignItems: "stretch" },
 
   jcCenter: { justifyContent: "center" },
   jcBetween: { justifyContent: "space-between" },
