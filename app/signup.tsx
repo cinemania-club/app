@@ -35,7 +35,7 @@ export default function () {
     useState(true);
 
   const server = useServer();
-  const { saveToken } = useContext(AuthContext)!;
+  const saveToken = useContext(AuthContext)?.saveToken;
 
   return (
     <DrawerFrame title="Cadastro" noSearch>
@@ -135,6 +135,8 @@ export default function () {
   }
 
   async function signup() {
+    if (!saveToken) return;
+
     setErrors({});
 
     const matching = password === passwordConfirmation;
