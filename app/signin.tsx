@@ -24,7 +24,7 @@ export default function () {
   const [hidePassword, setHidePassword] = useState(true);
 
   const server = useServer();
-  const { saveToken } = useContext(AuthContext)!;
+  const saveToken = useContext(AuthContext)?.saveToken;
 
   return (
     <DrawerFrame title="Login" noSearch>
@@ -71,6 +71,8 @@ export default function () {
   );
 
   async function signin() {
+    if (!saveToken) return;
+
     setErrors({});
 
     try {
