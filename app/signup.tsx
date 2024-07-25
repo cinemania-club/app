@@ -5,6 +5,7 @@ import { Pressable, ScrollView, Text } from "react-native";
 import DrawerFrame from "../components/DrawerFrame";
 import ActionButton from "../components/form/ActionButton";
 import TextGroup from "../components/form/TextGroup";
+import ModalError from "../components/ModalError";
 import { AuthContext } from "../src/contexts";
 import { useServer } from "../src/hooks";
 import { palette } from "../src/theme/colors";
@@ -110,8 +111,9 @@ export default function () {
             />
           </Pressable>
         </TextGroup>
+
         {errors.message && (
-          <Text style={[s.textPrimary, s.taCenter]}>{errors.message}</Text>
+          <ModalError message={errors.message} onClose={() => setErrors({})} />
         )}
         <ActionButton
           icon={<MaterialIcons name="login" />}
