@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -82,17 +82,14 @@ function CheckboxFilter<T>(props: {
   options: CheckboxOption<T>[];
   onChange: (value: T[]) => void;
 }) {
-  const [options, setChecked] = useReducer(
-    setOptions,
-    new Set<T>(
-      props.options
-        .filter((option) => option.initial)
-        .map((option) => option.value),
-    ),
+  const [options, setOptions] = useState<T[]>(
+    props.options
+      .filter((option) => option.initial)
+      .map((option) => option.value),
   );
 
   useEffect(() => {
-    props.onChange([...options]);
+    props.onChange(options);
   }, [options]);
 
   const optionsChunks = chunk(props.options, 2);
@@ -101,15 +98,17 @@ function CheckboxFilter<T>(props: {
     <View style={[s.g3]}>
       <Text style={[s.textStrong]}>{props.name}</Text>
       <View style={[s.g3]}>
-        {optionsChunks.map((optionsChunk) => (
-          <View style={[s.row, s.g5]}>
-            {optionsChunk.map((option) => (
-              <View style={[s.flex1]}>
+        {optionsChunks.map((optionsChunk, index) => (
+          <View key={index} style={[s.row, s.g5]}>
+            {optionsChunk.map((option, index) => (
+              <View key={index} style={[s.flex1]}>
                 <CheckboxField
                   label={option.label}
                   initial={option.initial}
                   onChange={(checked) =>
-                    setChecked({ value: option.value, checked })
+                    checked
+                      ? setOptions([...options, option.value])
+                      : setOptions(options.filter((e) => e !== option.value))
                   }
                 />
               </View>
@@ -119,17 +118,4 @@ function CheckboxFilter<T>(props: {
       </View>
     </View>
   );
-
-  function setOptions(
-    checkedOptions: Set<T>,
-    payload: { value: T; checked: boolean },
-  ) {
-    if (payload.checked) {
-      checkedOptions.add(payload.value);
-    } else {
-      checkedOptions.delete(payload.value);
-    }
-
-    return new Set([...checkedOptions]);
-  }
 }
