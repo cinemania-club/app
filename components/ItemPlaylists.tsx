@@ -34,8 +34,8 @@ export default function (props: { onClose: () => void }) {
           .map((playlist) => (
             <CheckboxField
               label={playlist.name}
-              onChange={(checked) => setPlaylistChecked(playlist._id, checked)}
-              initial={checkedPlaylists.includes(playlist._id)}
+              checked={checkedPlaylists.includes(playlist._id)}
+              onCheck={() => togglePlaylist(playlist._id)}
             />
           ))}
 
@@ -45,10 +45,8 @@ export default function (props: { onClose: () => void }) {
             <View style={[s.row, s.aiCenter, s.g2]}>
               <CheckboxField
                 label={playlist.name}
-                onChange={(checked) =>
-                  setPlaylistChecked(playlist._id, checked)
-                }
-                initial={checkedPlaylists.includes(playlist._id)}
+                checked={checkedPlaylists.includes(playlist._id)}
+                onCheck={() => togglePlaylist(playlist._id)}
               />
               <Pressable onPress={() => setOpenInfoArchived(true)}>
                 <MaterialCommunityIcons
@@ -66,10 +64,8 @@ export default function (props: { onClose: () => void }) {
           .map((playlist) => (
             <CustomPlaylist
               playlist={playlist}
-              initial={checkedPlaylists.includes(playlist._id)}
-              setChecked={(checked) =>
-                setPlaylistChecked(playlist._id, checked)
-              }
+              checked={checkedPlaylists.includes(playlist._id)}
+              onCheck={() => togglePlaylist(playlist._id)}
             />
           ))}
 
@@ -111,10 +107,10 @@ export default function (props: { onClose: () => void }) {
     </Modal>
   );
 
-  function setPlaylistChecked(id: string, checked: boolean) {
-    const playlists = checked
-      ? [...checkedPlaylists, id]
-      : checkedPlaylists.filter((e) => e !== id);
+  function togglePlaylist(id: string) {
+    const playlists = checkedPlaylists.includes(id)
+      ? checkedPlaylists.filter((e) => e !== id)
+      : [...checkedPlaylists, id];
 
     setCheckedPlaylists(playlists);
   }
@@ -141,8 +137,8 @@ export default function (props: { onClose: () => void }) {
 
 function CustomPlaylist(props: {
   playlist: Playlist;
-  initial: boolean;
-  setChecked: (checked: boolean) => void;
+  checked: boolean;
+  onCheck: () => void;
 }) {
   const [openDeletePlaylist, setOpenDeletePlaylist] = useState(false);
 
@@ -150,8 +146,8 @@ function CustomPlaylist(props: {
     <View style={[s.row, s.jcBetween, s.g2]}>
       <CheckboxField
         label={props.playlist.name}
-        onChange={(checked) => props.setChecked(checked)}
-        initial={props.initial}
+        checked={props.checked}
+        onCheck={() => props.onCheck()}
       />
       <Pressable
         style={[s.pressable]}
