@@ -8,6 +8,7 @@ export default function (props: {
   label: string;
   onChange: (checked: boolean) => void;
   initial?: boolean;
+  radio?: boolean;
 }) {
   const [checked, setChecked] = useState(props.initial || false);
 
@@ -15,16 +16,20 @@ export default function (props: {
     props.onChange(checked);
   }, [checked]);
 
+  const icon = props.radio
+    ? checked
+      ? "radiobox-marked"
+      : "radiobox-blank"
+    : checked
+      ? "checkbox-marked"
+      : "checkbox-blank-outline";
+
   return (
     <Pressable
       style={[s.row, s.aiCenter, s.g2]}
       onPress={() => setChecked(!checked)}
     >
-      <MaterialCommunityIcons
-        name={checked ? "checkbox-marked" : "checkbox-blank-outline"}
-        color={palette.primary}
-        size={20}
-      />
+      <MaterialCommunityIcons name={icon} color={palette.primary} size={20} />
       <Text style={[s.text]}>{props.label}</Text>
     </Pressable>
   );
