@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { chunk } from "lodash";
+import _, { chunk } from "lodash";
 import { MOVIE_GENRES } from "../src/filters";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
@@ -77,20 +77,26 @@ export default function (props: {
   );
 }
 
-function CheckboxFilter<T>(props: {
+function CheckboxFilter<T extends string | number | symbol>(props: {
   name: string;
   options: CheckboxOption<T>[];
   onChange: (value: T[]) => void;
 }) {
-  const [options, setOptions] = useState<T[]>(
-    props.options
-      .filter((option) => option.initial)
-      .map((option) => option.value),
+  const [selected, setSelected] = useState<Record<T, boolean>>(
+    _.chain(props.options)
+      .keyBy("value")
+      .mapValues("initial")
+      .value() as Record<T, boolean>,
   );
 
   useEffect(() => {
-    props.onChange(options);
-  }, [options]);
+    props.onChange(
+      _.chain(selected)
+        .pickBy((value) => value)
+        .keys()
+        .value() as T[],
+    );
+  }, [selected]);
 
   const optionsChunks = chunk(props.options, 2);
 
@@ -104,11 +110,12 @@ function CheckboxFilter<T>(props: {
               <View key={index} style={[s.flex1]}>
                 <CheckboxField
                   label={option.label}
-                  initial={option.initial}
-                  onChange={(checked) =>
-                    checked
-                      ? setOptions([...options, option.value])
-                      : setOptions(options.filter((e) => e !== option.value))
+                  checked={selected[option.value]}
+                  onCheck={() =>
+                    setSelected({
+                      ...selected,
+                      [option.value]: !selected[option.value],
+                    })
                   }
                 />
               </View>
