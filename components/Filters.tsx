@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import _, { chunk } from "lodash";
+import { chunk } from "lodash";
 import { MOVIE_GENRES } from "../src/filters";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
@@ -53,15 +53,17 @@ export default function (props: {
               initial: !!filters.formats?.includes(CatalogItemFormat.SERIES),
             },
           ]}
+          selected={filters.formats || []}
           onChange={(formats) => setFilters({ ...filters, formats })}
         />
 
-        <CheckboxFilter<number>
+        <CheckboxFilter
           name="Gênero"
           options={MOVIE_GENRES.map((genre) => ({
             ...genre,
             initial: !!filters.genres?.includes(genre.value),
           }))}
+          selected={filters.genres || []}
           onChange={(genres) => setFilters({ ...filters, genres })}
         />
       </View>
@@ -80,24 +82,9 @@ export default function (props: {
 function CheckboxFilter<T extends string | number | symbol>(props: {
   name: string;
   options: CheckboxOption<T>[];
+  selected: T[];
   onChange: (value: T[]) => void;
 }) {
-  const [selected, setSelected] = useState<Record<T, boolean>>(
-    _.chain(props.options)
-      .keyBy("value")
-      .mapValues("initial")
-      .value() as Record<T, boolean>,
-  );
-
-  useEffect(() => {
-    props.onChange(
-      _.chain(selected)
-        .pickBy((value) => value)
-        .keys()
-        .value() as T[],
-    );
-  }, [selected]);
-
   const optionsChunks = chunk(props.options, 2);
 
   return (
@@ -106,23 +93,29 @@ function CheckboxFilter<T extends string | number | symbol>(props: {
       <View style={[s.g3]}>
         {optionsChunks.map((optionsChunk, index) => (
           <View key={index} style={[s.row, s.g5]}>
-            {optionsChunk.map((option, index) => (
-              <View key={index} style={[s.flex1]}>
-                <CheckboxField
-                  label={option.label}
-                  checked={selected[option.value]}
-                  onCheck={() =>
-                    setSelected({
-                      ...selected,
-                      [option.value]: !selected[option.value],
-                    })
-                  }
-                />
-              </View>
-            ))}
+            {optionsChunk.map((option, index) => {
+              const checked = props.selected.includes(option.value);
+
+              return (
+                <View key={index} style={[s.flex1]}>
+                  <CheckboxField
+                    label={option.label}
+                    checked={checked}
+                    onCheck={() => onCheck(option.value, checked)}
+                  />
+                </View>
+              );
+            })}
           </View>
         ))}
       </View>
     </View>
   );
+
+  function onCheck(value: T, checked: boolean) {
+    const selected = checked
+      ? [...props.selected, value]
+      : props.selected.filter((e) => e !== value);
+    props.onChange(selected);
+  }
 }
