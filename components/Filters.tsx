@@ -56,16 +56,21 @@ export default function (props: {
               value: CatalogItemFormat.SERIES,
             },
           ]}
+          // ---------------------------------------
           initial={CatalogItemFormat.MOVIE}
           onChange={(format) => setFilters({ ...filters, format })}
+          // selected={filters.formats || []}
+          // onChange={(formats) => setFilters({ ...filters, formats })}
+          // ---------------------------------------
         />
 
-        <CheckboxFilter<number>
+        <CheckboxFilter
           name="Gênero"
           options={MOVIE_GENRES.map((genre) => ({
             ...genre,
             initial: !!filters.genres?.includes(genre.value),
           }))}
+          selected={filters.genres || []}
           onChange={(genres) => setFilters({ ...filters, genres })}
         />
       </View>
@@ -81,21 +86,12 @@ export default function (props: {
   );
 }
 
-function CheckboxFilter<T>(props: {
+function CheckboxFilter<T extends string | number | symbol>(props: {
   name: string;
   options: CheckboxOption<T>[];
+  selected: T[];
   onChange: (value: T[]) => void;
 }) {
-  const [options, setOptions] = useState<T[]>(
-    props.options
-      .filter((option) => option.initial)
-      .map((option) => option.value),
-  );
-
-  useEffect(() => {
-    props.onChange(options);
-  }, [options]);
-
   const optionsChunks = chunk(props.options, 2);
 
   return (
@@ -104,24 +100,31 @@ function CheckboxFilter<T>(props: {
       <View style={[s.g3]}>
         {optionsChunks.map((optionsChunk, index) => (
           <View key={index} style={[s.row, s.g5]}>
-            {optionsChunk.map((option, index) => (
-              <View key={index} style={[s.flex1]}>
-                <CheckboxField
-                  label={option.label}
-                  initial={option.initial}
-                  onChange={(checked) =>
-                    checked
-                      ? setOptions([...options, option.value])
-                      : setOptions(options.filter((e) => e !== option.value))
-                  }
-                />
-              </View>
-            ))}
+            {optionsChunk.map((option, index) => {
+              const checked = props.selected.includes(option.value);
+
+              return (
+                <View key={index} style={[s.flex1]}>
+                  <CheckboxField
+                    label={option.label}
+                    checked={checked}
+                    onCheck={() => onCheck(option.value, checked)}
+                  />
+                </View>
+              );
+            })}
           </View>
         ))}
       </View>
     </View>
   );
+
+  function onCheck(value: T, checked: boolean) {
+    const selected = checked
+      ? props.selected.filter((e) => e !== value)
+      : [...props.selected, value];
+    props.onChange(selected);
+  }
 }
 
 function RadioboxFilter<T>(props: {
