@@ -11,7 +11,10 @@ import {
 
 import CatalogItem from "../../components/CatalogItem";
 import DrawerFrame from "../../components/DrawerFrame";
-import Filters, { FiltersType } from "../../components/Filters";
+import Filters, {
+  FiltersType,
+  INITIAL_FILTERS,
+} from "../../components/Filters";
 import FloatingActionButton from "../../components/FloatingActionButton";
 import { CatalogItemContext } from "../../src/contexts";
 import { useServer } from "../../src/hooks";
@@ -38,7 +41,7 @@ export default function () {
   const [items, setItems] = useState<CatalogItemData[]>([]);
   const [onboarding, setOnboarding] = useState<Onboarding>(null);
   const [visible, setVisible] = useState(false);
-  const [filters, setFilters] = useState<FiltersType>({});
+  const [filters, setFilters] = useState<FiltersType>(INITIAL_FILTERS);
 
   const willExpand = items.some((item) => !item.showOverview);
 

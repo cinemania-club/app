@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -22,8 +22,13 @@ type RadioboxOption<T> = {
 };
 
 export type FiltersType = {
-  format?: CatalogItemFormat;
-  genres?: number[];
+  format: CatalogItemFormat;
+  genres: number[];
+};
+
+export const INITIAL_FILTERS = {
+  format: CatalogItemFormat.MOVIE,
+  genres: [],
 };
 
 export default function (props: {
@@ -56,12 +61,8 @@ export default function (props: {
               value: CatalogItemFormat.SERIES,
             },
           ]}
-          // ---------------------------------------
-          initial={CatalogItemFormat.MOVIE}
+          selected={filters.format}
           onChange={(format) => setFilters({ ...filters, format })}
-          // selected={filters.formats || []}
-          // onChange={(formats) => setFilters({ ...filters, formats })}
-          // ---------------------------------------
         />
 
         <CheckboxFilter
@@ -70,7 +71,7 @@ export default function (props: {
             ...genre,
             initial: !!filters.genres?.includes(genre.value),
           }))}
-          selected={filters.genres || []}
+          selected={filters.genres}
           onChange={(genres) => setFilters({ ...filters, genres })}
         />
       </View>
@@ -130,15 +131,9 @@ function CheckboxFilter<T extends string | number | symbol>(props: {
 function RadioboxFilter<T>(props: {
   name: string;
   options: RadioboxOption<T>[];
-  initial: T;
+  selected: T;
   onChange: (value: T) => void;
 }) {
-  const [selected, setSelected] = useState<T>(props.initial);
-
-  useEffect(() => {
-    props.onChange(selected);
-  }, [selected]);
-
   const optionsChunks = chunk(props.options, 2);
 
   return (
@@ -152,8 +147,8 @@ function RadioboxFilter<T>(props: {
                 <CheckboxField
                   radio
                   label={option.label}
-                  initial={props.initial === option.value}
-                  onChange={() => setSelected(option.value)}
+                  checked={props.selected === option.value}
+                  onCheck={() => props.onChange(option.value)}
                 />
               </View>
             ))}
@@ -162,11 +157,4 @@ function RadioboxFilter<T>(props: {
       </View>
     </View>
   );
-
-  function onCheck(value: T, checked: boolean) {
-    const selected = checked
-      ? props.selected.filter((e) => e !== value)
-      : [...props.selected, value];
-    props.onChange(selected);
-  }
 }
