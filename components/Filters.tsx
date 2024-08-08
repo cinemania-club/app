@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -16,8 +16,13 @@ type CheckboxOption<T> = {
   initial: boolean;
 };
 
+type RadioboxOption<T> = {
+  label: string;
+  value: T;
+};
+
 export type FiltersType = {
-  formats?: CatalogItemFormat[];
+  format?: CatalogItemFormat;
   genres?: number[];
 };
 
@@ -39,22 +44,24 @@ export default function (props: {
           <Text style={[s.textStrong, { fontSize: 16 }]}>Filtrar Lista</Text>
         </View>
 
-        <CheckboxFilter
+        <RadioboxFilter
           name="Tipo"
           options={[
             {
               label: "Filmes",
               value: CatalogItemFormat.MOVIE,
-              initial: !!filters.formats?.includes(CatalogItemFormat.MOVIE),
             },
             {
               label: "Séries",
               value: CatalogItemFormat.SERIES,
-              initial: !!filters.formats?.includes(CatalogItemFormat.SERIES),
             },
           ]}
-          selected={filters.formats || []}
-          onChange={(formats) => setFilters({ ...filters, formats })}
+          // ---------------------------------------
+          initial={CatalogItemFormat.MOVIE}
+          onChange={(format) => setFilters({ ...filters, format })}
+          // selected={filters.formats || []}
+          // onChange={(formats) => setFilters({ ...filters, formats })}
+          // ---------------------------------------
         />
 
         <CheckboxFilter
@@ -106,6 +113,50 @@ function CheckboxFilter<T extends string | number | symbol>(props: {
                 </View>
               );
             })}
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+
+  function onCheck(value: T, checked: boolean) {
+    const selected = checked
+      ? props.selected.filter((e) => e !== value)
+      : [...props.selected, value];
+    props.onChange(selected);
+  }
+}
+
+function RadioboxFilter<T>(props: {
+  name: string;
+  options: RadioboxOption<T>[];
+  initial: T;
+  onChange: (value: T) => void;
+}) {
+  const [selected, setSelected] = useState<T>(props.initial);
+
+  useEffect(() => {
+    props.onChange(selected);
+  }, [selected]);
+
+  const optionsChunks = chunk(props.options, 2);
+
+  return (
+    <View style={[s.g3]}>
+      <Text style={[s.textStrong]}>{props.name}</Text>
+      <View style={[s.g3]}>
+        {optionsChunks.map((optionsChunk, index) => (
+          <View key={index} style={[s.row, s.g5]}>
+            {optionsChunk.map((option, index) => (
+              <View key={index} style={[s.flex1]}>
+                <CheckboxField
+                  radio
+                  label={option.label}
+                  initial={props.initial === option.value}
+                  onChange={() => setSelected(option.value)}
+                />
+              </View>
+            ))}
           </View>
         ))}
       </View>
