@@ -162,4 +162,11 @@ function RadioboxFilter<T>(props: {
       </View>
     </View>
   );
+
+  function onCheck(value: T, checked: boolean) {
+    const selected = checked
+      ? props.selected.filter((e) => e !== value)
+      : [...props.selected, value];
+    props.onChange(selected);
+  }
 }
