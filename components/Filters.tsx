@@ -114,8 +114,8 @@ function CheckboxFilter<T extends string | number | symbol>(props: {
 
   function onCheck(value: T, checked: boolean) {
     const selected = checked
-      ? [...props.selected, value]
-      : props.selected.filter((e) => e !== value);
+      ? props.selected.filter((e) => e !== value)
+      : [...props.selected, value];
     props.onChange(selected);
   }
 }
