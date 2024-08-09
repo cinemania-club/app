@@ -3,7 +3,7 @@ import { Text, View } from "react-native";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { chunk } from "lodash";
-import { MOVIE_GENRES } from "../src/filters";
+import { MOVIE_GENRES, SERIES_GENRES } from "../src/filters";
 import { palette } from "../src/theme/colors";
 import s from "../src/theme/styles";
 import { CatalogItemFormat } from "../src/types";
@@ -31,11 +31,17 @@ export const INITIAL_FILTERS = {
   genres: [],
 };
 
+const FORMAT_GENRES = {
+  [CatalogItemFormat.MOVIE]: MOVIE_GENRES,
+  [CatalogItemFormat.SERIES]: SERIES_GENRES,
+};
+
 export default function (props: {
   filters: FiltersType;
   onFilter: (filters: FiltersType) => void;
 }) {
   const [filters, setFilters] = useState(props.filters);
+  const genres = FORMAT_GENRES[filters.format];
 
   return (
     <View style={[s.bgDark, s.flex1, s.p3, s.absolute]}>
@@ -67,7 +73,7 @@ export default function (props: {
 
         <CheckboxFilter
           name="Gênero"
-          options={MOVIE_GENRES.map((genre) => ({
+          options={genres.map((genre) => ({
             ...genre,
             initial: !!filters.genres?.includes(genre.value),
           }))}
